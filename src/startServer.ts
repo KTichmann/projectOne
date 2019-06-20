@@ -5,6 +5,8 @@ import * as fs from "fs";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { mergeSchemas, makeExecutableSchema } from "graphql-tools";
 import { GraphQLSchema } from "graphql";
+import * as Redis from "ioredis";
+import { User } from "./entity/User";
 
 export const startServer = async () => {
 	// Holds a list of all the schemas
@@ -23,8 +25,29 @@ export const startServer = async () => {
 
 		schemas.push(makeExecutableSchema({ resolvers, typeDefs }));
 	});
+
+	const redis = new Redis();
+
 	// make graphql server, passing in schema array to mergeSchemas to make one schema
-	const server = new GraphQLServer({ schema: mergeSchemas({ schemas }) });
+	const server = new GraphQLServer({
+		schema: mergeSchemas({ schemas }),
+		context: ({ request }) => ({
+			redis,
+			url: request.protocol + "://" + request.get("host")
+		})
+	});
+
+	server.express.get("/confirm/:id", async (req, res) => {
+		const { id } = req.params;
+		const userId = await redis.get(id);
+		if (userId) {
+			await User.update({ id: userId }, { confirmed: true });
+			res.send("ok");
+		} else {
+			res.send("invalid");
+		}
+	});
+
 	// connect to our db through typeorm
 	await createTypeormConn();
 	const app = await server.start({
