@@ -4,63 +4,63 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
 import { formatYupError } from "../../utils/formatYupError";
 import {
-	duplicateEmail,
-	emailNotLongEnough,
-	invalidEmail,
-	passwordNotLongEnough
+  duplicateEmail,
+  emailNotLongEnough,
+  invalidEmail,
+  passwordNotLongEnough
 } from "./errorMessages";
 import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 
 const schema = yup.object().shape({
-	email: yup
-		.string()
-		.min(3, emailNotLongEnough)
-		.max(255)
-		.email(invalidEmail),
-	password: yup
-		.string()
-		.min(3, passwordNotLongEnough)
-		.max(255)
+  email: yup
+    .string()
+    .min(3, emailNotLongEnough)
+    .max(255)
+    .email(invalidEmail),
+  password: yup
+    .string()
+    .min(3, passwordNotLongEnough)
+    .max(255)
 });
 
 export const resolvers: ResolverMap = {
-	Query: {
-		errorFill: () => "bye"
-	},
+  Query: {
+    errorFill: () => "bye"
+  },
 
-	Mutation: {
-		register: async (
-			_,
-			args: GQL.IRegisterOnMutationArguments,
-			{ redis, url }
-		) => {
-			try {
-				await schema.validate(args, { abortEarly: false });
-			} catch (err) {
-				return formatYupError(err);
-			}
-			const { email, password } = args;
-			const userAlreadyExists = await User.findOne({
-				where: { email },
-				select: ["id"]
-			});
+  Mutation: {
+    register: async (
+      _,
+      args: GQL.IRegisterOnMutationArguments,
+      { redis, url }
+    ) => {
+      try {
+        await schema.validate(args, { abortEarly: false });
+      } catch (err) {
+        return formatYupError(err);
+      }
+      const { email, password } = args;
+      const userAlreadyExists = await User.findOne({
+        where: { email },
+        select: ["id"]
+      });
 
-			if (userAlreadyExists) {
-				return [{ path: "email", message: duplicateEmail }];
-			}
-			// Hash the password
-			const hashedPassword = await bcrypt.hash(password, 10);
-			// Create the user object
-			const user = User.create({
-				email,
-				password: hashedPassword
-			});
-			// Save the user to the db
-			await user.save();
+      if (userAlreadyExists) {
+        return [{ path: "email", message: duplicateEmail }];
+      }
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // Create the user object
+      const user = User.create({
+        email,
+        password: hashedPassword
+      });
+      // Save the user to the db
+      await user.save();
 
-			await createConfirmEmailLink(url, user.id, redis);
+      await createConfirmEmailLink(url, user.id, redis);
 
-			return null;
-		}
-	}
+      return null;
+    }
+  }
 };
