@@ -1,87 +1,77 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/ts-node -D
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add express
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\bOnline\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\HashiCorp\Vagrant\bin;C:\Program Files\PuTTY;C:\Program Files\PostgreSQL\11\bin;C:\Program Files\PostgreSQL\11\lib;C:\Users\bOnline\AppData\Local\Programs\Python\Python37-32\Scripts;C:\Users\bOnline\AppData\Local\Programs\Python\Python37-32;C:\Users\bOnline\AppData\Local\Microsoft\WindowsApps;C:\Users\bOnline\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\bOnline\AppData\Roaming\npm;C:\Users\bOnline\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.12.3
+  1.16.0
 
 Node version: 
-  8.12.0
+  11.4.0
 
 Platform: 
-  win32 x64
+  linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fts-node: Not found
-      at Request.params.callback [as _callback] (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:65894:18)
-      at Request.self.callback (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129018:22)
-      at emitTwo (events.js:126:13)
-      at Request.emit (events.js:214:7)
-      at Request.<anonymous> (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129990:10)
-      at emitOne (events.js:116:13)
-      at Request.emit (events.js:211:7)
-      at IncomingMessage.<anonymous> (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129912:12)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:111:20)
+  Error: EACCES: permission denied, unlink '/home/wim/Documents/projectOne/node_modules/@babel/runtime/LICENSE'
 
 npm manifest: 
   {
-  	"name": "server-template",
-  	"version": "0.0.1",
-  	"description": "Awesome project developed with TypeORM.",
-  	"devDependencies": {
-  		"@types/bcryptjs": "^2.4.2",
-  		"@types/ioredis": "^4.0.12",
-  		"@types/jest": "^24.0.15",
-  		"@types/node": "^8.0.29",
-  		"@types/uuid": "^3.4.4",
-  		"@types/yup": "^0.26.16",
-  		"gql2ts": "^1.10.1",
-  		"nodemon": "^1.19.1",
-  		"ts-jest": "^24.0.2",
-  		"ts-node": "3.3.0",
-  		"tslint": "^5.17.0",
-  		"tslint-config-prettier": "^1.18.0",
-  		"typescript": "3.3.3333"
-  	},
-  	"dependencies": {
-  		"bcryptjs": "^2.4.3",
-  		"graphql": "^14.3.1",
-  		"graphql-import": "^0.7.1",
-  		"graphql-request": "^1.8.2",
-  		"graphql-tools": "^4.0.4",
-  		"graphql-yoga": "^1.17.4",
-  		"ioredis": "^4.10.0",
-  		"jest": "^24.8.0",
-  		"pg": "^7.3.0",
-  		"reflect-metadata": "^0.1.10",
-  		"typeorm": "0.2.18",
-  		"uuid": "^3.3.2",
-  		"win-node-env": "^0.4.0",
-  		"yup": "^0.27.0"
-  	},
-  	"scripts": {
-  		"start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
-  		"test": "NODE_ENV=test jest --force-exit",
-  		"gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
-  	},
-  	"jest": {
-  		"globalSetup": "./src/testSetup/callSetup.js",
-  		"transform": {
-  			"^.+\\.tsx?$": "ts-jest"
-  		},
-  		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-  		"moduleFileExtensions": [
-  			"ts",
-  			"tsx",
-  			"js",
-  			"jsx",
-  			"json",
-  			"node"
-  		]
-  	}
+    "name": "server-template",
+    "version": "0.0.1",
+    "description": "Awesome project developed with TypeORM.",
+    "devDependencies": {
+      "@types/bcryptjs": "^2.4.2",
+      "@types/ioredis": "^4.0.12",
+      "@types/jest": "^24.0.15",
+      "@types/node": "^8.0.29",
+      "@types/uuid": "^3.4.4",
+      "@types/yup": "^0.26.16",
+      "gql2ts": "^1.10.1",
+      "jest": "^24.8.0",
+      "node-fetch": "^2.6.0",
+      "nodemon": "^1.19.1",
+      "ts-jest": "^24.0.2",
+      "ts-node": "3.3.0",
+      "tslint": "^5.17.0",
+      "tslint-config-prettier": "^1.18.0",
+      "typescript": "3.3.3333"
+    },
+    "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "graphql": "^14.3.1",
+      "graphql-import": "^0.7.1",
+      "graphql-request": "^1.8.2",
+      "graphql-tools": "^4.0.4",
+      "graphql-yoga": "^1.17.4",
+      "ioredis": "^4.10.0",
+      "pg": "^7.3.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.18",
+      "uuid": "^3.3.2",
+      "yup": "^0.27.0"
+    },
+    "scripts": {
+      "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+      "test": "NODE_ENV=test jest --watch",
+      "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
+    },
+    "jest": {
+      "globalSetup": "./src/testSetup/callSetup.js",
+      "transform": {
+        "^.+\\.tsx?$": "ts-jest"
+      },
+      "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+      "moduleFileExtensions": [
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "node"
+      ]
+    }
   }
 
 yarn manifest: 
@@ -3583,6 +3573,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
     integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
   
+  node-fetch@^2.6.0:
+    version "2.6.0"
+    resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+    integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  
   node-int64@^0.4.0:
     version "0.4.0"
     resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
@@ -5379,11 +5374,6 @@ Lockfile:
     integrity sha512-Ba5m9/Fa4Xt9eb2ELXt77JxVDV8w7qQrH0zS/TWSJdLyAwQjWoOzpzj5lwVftDz6n/EOu3tNACS84v509qwnJA==
     dependencies:
       string-width "^2.1.1"
-  
-  win-node-env@^0.4.0:
-    version "0.4.0"
-    resolved "https://registry.yarnpkg.com/win-node-env/-/win-node-env-0.4.0.tgz#2d9dc991702920c73eaa1d644655b773886da5cb"
-    integrity sha512-bf4TV/NOBEazlHJW/bOns7u2JaHe3f5bz8BYanm/xuqJ405NG9OK3VAI1Y2WvHJsAo4GMU8EYTHSh59Q3UfHvA==
   
   wordwrap@~0.0.2:
     version "0.0.3"
