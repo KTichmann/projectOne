@@ -8,6 +8,9 @@ export const createConfirmEmailLink = async (
 ) => {
 	const id = v4();
 
-	await redis.set(id, userId, "ex", 60 * 60 * 24);
+	// await redis.set(id, userId, "ex", 60 * 60 * 24); //Works on linux - expiry time set
+
+	await redis.set(id, userId); // Windows redis doesn't accept more than 2 args
+
 	return `${url}/confirm/${id}`;
 };

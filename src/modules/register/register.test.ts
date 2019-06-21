@@ -1,16 +1,13 @@
 import { request } from "graphql-request";
 import { User } from "../../entity/User";
-import { createTypeormConn } from "../../utils/createTypeormConn";
+
 import {
 	duplicateEmail,
 	emailNotLongEnough,
 	invalidEmail,
 	passwordNotLongEnough
 } from "./errorMessages";
-
-/*
-	Add custom matcher to expect
-*/
+import { createTypeormConn } from "../../utils/createTypeormConn";
 
 const email = "testing@test.com";
 const password = "testing";

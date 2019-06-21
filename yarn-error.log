@@ -1,80 +1,95 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add @gql2ts/from-schema
+  C:\Program Files\nodejs\node.exe C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/typeorm -D
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\bOnline\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\HashiCorp\Vagrant\bin;C:\Program Files\PuTTY;C:\Program Files\PostgreSQL\11\bin;C:\Program Files\PostgreSQL\11\lib;C:\Users\bOnline\AppData\Local\Programs\Python\Python37-32\Scripts;C:\Users\bOnline\AppData\Local\Programs\Python\Python37-32;C:\Users\bOnline\AppData\Local\Microsoft\WindowsApps;C:\Users\bOnline\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\bOnline\AppData\Roaming\npm;C:\Users\bOnline\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin
 
 Yarn version: 
-  1.16.0
+  1.12.3
 
 Node version: 
-  11.4.0
+  8.12.0
 
 Platform: 
-  linux x64
+  win32 x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/wim/Documents/projectOne/node_modules/@babel/runtime/LICENSE'
+  Error: https://registry.yarnpkg.com/@types%2ftypeorm: Not found
+      at Request.params.callback [as _callback] (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:65894:18)
+      at Request.self.callback (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129018:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129990:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Users\bOnline\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129912:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
-    "name": "server-template",
-    "version": "0.0.1",
-    "description": "Awesome project developed with TypeORM.",
-    "devDependencies": {
-      "@types/bcryptjs": "^2.4.2",
-      "@types/ioredis": "^4.0.12",
-      "@types/jest": "^24.0.15",
-      "@types/node": "^8.0.29",
-      "@types/uuid": "^3.4.4",
-      "@types/yup": "^0.26.16",
-      "gql2ts": "^1.10.1",
-      "jest": "^24.8.0",
-      "node-fetch": "^2.6.0",
-      "nodemon": "^1.19.1",
-      "ts-jest": "^24.0.2",
-      "ts-node": "3.3.0",
-      "tslint": "^5.17.0",
-      "tslint-config-prettier": "^1.18.0",
-      "typescript": "3.3.3333"
-    },
-    "dependencies": {
-      "@types/express": "^4.17.0",
-      "@types/node-fetch": "^2.3.7",
-      "bcryptjs": "^2.4.3",
-      "express": "^4.17.1",
-      "graphql": "^14.3.1",
-      "graphql-import": "^0.7.1",
-      "graphql-request": "^1.8.2",
-      "graphql-tools": "^4.0.4",
-      "graphql-yoga": "^1.17.4",
-      "ioredis": "^4.10.0",
-      "pg": "^7.3.0",
-      "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.18",
-      "uuid": "^3.3.2",
-      "yup": "^0.27.0"
-    },
-    "scripts": {
-      "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
-      "test": "NODE_ENV=test jest --watch",
-      "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
-    },
-    "jest": {
-      "globalSetup": "./src/testSetup/callSetup.js",
-      "transform": {
-        "^.+\\.tsx?$": "ts-jest"
-      },
-      "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-      "moduleFileExtensions": [
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "node"
-      ]
-    }
+  	"name": "server-template",
+  	"version": "0.0.1",
+  	"description": "Awesome project developed with TypeORM.",
+  	"devDependencies": {
+  		"@types/bcryptjs": "^2.4.2",
+  		"@types/ioredis": "^4.0.12",
+  		"@types/jest": "^24.0.15",
+  		"@types/node": "^8.0.29",
+  		"@types/sparkpost": "^2.1.4",
+  		"@types/uuid": "^3.4.4",
+  		"@types/yup": "^0.26.16",
+  		"gql2ts": "^1.10.1",
+  		"jest": "^24.8.0",
+  		"node-fetch": "^2.6.0",
+  		"nodemon": "^1.19.1",
+  		"ts-jest": "^24.0.2",
+  		"ts-node": "3.3.0",
+  		"tslint": "^5.17.0",
+  		"tslint-config-prettier": "^1.18.0",
+  		"typescript": "3.3.3333"
+  	},
+  	"dependencies": {
+  		"@gql2ts/from-schema": "^1.10.1",
+  		"@types/express": "^4.17.0",
+  		"@types/node-fetch": "^2.3.7",
+  		"bcryptjs": "^2.4.3",
+  		"dotenv": "^8.0.0",
+  		"express": "^4.17.1",
+  		"graphql": "^14.3.1",
+  		"graphql-import": "^0.7.1",
+  		"graphql-request": "^1.8.2",
+  		"graphql-tools": "^4.0.4",
+  		"graphql-yoga": "^1.17.4",
+  		"ioredis": "^4.10.0",
+  		"pg": "^7.3.0",
+  		"reflect-metadata": "^0.1.10",
+  		"sparkpost": "^2.1.3",
+  		"typeorm": "0.2.18",
+  		"uuid": "^3.3.2",
+  		"win-node-env": "^0.4.0",
+  		"yup": "^0.27.0"
+  	},
+  	"scripts": {
+  		"start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+  		"test": "NODE_ENV=test jest --watch",
+  		"gen-schema-types": "ts-node src/scripts/createTypes.ts"
+  	},
+  	"jest": {
+  		"globalSetup": "./src/testSetup/callSetup.js",
+  		"transform": {
+  			"^.+\\.tsx?$": "ts-jest"
+  		},
+  		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  		"moduleFileExtensions": [
+  			"ts",
+  			"tsx",
+  			"js",
+  			"jsx",
+  			"json",
+  			"node"
+  		]
+  	}
   }
 
 yarn manifest: 
@@ -451,6 +466,11 @@ Lockfile:
       "@types/connect" "*"
       "@types/node" "*"
   
+  "@types/caseless@*":
+    version "0.12.2"
+    resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
+    integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
+  
   "@types/connect@*":
     version "3.4.32"
     resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
@@ -481,6 +501,13 @@ Lockfile:
       "@types/body-parser" "*"
       "@types/express-serve-static-core" "*"
       "@types/serve-static" "*"
+  
+  "@types/form-data@*":
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
+    integrity sha512-JAMFhOaHIciYVh8fb5/83nmuO/AHwmto+Hq7a9y8FzLDcC1KCU344XDOMEmahnrTFlHjgh4L0WJFczNIX2GxnQ==
+    dependencies:
+      "@types/node" "*"
   
   "@types/graphql-deduplicator@^2.0.0":
     version "2.0.0"
@@ -558,6 +585,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
     integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
   
+  "@types/request@*":
+    version "2.48.1"
+    resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.1.tgz#e402d691aa6670fbbff1957b15f1270230ab42fa"
+    integrity sha512-ZgEZ1TiD+KGA9LiAAPPJL68Id2UWfeSO62ijSXZjFJArVV+2pKcsVHmrcu+1oiE3q6eDGiFiSolRc4JHoerBBg==
+    dependencies:
+      "@types/caseless" "*"
+      "@types/form-data" "*"
+      "@types/node" "*"
+      "@types/tough-cookie" "*"
+  
   "@types/serve-static@*":
     version "1.13.2"
     resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.13.2.tgz#f5ac4d7a6420a99a6a45af4719f4dcd8cd907a48"
@@ -566,10 +603,23 @@ Lockfile:
       "@types/express-serve-static-core" "*"
       "@types/mime" "*"
   
+  "@types/sparkpost@^2.1.4":
+    version "2.1.4"
+    resolved "https://registry.yarnpkg.com/@types/sparkpost/-/sparkpost-2.1.4.tgz#22136f73c684c194961b1730673e1d9d06957b9c"
+    integrity sha512-D8gxn+p983mmYDCOlcS98eN6PlVKTpXbazx9gBQ9fG51Cix4Xyrm5hNJeWbhKtt4emCL6rTqf6jc0RZY3DKPgw==
+    dependencies:
+      "@types/node" "*"
+      "@types/request" "*"
+  
   "@types/stack-utils@^1.0.1":
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
     integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
+  
+  "@types/tough-cookie@*":
+    version "2.3.5"
+    resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
+    integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
   
   "@types/uuid@^3.4.4":
     version "3.4.4"
@@ -1621,6 +1671,11 @@ Lockfile:
     version "6.2.0"
     resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
     integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
+  
+  dotenv@^8.0.0:
+    version "8.0.0"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.0.0.tgz#ed310c165b4e8a97bb745b0a9d99c31bda566440"
+    integrity sha512-30xVGqjLjiUOArT4+M5q9sYdvuR4riM6yK9wMcas9Vbp6zZa+ocC9dp6QoftuhTPhFAiLK/0C5Ni2nou/Bk8lg==
   
   duplexer3@^0.1.4:
     version "0.1.4"
@@ -3308,7 +3363,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
     integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
   
-  lodash@^4.17.11, lodash@^4.17.4:
+  lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.4:
     version "4.17.11"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
     integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -4339,7 +4394,7 @@ Lockfile:
       stealthy-require "^1.1.1"
       tough-cookie "^2.3.3"
   
-  request@^2.87.0:
+  request@^2.79.0, request@^2.87.0:
     version "2.88.0"
     resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
     integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -4656,6 +4711,14 @@ Lockfile:
     version "0.6.1"
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
     integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
+  
+  sparkpost@^2.1.3:
+    version "2.1.3"
+    resolved "https://registry.yarnpkg.com/sparkpost/-/sparkpost-2.1.3.tgz#9e5311398397cc465caf85f41b9db9104260bad9"
+    integrity sha512-/Xc+e457Aortj2uUmCCeiNhdPca1FR8ONgACMglj5ZGYzpRgOAbsG8kjIC69Ir5El8tWnehjaSuKyC0EMcrwWA==
+    dependencies:
+      lodash "^4.17.2"
+      request "^2.79.0"
   
   spdx-correct@^3.0.0:
     version "3.1.0"
@@ -5384,6 +5447,11 @@ Lockfile:
     integrity sha512-Ba5m9/Fa4Xt9eb2ELXt77JxVDV8w7qQrH0zS/TWSJdLyAwQjWoOzpzj5lwVftDz6n/EOu3tNACS84v509qwnJA==
     dependencies:
       string-width "^2.1.1"
+  
+  win-node-env@^0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/win-node-env/-/win-node-env-0.4.0.tgz#2d9dc991702920c73eaa1d644655b773886da5cb"
+    integrity sha512-bf4TV/NOBEazlHJW/bOns7u2JaHe3f5bz8BYanm/xuqJ405NG9OK3VAI1Y2WvHJsAo4GMU8EYTHSh59Q3UfHvA==
   
   wordwrap@~0.0.2:
     version "0.0.3"
