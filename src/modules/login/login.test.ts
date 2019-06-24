@@ -1,76 +1,55 @@
-import { request } from "graphql-request";
 import { invalidLogin, confirmedEmailError } from "./errorMessages";
 import { User } from "../../entity/User";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { Connection } from "typeorm";
+import { TestClient } from "../../utils/testClient";
 
 const email = "tom@bob.com";
 const password = "jalksdf";
 
-const registerMutation = (e: string, p: string) => `
-mutation {
-  register(email: "${e}", password: "${p}") {
-    path
-    message
-  }
-}
-`;
-
-const loginMutation = (e: string, p: string) => `
-mutation {
-  login(email: "${e}", password: "${p}") {
-    path
-    message
-  }
-}
-`;
-
 let conn: Connection;
 beforeAll(async () => {
-	conn = await createTypeormConn();
+  conn = await createTypeormConn();
 });
 afterAll(async () => {
-	conn.close();
+  conn.close();
 });
 
-const loginExpectError = async (e: string, p: string, errMsg: string) => {
-	const response = await request(
-		process.env.TEST_HOST as string,
-		loginMutation(e, p)
-	);
-
-	expect(response).toEqual({
-		login: [
-			{
-				path: "email",
-				message: errMsg
-			}
-		]
-	});
+const loginExpectError = async (
+  client: any,
+  e: string,
+  p: string,
+  errMsg: string
+) => {
+  const response = await client.login(e, p);
+  expect(response.data).toEqual({
+    login: [
+      {
+        path: "email",
+        message: errMsg
+      }
+    ]
+  });
 };
 
 describe("login", () => {
-	test("email not found send back error", async () => {
-		await loginExpectError("bob@bob.com", "whatever", invalidLogin);
-	});
+  test("email not found send back error", async () => {
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await loginExpectError(client, "bob@bob.com", "whatever", invalidLogin);
+  });
 
-	test("email not confirmed", async () => {
-		await request(
-			process.env.TEST_HOST as string,
-			registerMutation(email, password)
-		);
+  test("email not confirmed", async () => {
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.register(email, password);
 
-		await loginExpectError(email, password, confirmedEmailError);
+    await loginExpectError(client, email, password, confirmedEmailError);
 
-		await User.update({ email }, { confirmed: true });
+    await User.update({ email }, { confirmed: true });
 
-		await loginExpectError(email, "aslkdfjaksdljf", invalidLogin);
+    await loginExpectError(client, email, "aslkdfjaksdljf", invalidLogin);
 
-		const response = await request(
-			process.env.TEST_HOST as string,
-			loginMutation(email, password)
-		);
+    const response = await client.login(email, password);
 
-		expect(response).toEqual({ login: null });
-	});
+    expect(response.data).toEqual({ login: null });
+  });
 });

@@ -22,24 +22,36 @@ afterAll(async () => {
   conn.close();
 });
 
-describe("me query", () => {
-  test("return null if no cookie", async () => {
-    const client = new TestClient(process.env.TEST_HOST as string);
-    const response = await client.me();
+describe("logout", () => {
+  test("multiple sessions", async () => {
+    // computer 1
+    const sess1 = new TestClient(process.env.TEST_HOST as string);
+    // computer 2
+    const sess2 = new TestClient(process.env.TEST_HOST as string);
 
-    expect(response.data.me).toBeNull();
+    await sess1.login(email, password);
+    await sess2.login(email, password);
+
+    expect(await sess1.me()).toEqual(await sess2.me());
+
+    await sess1.logout();
+    expect(await sess1.me()).toEqual(await sess2.me());
   });
-
-  test("gets current user", async () => {
+  test("single session - logs out a user", async () => {
     const client = new TestClient(process.env.TEST_HOST as string);
+
     await client.login(email, password);
     const response = await client.me();
-
     expect(response.data).toEqual({
       me: {
         id: userId,
         email
       }
     });
+
+    await client.logout();
+    const response2 = await client.me();
+
+    expect(response2.data.me).toBeNull();
   });
 });

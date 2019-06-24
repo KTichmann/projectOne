@@ -3,10 +3,10 @@ import { User } from "../../entity/User";
 import { createMiddleware } from "../../utils/createMiddleware";
 import middleware from "./middleware";
 
-export const resovers: ResolverMap = {
-	Query: {
-		me: createMiddleware(middleware, (_, __, { session }) =>
-			User.findOne({ where: { id: session.userId } })
-		)
-	}
+export const resolvers: ResolverMap = {
+  Query: {
+    me: createMiddleware(middleware, (_, __, { session }) => {
+      return User.findOne({ where: { id: session.userId } });
+    })
+  }
 };

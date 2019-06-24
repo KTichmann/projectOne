@@ -1,48 +1,65 @@
 import * as bcrypt from "bcryptjs";
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
-import { invalidLogin, confirmedEmailError } from "./errorMessages";
+import {
+  invalidLogin,
+  confirmedEmailError,
+  forgotPasswordLocked
+} from "./errorMessages";
+import { userSessionIdPrefix } from "../../constants";
 
 const errorResponse = [
-	{
-		path: "email",
-		message: invalidLogin
-	}
+  {
+    path: "email",
+    message: invalidLogin
+  }
 ];
 
 export const resolvers: ResolverMap = {
-	Query: {
-		errorFill: () => "bye"
-	},
+  Query: {
+    errorFill: () => "bye"
+  },
 
-	Mutation: {
-		login: async (
-			_,
-			{ email, password }: GQL.ILoginOnMutationArguments,
-			{ session }
-		) => {
-			const user = await User.findOne({ where: { email } });
-			if (!user) {
-				return errorResponse;
-			}
-			const valid = await bcrypt.compare(password, user.password);
-			if (!valid) {
-				return errorResponse;
-			}
-			if (!user.confirmed) {
-				return [
-					{
-						path: "email",
-						message: confirmedEmailError
-					}
-				];
-			}
+  Mutation: {
+    login: async (
+      _,
+      { email, password }: GQL.ILoginOnMutationArguments,
+      { session, redis, req }
+    ) => {
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        return errorResponse;
+      }
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        return errorResponse;
+      }
 
-			// login is successful
-			// create a cookie for the user
-			session.userId = user.id;
+      if (!user.confirmed) {
+        return [
+          {
+            path: "email",
+            message: confirmedEmailError
+          }
+        ];
+      }
 
-			return null;
-		}
-	}
+      if (user.forgotPasswordLocked) {
+        return [
+          {
+            path: "email",
+            message: forgotPasswordLocked
+          }
+        ];
+      }
+      // login is successful
+      // create a cookie for the user
+      session.userId = user.id;
+      if (req.sessionID) {
+        await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
+      }
+
+      return null;
+    }
+  }
 };
