@@ -1,4 +1,3 @@
-import * as bcrypt from "bcryptjs";
 import * as yup from "yup";
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
@@ -49,12 +48,11 @@ export const resolvers: ResolverMap = {
 			if (userAlreadyExists) {
 				return [{ path: "email", message: duplicateEmail }];
 			}
-			// Hash the password
-			const hashedPassword = await bcrypt.hash(password, 10);
+
 			// Create the user object
 			const user = User.create({
 				email,
-				password: hashedPassword
+				password
 			});
 			// Save the user to the db
 			await user.save();

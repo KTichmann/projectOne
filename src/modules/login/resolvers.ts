@@ -16,7 +16,11 @@ export const resolvers: ResolverMap = {
 	},
 
 	Mutation: {
-		login: async (_, { email, password }: GQL.ILoginOnMutationArguments) => {
+		login: async (
+			_,
+			{ email, password }: GQL.ILoginOnMutationArguments,
+			{ session }
+		) => {
 			const user = await User.findOne({ where: { email } });
 			if (!user) {
 				return errorResponse;
@@ -33,6 +37,10 @@ export const resolvers: ResolverMap = {
 					}
 				];
 			}
+
+			// login is successful
+			// create a cookie for the user
+			session.userId = user.id;
 
 			return null;
 		}
