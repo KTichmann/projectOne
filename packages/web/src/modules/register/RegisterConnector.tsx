@@ -1,5 +1,4 @@
 import * as React from "react";
+import { RegisterView } from "./views/RegisterView";
 
-export const RegisterConnector = () => (
-	<div>This is the register connector</div>
-);
+export const RegisterConnector = () => <RegisterView />;
