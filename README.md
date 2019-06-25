@@ -1,7 +1,6 @@
-# Awesome Project Build with TypeORM
+# Template Server built using ts, gql, and typeorm
 
-Steps to run this project:
+## Setup
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+- Two postgres databases - one for testing, one for development - change names & password/un in ormconfig.json
+- Redis
