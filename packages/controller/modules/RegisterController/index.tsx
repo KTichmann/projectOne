@@ -1,4 +1,6 @@
 import * as React from "react";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
 
 interface Props {
 	children: (data: {
@@ -16,3 +18,12 @@ export class RegisterController extends React.PureComponent<Props> {
 		return this.props.children({ submit: this.submit });
 	}
 }
+
+const RegisterMutation = gql(`
+    mutation($email: String!, $password: String!){
+        login(email: "", password: ""){
+            path,
+            message
+        }
+    }
+`);
