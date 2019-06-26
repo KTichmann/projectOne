@@ -47,22 +47,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import * as React from "react";
-var RegisterController = /** @class */ (function (_super) {
-    __extends(RegisterController, _super);
-    function RegisterController() {
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+var C = /** @class */ (function (_super) {
+    __extends(C, _super);
+    function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
+            var response;
             return __generator(this, function (_a) {
-                console.log(values);
-                return [2 /*return*/, null];
+                switch (_a.label) {
+                    case 0:
+                        console.log(values);
+                        return [4 /*yield*/, this.props.mutate({
+                                variables: values
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        console.log("response: ", response);
+                        return [2 /*return*/, null];
+                }
             });
         }); };
         return _this;
     }
-    RegisterController.prototype.render = function () {
+    C.prototype.render = function () {
         return this.props.children({ submit: this.submit });
     };
-    return RegisterController;
+    return C;
 }(React.PureComponent));
-export { RegisterController };
+var registerMutation = gql("\n    mutation RegisterMutation($email: String!, $password: String!){\n        register(email: $email, password: $password){\n            path,\n            message\n        }\n    }\n");
+export var RegisterController = graphql(registerMutation)(C);
 //# sourceMappingURL=index.js.map

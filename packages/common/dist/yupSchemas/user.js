@@ -5,6 +5,11 @@ exports.duplicateEmail = "already taken";
 exports.emailNotLongEnough = "email must be at least 3 characters";
 exports.invalidEmail = "email must be a valid email";
 exports.passwordNotLongEnough = "password must be at least 3 characters";
+exports.registerPasswordValidation = yup
+    .string()
+    .min(3, exports.passwordNotLongEnough)
+    .max(255)
+    .required();
 exports.validUserSchema = yup.object().shape({
     email: yup
         .string()
@@ -12,10 +17,6 @@ exports.validUserSchema = yup.object().shape({
         .max(255)
         .email(exports.invalidEmail)
         .required(),
-    password: yup
-        .string()
-        .min(3, exports.passwordNotLongEnough)
-        .max(255)
-        .required()
+    password: exports.registerPasswordValidation
 });
 //# sourceMappingURL=user.js.map
