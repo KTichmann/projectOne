@@ -1,24 +1,10 @@
-import * as yup from "yup";
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
 import { formatYupError } from "../../utils/formatYupError";
-import {
-	duplicateEmail,
-	emailNotLongEnough,
-	invalidEmail
-} from "./errorMessages";
+import { duplicateEmail } from "./errorMessages";
 import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 import { sendEmail } from "../../utils/sendEmail";
-import { registerPasswordValidation } from "../../yupSchemas";
-
-const schema = yup.object().shape({
-	email: yup
-		.string()
-		.min(3, emailNotLongEnough)
-		.max(255)
-		.email(invalidEmail),
-	password: registerPasswordValidation
-});
+import { validUserSchema } from "@abb/common";
 
 export const resolvers: ResolverMap = {
 	Query: {
@@ -32,7 +18,7 @@ export const resolvers: ResolverMap = {
 			{ redis, url }
 		) => {
 			try {
-				await schema.validate(args, { abortEarly: false });
+				await validUserSchema.validate(args, { abortEarly: false });
 			} catch (err) {
 				return formatYupError(err);
 			}
