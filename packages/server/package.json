@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "Awesome project developed with TypeORM.",
   "devDependencies": {
+    "@gql2ts/types": "^1.9.0",
+    "@types/aws-lambda": "^8.10.27",
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-redis": "^0.0.10",
     "@types/express": "^4.17.0",
@@ -15,6 +17,7 @@
     "@types/request-promise": "^4.1.44",
     "@types/sparkpost": "^2.1.4",
     "@types/uuid": "^3.4.4",
+    "@types/ws": "^6.0.1",
     "@types/yup": "^0.26.16",
     "copyfiles": "^2.1.0",
     "gql2ts": "^1.10.1",
@@ -25,7 +28,8 @@
     "ts-node": "3.3.0",
     "tslint": "^5.17.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.3333",
+    "win-node-env": "^0.4.0"
   },
   "dependencies": {
     "@abb/common": "1.0.0",
