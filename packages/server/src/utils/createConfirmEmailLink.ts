@@ -1,16 +1,19 @@
 import { v4 } from "uuid";
-import { Redis } from "ioredis";
+import { Db } from "mongodb";
 
 export const createConfirmEmailLink = async (
-  url: string,
-  userId: string,
-  redis: Redis
+	url: string,
+	userId: string,
+	mongo: Db
 ) => {
-  const id = v4();
+	const id = v4();
 
-  await redis.set(id, userId, "ex", 60 * 60 * 24); //Works on linux - expiry time set
+	const collection = mongo.collection("userVerification");
+	await collection.insertOne({ createdAt: new Date(), id, userId });
 
-  // await redis.set(id, userId); // Windows redis doesn't accept more than 2 args
+	// await redis.set(id, userId, "ex", 60 * 60 * 24); //Works on linux - expiry time set
 
-  return `${url}/confirm/${id}`;
+	// await redis.set(id, userId); // Windows redis doesn't accept more than 2 args
+
+	return `${url}/confirm/${id}`;
 };

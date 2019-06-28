@@ -15,7 +15,7 @@ export const resolvers: ResolverMap = {
 		register: async (
 			_,
 			args: GQL.IRegisterOnMutationArguments,
-			{ redis, url }
+			{ mongo, url }
 		) => {
 			try {
 				await validUserSchema.validate(args, { abortEarly: false });
@@ -43,7 +43,7 @@ export const resolvers: ResolverMap = {
 			if (process.env.NODE_ENV !== "test") {
 				await sendEmail(
 					email,
-					await createConfirmEmailLink(url, user.id, redis)
+					await createConfirmEmailLink(url, user.id, mongo)
 				);
 			}
 
