@@ -6,7 +6,6 @@ import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
 import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
 import { User } from "../../entity/User";
 import { userNotFoundError, expiredKeyError } from "./errorMessages";
-import { forgotPasswordPrefix } from "../../constants";
 import { registerPasswordValidation } from "../../yupSchemas";
 import { formatYupError } from "../../utils/formatYupError";
 
@@ -26,15 +25,15 @@ export const resolvers: ResolverMap = {
 		sendForgotPasswordEmail: async (
 			_,
 			{ email }: GQL.ISendForgotPasswordEmailOnMutationArguments,
-			{ redis }
+			{ mongo }
 		) => {
 			const user = await User.findOne({ where: { email } });
 			if (!user) {
 				return [{ path: "email", message: userNotFoundError }];
 			}
-			await forgotPasswordLockAccount(user.id, redis);
+			await forgotPasswordLockAccount(user.id);
 			// @todo add frontend url
-			await createForgotPasswordLink("", user.id, redis);
+			await createForgotPasswordLink("", user.id, mongo);
 
 			// @todo send email with the url
 			return true;
@@ -42,11 +41,11 @@ export const resolvers: ResolverMap = {
 		forgotPasswordChange: async (
 			_,
 			{ newPassword, key }: GQL.IForgotPasswordChangeOnMutationArguments,
-			{ redis }
+			{ mongo }
 		) => {
-			const redisKey = `${forgotPasswordPrefix}${key}`;
-			const userId = await redis.get(redisKey);
-			if (!userId) {
+			const collection = mongo.collection("forgotPassword");
+			const forgotPasswordObj = await collection.findOne({ id: key });
+			if (!forgotPasswordObj) {
 				return [
 					{
 						path: "key",
@@ -54,6 +53,7 @@ export const resolvers: ResolverMap = {
 					}
 				];
 			}
+			const userId = forgotPasswordObj.userId;
 
 			try {
 				await schema.validate({ newPassword }, { abortEarly: true });
@@ -70,7 +70,7 @@ export const resolvers: ResolverMap = {
 				}
 			);
 
-			const deleteKeyPromise = redis.del(redisKey);
+			const deleteKeyPromise = collection.deleteOne({ id: key });
 
 			await Promise.all([updatePromise, deleteKeyPromise]);
 

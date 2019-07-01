@@ -1,18 +1,15 @@
 import * as session from "express-session";
-import * as connectRedis from "connect-redis";
-// import * as RateLimit from "express-rate-limit";
-// import * as RateLimitRedisStore from "rate-limit-redis";
+import * as connectMongo from "connect-mongo";
 
 import { GraphQLServer } from "graphql-yoga";
 import { createTypeormConn } from "./utils/createTypeormConn";
-import { redis } from "./redis";
 import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
-import { redisSessionPrefix } from "./constants";
 import { MongoDb } from "./utils/mongoDb";
 
 const SESSION_SECRET = "asdfj;124;hae[0u2q45nasdf1234";
-const RedisStore = connectRedis(session);
+const MongoStore = connectMongo(session);
+const MONGO_URL = process.env.MONGO_URL;
 
 export const startServer = async () => {
 	const mongo = await MongoDb();
@@ -22,28 +19,24 @@ export const startServer = async () => {
 		schema: genSchema(),
 		context: ({ request }) => ({
 			mongo,
-			redis,
 			url: request.protocol + "://" + request.get("host"),
 			session: request.session,
 			req: request
 		})
 	});
 
-	// server.express.use(
-	// 	new RateLimit({
-	// 		store: new RateLimitRedisStore({
-	// 			client: redis
-	// 		}),
-	// 		windowMs: 15 * 60 * 1000,
-	// 		max: 100
-	// 	})
-	// );
+	// const limiter = RateLimit({
+	// 	store: new RateLimitMongoStore({ uri: MONGO_URL }),
+	// 	max: 100,
+	// 	windowMs: 15 * 60 * 1000
+	// });
+	// server.express.use(limiter);
 
 	server.express.use(
 		session({
-			store: new RedisStore({
-				client: redis as any,
-				prefix: redisSessionPrefix
+			store: new MongoStore({
+				url: MONGO_URL as string,
+				stringify: false
 			}),
 			name: "tid",
 			secret: SESSION_SECRET,

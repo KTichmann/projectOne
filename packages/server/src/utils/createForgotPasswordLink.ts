@@ -1,17 +1,15 @@
 import { v4 } from "uuid";
-import { Redis } from "ioredis";
-import { forgotPasswordPrefix } from "../constants";
+import { Db } from "mongodb";
 
 export const createForgotPasswordLink = async (
 	url: string,
 	userId: string,
-	redis: Redis
+	mongo: Db
 ) => {
 	const id = v4();
 
-	await redis.set(`${forgotPasswordPrefix}${id}`, userId, "ex", 60 * 20); // Works on linux - expiry time set
-
-	// await redis.set(`${forgotPasswordPrefix}${id}`, userId); // Windows redis doesn't accept more than 2 args
+	const collection = mongo.collection("forgotPassword");
+	await collection.insertOne({ createdAt: new Date(), id, userId });
 
 	return `${url}/change-password/${id}`;
 };
