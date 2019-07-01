@@ -48,7 +48,7 @@
     "database": "d141dkj0hq45pj",
     "synchronize": true,
     "logging": false,
-    "entities": ["src/entity/**/*.js"],
+    "entities": ["dist/entity/**/*.js"],
     "migrations": ["src/migration/**/*.js"],
     "subscribers": ["src/subscriber/**/*.js"],
     "cli": {
