@@ -8,11 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Redis = require("ioredis");
 const createTypeormConn_1 = require("../../utils/createTypeormConn");
 const User_1 = require("../../entity/User");
 const testClient_1 = require("../../utils/testClient");
-const createForgotPasswordLink_1 = require("../../utils/createForgotPasswordLink");
 const forgotPasswordLockAccount_1 = require("../../utils/forgotPasswordLockAccount");
 const errorMessages_1 = require("../login/errorMessages");
 const errorMessages_2 = require("../register/errorMessages");
@@ -21,7 +19,6 @@ const password = "testing";
 const newPassword = "newPassword";
 let conn;
 let userId;
-const redis = new Redis();
 beforeAll(() => __awaiter(this, void 0, void 0, function* () {
     conn = yield createTypeormConn_1.createTypeormConn();
     const user = yield User_1.User.create({
@@ -37,8 +34,8 @@ afterAll(() => __awaiter(this, void 0, void 0, function* () {
 describe("forgot password", () => {
     test("works", () => __awaiter(this, void 0, void 0, function* () {
         const client = new testClient_1.TestClient(process.env.TEST_HOST);
-        const url = yield createForgotPasswordLink_1.createForgotPasswordLink("", userId, redis);
-        yield forgotPasswordLockAccount_1.forgotPasswordLockAccount(userId, redis);
+        const url = "CHANGE";
+        yield forgotPasswordLockAccount_1.forgotPasswordLockAccount(userId);
         const parts = url.split("/");
         const key = parts[parts.length - 1];
         expect(yield client.login(email, password)).toEqual({

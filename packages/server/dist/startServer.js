@@ -9,38 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const session = require("express-session");
-const connectRedis = require("connect-redis");
-const RateLimit = require("express-rate-limit");
-const RateLimitRedisStore = require("rate-limit-redis");
+const connectMongo = require("connect-mongo");
 const graphql_yoga_1 = require("graphql-yoga");
 const createTypeormConn_1 = require("./utils/createTypeormConn");
-const redis_1 = require("./redis");
 const confirmEmail_1 = require("./routes/confirmEmail");
 const genSchema_1 = require("./utils/genSchema");
-const constants_1 = require("./constants");
+const mongoDb_1 = require("./utils/mongoDb");
 const SESSION_SECRET = "asdfj;124;hae[0u2q45nasdf1234";
-const RedisStore = connectRedis(session);
+const MongoStore = connectMongo(session);
+const MONGO_URL = process.env.MONGO_URL;
 exports.startServer = () => __awaiter(this, void 0, void 0, function* () {
+    const mongo = yield mongoDb_1.MongoDb();
     const server = new graphql_yoga_1.GraphQLServer({
         schema: genSchema_1.genSchema(),
         context: ({ request }) => ({
-            redis: redis_1.redis,
+            mongo,
             url: request.protocol + "://" + request.get("host"),
             session: request.session,
             req: request
         })
     });
-    server.express.use(new RateLimit({
-        store: new RateLimitRedisStore({
-            client: redis_1.redis
-        }),
-        windowMs: 15 * 60 * 1000,
-        max: 100
-    }));
     server.express.use(session({
-        store: new RedisStore({
-            client: redis_1.redis,
-            prefix: constants_1.redisSessionPrefix
+        store: new MongoStore({
+            url: MONGO_URL,
+            stringify: false
         }),
         name: "tid",
         secret: SESSION_SECRET,
@@ -58,7 +50,7 @@ exports.startServer = () => __awaiter(this, void 0, void 0, function* () {
             ? "*"
             : process.env.FRONTEND_HOST
     };
-    server.express.get("/confirm/:id", confirmEmail_1.confirmEmail);
+    server.express.get("/confirm/:id", (req, res) => confirmEmail_1.confirmEmail(req, res, mongo));
     yield createTypeormConn_1.createTypeormConn();
     const app = yield server.start({
         cors,

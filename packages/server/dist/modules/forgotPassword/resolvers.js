@@ -14,7 +14,6 @@ const createForgotPasswordLink_1 = require("../../utils/createForgotPasswordLink
 const forgotPasswordLockAccount_1 = require("../../utils/forgotPasswordLockAccount");
 const User_1 = require("../../entity/User");
 const errorMessages_1 = require("./errorMessages");
-const constants_1 = require("../../constants");
 const yupSchemas_1 = require("../../yupSchemas");
 const formatYupError_1 = require("../../utils/formatYupError");
 const schema = yup.object().shape({
@@ -25,19 +24,19 @@ exports.resolvers = {
         dummy: () => "bye"
     },
     Mutation: {
-        sendForgotPasswordEmail: (_, { email }, { redis }) => __awaiter(this, void 0, void 0, function* () {
+        sendForgotPasswordEmail: (_, { email }, { mongo }) => __awaiter(this, void 0, void 0, function* () {
             const user = yield User_1.User.findOne({ where: { email } });
             if (!user) {
                 return [{ path: "email", message: errorMessages_1.userNotFoundError }];
             }
-            yield forgotPasswordLockAccount_1.forgotPasswordLockAccount(user.id, redis);
-            yield createForgotPasswordLink_1.createForgotPasswordLink("", user.id, redis);
+            yield forgotPasswordLockAccount_1.forgotPasswordLockAccount(user.id);
+            yield createForgotPasswordLink_1.createForgotPasswordLink("", user.id, mongo);
             return true;
         }),
-        forgotPasswordChange: (_, { newPassword, key }, { redis }) => __awaiter(this, void 0, void 0, function* () {
-            const redisKey = `${constants_1.forgotPasswordPrefix}${key}`;
-            const userId = yield redis.get(redisKey);
-            if (!userId) {
+        forgotPasswordChange: (_, { newPassword, key }, { mongo }) => __awaiter(this, void 0, void 0, function* () {
+            const collection = mongo.collection("forgotPassword");
+            const forgotPasswordObj = yield collection.findOne({ id: key });
+            if (!forgotPasswordObj) {
                 return [
                     {
                         path: "key",
@@ -45,6 +44,7 @@ exports.resolvers = {
                     }
                 ];
             }
+            const userId = forgotPasswordObj.userId;
             try {
                 yield schema.validate({ newPassword }, { abortEarly: true });
             }
@@ -56,7 +56,7 @@ exports.resolvers = {
                 forgotPasswordLocked: false,
                 password: hashedPassword
             });
-            const deleteKeyPromise = redis.del(redisKey);
+            const deleteKeyPromise = collection.deleteOne({ id: key });
             yield Promise.all([updatePromise, deleteKeyPromise]);
             return null;
         })

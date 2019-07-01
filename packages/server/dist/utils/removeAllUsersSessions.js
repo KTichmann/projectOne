@@ -8,13 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = require("../constants");
-exports.removeAllUsersSessions = (userId, redis) => __awaiter(this, void 0, void 0, function* () {
-    const sessionIds = yield redis.lrange(`${constants_1.userSessionIdPrefix}${userId}`, 0, -1);
-    const promises = [];
-    for (const sessionId of sessionIds) {
-        promises.push(redis.del(`${constants_1.redisSessionPrefix}${sessionId}`));
-    }
-    yield Promise.all(promises);
+const mongoDb_1 = require("./mongoDb");
+exports.removeAllUsersSessions = (userId) => __awaiter(this, void 0, void 0, function* () {
+    const db = yield mongoDb_1.MongoDb("test");
+    yield db.collection("sessions").deleteMany({ "session.userId": userId });
 });
 //# sourceMappingURL=removeAllUsersSessions.js.map

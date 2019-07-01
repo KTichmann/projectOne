@@ -9,13 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../entity/User");
-const redis_1 = require("../redis");
-exports.confirmEmail = (req, res) => __awaiter(this, void 0, void 0, function* () {
+exports.confirmEmail = (req, res, mongo) => __awaiter(this, void 0, void 0, function* () {
+    const collection = mongo.collection("userVerification");
     const { id } = req.params;
-    const userId = yield redis_1.redis.get(id);
+    const cursor = yield collection.find({ id: { $eq: id } });
+    const docArr = yield cursor.toArray();
+    const userId = docArr[0].userId;
     if (userId) {
         yield User_1.User.update({ id: userId }, { confirmed: true });
-        yield redis_1.redis.del(id);
+        yield collection.remove({ userId: { $eq: userId } }, { single: true });
         res.send("ok");
     }
     else {

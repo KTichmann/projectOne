@@ -8,10 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const removeAllUsersSessions_1 = require("./removeAllUsersSessions");
-const User_1 = require("../entity/User");
-exports.forgotPasswordLockAccount = (userId) => __awaiter(this, void 0, void 0, function* () {
-    yield User_1.User.update({ id: userId }, { forgotPasswordLocked: true });
-    yield removeAllUsersSessions_1.removeAllUsersSessions(userId);
+const mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
+const MONGO_DB_PASS = process.env.MONGO_DB_PASS;
+const url = `mongodb+srv://admin:${MONGO_DB_PASS}@abb-9svkf.mongodb.net/test?retryWrites=true&w=majority`;
+exports.MongoDb = (db = "abbproject") => __awaiter(this, void 0, void 0, function* () {
+    const client = yield MongoClient.connect(url, { useNewUrlParser: true });
+    return client.db(db);
 });
-//# sourceMappingURL=forgotPasswordLockAccount.js.map
+//# sourceMappingURL=mongoDb.js.map

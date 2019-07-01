@@ -8,13 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Redis = require("ioredis");
 const node_fetch_1 = require("node-fetch");
 const createConfirmEmailLink_1 = require("./createConfirmEmailLink");
 const createTypeormConn_1 = require("./createTypeormConn");
 const User_1 = require("../entity/User");
+const mongoDb_1 = require("./mongoDb");
 let userId;
-const redis = new Redis();
 beforeAll(() => __awaiter(this, void 0, void 0, function* () {
     yield createTypeormConn_1.createTypeormConn();
     const user = yield User_1.User.create({
@@ -25,16 +24,13 @@ beforeAll(() => __awaiter(this, void 0, void 0, function* () {
 }));
 describe("createConfirmEmailLink works", () => {
     test("confirms user and clears key in redis", () => __awaiter(this, void 0, void 0, function* () {
-        const url = yield createConfirmEmailLink_1.createConfirmEmailLink(process.env.TEST_HOST, userId, redis);
+        const mongo = yield mongoDb_1.MongoDb();
+        const url = yield createConfirmEmailLink_1.createConfirmEmailLink(process.env.TEST_HOST, userId, mongo);
         const response = yield node_fetch_1.default(url);
         const text = yield response.text();
         expect(text).toEqual("ok");
         const user = yield User_1.User.findOne({ where: { id: userId } });
         expect(user.confirmed).toBeTruthy();
-        const chunks = url.split("/");
-        const key = chunks[chunks.length - 1];
-        const value = yield redis.get(key);
-        expect(value).toBeNull();
     }));
 });
 //# sourceMappingURL=createConfirmEmailLink.test.js.map

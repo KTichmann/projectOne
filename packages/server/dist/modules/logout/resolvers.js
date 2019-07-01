@@ -14,10 +14,10 @@ exports.resolvers = {
         dummy: () => "dummy"
     },
     Mutation: {
-        logout: (_, __, { session, redis }) => __awaiter(this, void 0, void 0, function* () {
+        logout: (_, __, { session }) => __awaiter(this, void 0, void 0, function* () {
             const { userId } = session;
             if (userId) {
-                removeAllUsersSessions_1.removeAllUsersSessions(userId, redis);
+                removeAllUsersSessions_1.removeAllUsersSessions(userId);
                 return true;
             }
             return false;

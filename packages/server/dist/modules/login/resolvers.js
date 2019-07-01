@@ -11,7 +11,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require("bcryptjs");
 const User_1 = require("../../entity/User");
 const errorMessages_1 = require("./errorMessages");
-const constants_1 = require("../../constants");
 const errorResponse = [
     {
         path: "email",
@@ -23,7 +22,7 @@ exports.resolvers = {
         errorFill: () => "bye"
     },
     Mutation: {
-        login: (_, { email, password }, { session, redis, req }) => __awaiter(this, void 0, void 0, function* () {
+        login: (_, { email, password }, { session }) => __awaiter(this, void 0, void 0, function* () {
             const user = yield User_1.User.findOne({ where: { email } });
             if (!user) {
                 return errorResponse;
@@ -49,9 +48,6 @@ exports.resolvers = {
                 ];
             }
             session.userId = user.id;
-            if (req.sessionID) {
-                yield redis.lpush(`${constants_1.userSessionIdPrefix}${user.id}`, req.sessionID);
-            }
             return null;
         })
     }

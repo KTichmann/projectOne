@@ -19,7 +19,7 @@ exports.resolvers = {
         errorFill: () => "bye"
     },
     Mutation: {
-        register: (_, args, { redis, url }) => __awaiter(this, void 0, void 0, function* () {
+        register: (_, args, { mongo, url }) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield common_1.validUserSchema.validate(args, { abortEarly: false });
             }
@@ -40,7 +40,7 @@ exports.resolvers = {
             });
             yield user.save();
             if (process.env.NODE_ENV !== "test") {
-                yield sendEmail_1.sendEmail(email, yield createConfirmEmailLink_1.createConfirmEmailLink(url, user.id, redis));
+                yield sendEmail_1.sendEmail(email, yield createConfirmEmailLink_1.createConfirmEmailLink(url, user.id, mongo));
             }
             return null;
         })
