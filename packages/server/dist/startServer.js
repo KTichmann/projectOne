@@ -54,9 +54,9 @@ exports.startServer = () => __awaiter(this, void 0, void 0, function* () {
     yield createTypeormConn_1.createTypeormConn();
     const app = yield server.start({
         cors,
-        port: process.env.NODE_ENV === "test" ? 0 : 4000
+        port: process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4000
     });
-    console.log(`Server is running on localhost:${process.env.NODE_ENV === "test" ? 0 : 4000}`);
+    console.log(`Server is running on localhost:${process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4000}`);
     return app;
 });
 //# sourceMappingURL=startServer.js.map
