@@ -4,7 +4,6 @@
 		"packages/*"
 	],
 	"scripts": {
-		"deploy": "cd ./packages/server && yarn build && cd ../../ && git push heroku master",
-		"gp": "git add . && git commit -m $1 && git push"
+		"deploy": "cd ./packages/server && yarn build && git lazy 'deploy to heroku' && cd ../../ && git push heroku master"
 	}
 }
