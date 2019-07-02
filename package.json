@@ -1,6 +1,9 @@
 {
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ]
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"deploy": "cd ./packages/server && yarn build && cd ../../ && git push heroku master"
+	}
 }
