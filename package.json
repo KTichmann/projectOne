@@ -4,6 +4,13 @@
 		"packages/*"
 	],
 	"scripts": {
+		"common:build": "cd ./packages/common && yarn build",
+		"server:build": "cd ./packages/server && yarn build && cd ../../ && yarn common:build",
+		"web:build": "cd ./packages/web && yarn build && cd ../.. && yarn common:build",
 		"deploy": "cd ./packages/server && yarn build && git lazy 'deploy to heroku' && cd ../../ && git push heroku master"
+	},
+	"dependencies": {
+		"lerna": "^3.15.0",
+		"netlify-cli": "^2.11.23"
 	}
 }
