@@ -9,6 +9,11 @@ COPY ./packages/common/package.json ./packages/common/
 RUN npm i -g yarn
 RUN yarn install --production
 
+WORKDIR ./packages/server
+RUN yarn build
+
+WORKDIR /abb
+
 COPY ./packages/server/dist ./packages/server/dist
 COPY ./packages/common/dist ./packages/common/dist
 COPY ./ormconfig.json .
