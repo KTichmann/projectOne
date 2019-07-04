@@ -7,18 +7,19 @@ import {
 	Field,
 	Form as FForm
 } from "formik";
-import { validUserSchema } from "@abb/common";
 import { Link } from "react-router-dom";
+import { loginSchema } from "@abb/common";
 import { InputField } from "../../shared/InputField";
+
 interface FormValues {
 	email: string;
 	password: string;
 }
 interface Props {
-	submit: (values: FormValues) => Promise<FormikErrors<FormValues> | null>;
+	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
-class RegisterViewWithoutFormik extends React.PureComponent<
+class LoginViewWithoutFormik extends React.PureComponent<
 	FormikProps<FormValues> & Props
 > {
 	render() {
@@ -47,11 +48,11 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 							type='primary'
 							htmlType='submit'
 							className='login-form-button'>
-							Register
+							Log In
 						</Button>
 					</Form.Item>
 					<Form.Item>
-						Or <Link to='/login'>login now!</Link>
+						Or <Link to='/register'>register now!</Link>
 					</Form.Item>
 				</div>
 			</FForm>
@@ -59,8 +60,10 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 	}
 }
 
-export const RegisterView = withFormik<Props, FormValues>({
-	validationSchema: validUserSchema,
+export const LoginView = withFormik<Props, FormValues>({
+	validationSchema: loginSchema,
+	validateOnChange: false,
+	validateOnBlur: false,
 	mapPropsToValues: () => ({ email: "", password: "" }),
 	handleSubmit: async (values, { props, setErrors }) => {
 		const errors = await props.submit(values);
@@ -68,4 +71,4 @@ export const RegisterView = withFormik<Props, FormValues>({
 			setErrors(errors);
 		}
 	}
-})(RegisterViewWithoutFormik);
+})(LoginViewWithoutFormik);
