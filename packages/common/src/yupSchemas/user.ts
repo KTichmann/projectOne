@@ -5,11 +5,22 @@ export const emailNotLongEnough = "email must be at least 3 characters";
 export const invalidEmail = "email must be a valid email";
 export const passwordNotLongEnough = "password must be at least 3 characters";
 
-export const registerPasswordValidation = yup
+const userEmail = yup
 	.string()
-	.min(3, passwordNotLongEnough)
-	.max(255)
-	.required();
+	.min(3, "invalid login")
+	.max(255, "invalid login")
+	.email("Please enter a valid email")
+	.required("Email field cannot be empty");
+
+const userPassword = yup
+	.string()
+	.min(3, "invalid login")
+	.max(255, "invalid login")
+	.required("Password field cannot be empty");
+
+export const userEmailSchema = yup.object().shape({
+	email: userEmail
+});
 
 export const validUserSchema = yup.object().shape({
 	email: yup
@@ -18,19 +29,10 @@ export const validUserSchema = yup.object().shape({
 		.max(255)
 		.email(invalidEmail)
 		.required(),
-	password: registerPasswordValidation
+	password: userPassword
 });
 
 export const loginSchema = yup.object().shape({
-	email: yup
-		.string()
-		.min(3, "invalid login")
-		.max(255, "invalid login")
-		.email("Please enter a valid email")
-		.required("Email field cannot be empty"),
-	password: yup
-		.string()
-		.min(3, "invalid login")
-		.max(255, "invalid login")
-		.required("Password field cannot be empty")
+	email: userEmail,
+	password: userPassword
 });
