@@ -1,20 +1,18 @@
 import React from "react";
 import { Form, Icon, Button } from "antd";
 import { withFormik, FormikProps, Field, Form as FForm } from "formik";
-import { validUserSchema } from "@abb/common";
 import { Link } from "react-router-dom";
+import { userEmailSchema } from "@abb/common";
 import { InputField } from "../../shared/InputField";
+
 interface FormValues {
 	email: string;
-	password: string;
 }
 interface Props {
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
-class RegisterViewWithoutFormik extends React.PureComponent<
-	FormikProps<FormValues> & Props
-> {
+class FPV extends React.PureComponent<FormikProps<FormValues> & Props> {
 	render() {
 		return (
 			<FForm style={{ display: "flex", margin: "auto" }}>
@@ -25,27 +23,16 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 						placeholder='Email'
 						component={InputField}
 					/>
-					<Field
-						name='password'
-						prefix={<Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />}
-						placeholder='Password'
-						component={InputField}
-					/>
-					<Form.Item>
-						<Link className='login-form-forgot' to='/forgot-password'>
-							Forgot password
-						</Link>
-					</Form.Item>
 					<Form.Item>
 						<Button
 							type='primary'
 							htmlType='submit'
 							className='login-form-button'>
-							Register
+							Send Password Reset Email
 						</Button>
 					</Form.Item>
 					<Form.Item>
-						Or <Link to='/login'>login now!</Link>
+						Or <Link to='/login'>login</Link>
 					</Form.Item>
 				</div>
 			</FForm>
@@ -53,13 +40,13 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 	}
 }
 
-export const RegisterView = withFormik<Props, FormValues>({
-	validationSchema: validUserSchema,
-	mapPropsToValues: () => ({ email: "", password: "" }),
+export const ForgotPasswordView = withFormik<Props, FormValues>({
+	validationSchema: userEmailSchema,
+	mapPropsToValues: () => ({ email: "" }),
 	handleSubmit: async (values, { props, setErrors }) => {
 		const errors = await props.submit(values);
 		if (errors) {
 			setErrors(errors);
 		}
 	}
-})(RegisterViewWithoutFormik);
+})(FPV);

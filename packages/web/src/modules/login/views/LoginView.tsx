@@ -1,12 +1,6 @@
 import React from "react";
 import { Form, Icon, Button } from "antd";
-import {
-	withFormik,
-	FormikErrors,
-	FormikProps,
-	Field,
-	Form as FForm
-} from "formik";
+import { withFormik, FormikProps, Field, Form as FForm } from "formik";
 import { Link } from "react-router-dom";
 import { loginSchema } from "@abb/common";
 import { InputField } from "../../shared/InputField";
@@ -39,9 +33,9 @@ class LoginViewWithoutFormik extends React.PureComponent<
 						component={InputField}
 					/>
 					<Form.Item>
-						<a className='login-form-forgot' href=''>
+						<Link className='login-form-forgot' to='/forgot-password'>
 							Forgot password
-						</a>
+						</Link>
 					</Form.Item>
 					<Form.Item>
 						<Button
