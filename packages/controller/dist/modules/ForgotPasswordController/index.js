@@ -53,13 +53,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import * as React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { normalizeErrors } from "../../utils/normalizeErrors";
 var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
-            var response, login;
+            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.props.mutate({
@@ -67,11 +66,13 @@ var C = /** @class */ (function (_super) {
                         })];
                     case 1:
                         response = _a.sent();
+                        console.log(response);
                         if (typeof response !== "undefined" &&
-                            typeof response.data !== "undefined" &&
-                            response.data.login) {
-                            login = response.data.login;
-                            return [2 /*return*/, normalizeErrors(login)];
+                            response.data &&
+                            !response.data.sendForgotPasswordEmail) {
+                            return [2 /*return*/, {
+                                    email: "Failed to send email confirmation, please verify that you entered the email correctly and try again."
+                                }];
                         }
                         return [2 /*return*/, null];
                 }
@@ -84,7 +85,7 @@ var C = /** @class */ (function (_super) {
     };
     return C;
 }(React.PureComponent));
-var loginMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation LoginMutation($email: String!, $password: String!) {\n\t\tlogin(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"], ["\n\tmutation LoginMutation($email: String!, $password: String!) {\n\t\tlogin(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"])));
-export var LoginController = graphql(loginMutation)(C);
+var forgotPasswordMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"], ["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"])));
+export var ForgotPasswordController = graphql(forgotPasswordMutation)(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map

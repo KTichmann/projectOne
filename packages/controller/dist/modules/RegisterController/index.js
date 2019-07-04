@@ -11,6 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -49,22 +53,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import * as React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
+import { normalizeErrors } from "../../utils/normalizeErrors";
 var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
-            var response;
+            var response, register;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(values);
-                        return [4 /*yield*/, this.props.mutate({
-                                variables: values
-                            })];
+                    case 0: return [4 /*yield*/, this.props.mutate({
+                            variables: values
+                        })];
                     case 1:
                         response = _a.sent();
-                        console.log("response: ", response);
+                        if (typeof response !== "undefined" &&
+                            typeof response.data !== "undefined" &&
+                            response.data.register) {
+                            register = response.data.register;
+                            return [2 /*return*/, normalizeErrors(register)];
+                        }
                         return [2 /*return*/, null];
                 }
             });
@@ -76,6 +84,7 @@ var C = /** @class */ (function (_super) {
     };
     return C;
 }(React.PureComponent));
-var registerMutation = gql("\n    mutation RegisterMutation($email: String!, $password: String!){\n        register(email: $email, password: $password){\n            path,\n            message\n        }\n    }\n");
+var registerMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"], ["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"])));
 export var RegisterController = graphql(registerMutation)(C);
+var templateObject_1;
 //# sourceMappingURL=index.js.map
