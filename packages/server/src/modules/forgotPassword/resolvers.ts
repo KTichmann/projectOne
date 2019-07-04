@@ -5,7 +5,7 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
 import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
 import { User } from "../../entity/User";
-import { userNotFoundError, expiredKeyError } from "./errorMessages";
+import { expiredKeyError } from "./errorMessages";
 import { registerPasswordValidation } from "../../yupSchemas";
 import { formatYupError } from "../../utils/formatYupError";
 
@@ -29,11 +29,16 @@ export const resolvers: ResolverMap = {
 		) => {
 			const user = await User.findOne({ where: { email } });
 			if (!user) {
-				return [{ path: "email", message: userNotFoundError }];
+				return false;
+				// return [{ path: "email", message: userNotFoundError }];
 			}
 			await forgotPasswordLockAccount(user.id);
-			// @todo add frontend url
-			await createForgotPasswordLink("", user.id, mongo);
+
+			await createForgotPasswordLink(
+				process.env.FRONTEND_HOST as string,
+				user.id,
+				mongo
+			);
 
 			// @todo send email with the url
 			return true;
