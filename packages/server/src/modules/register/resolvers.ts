@@ -43,7 +43,8 @@ export const resolvers: ResolverMap = {
 			if (process.env.NODE_ENV !== "test") {
 				await sendEmail(
 					email,
-					await createConfirmEmailLink(url, user.id, mongo)
+					await createConfirmEmailLink(url, user.id, mongo),
+					"Verify your email address"
 				);
 			}
 

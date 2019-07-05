@@ -3,11 +3,12 @@ import * as bcrypt from "bcryptjs";
 
 import { ResolverMap } from "../../types/graphql-utils";
 import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
-import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
+// import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
 import { User } from "../../entity/User";
 import { expiredKeyError } from "./errorMessages";
 import { registerPasswordValidation } from "../../yupSchemas";
 import { formatYupError } from "../../utils/formatYupError";
+import { sendEmail } from "../../utils/sendEmail";
 
 // 20 minute timeout
 // lock account
@@ -30,17 +31,18 @@ export const resolvers: ResolverMap = {
 			const user = await User.findOne({ where: { email } });
 			if (!user) {
 				return false;
-				// return [{ path: "email", message: userNotFoundError }];
 			}
-			await forgotPasswordLockAccount(user.id);
+			// await forgotPasswordLockAccount(user.id);
 
-			await createForgotPasswordLink(
+			const url = await createForgotPasswordLink(
 				process.env.FRONTEND_HOST as string,
 				user.id,
 				mongo
 			);
 
-			// @todo send email with the url
+			// send email with the url
+			await sendEmail(email, url, "Reset your password here");
+
 			return true;
 		},
 		forgotPasswordChange: async (
@@ -53,7 +55,7 @@ export const resolvers: ResolverMap = {
 			if (!forgotPasswordObj) {
 				return [
 					{
-						path: "key",
+						path: "password",
 						message: expiredKeyError
 					}
 				];

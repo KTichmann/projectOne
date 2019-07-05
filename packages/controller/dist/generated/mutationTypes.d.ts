@@ -6,5 +6,8 @@ export interface RegisterMutation {
     register: Maybe<Error[]>;
 }
 export interface ForgotPasswordEmailMutation {
-    sendForgotPasswordEmail?: Maybe<Scalars["Boolean"]>;
+    sendForgotPasswordEmail: Maybe<Scalars["Boolean"]>;
+}
+export interface ChangePasswordMutation {
+    forgotPasswordChange: Maybe<Error[]>;
 }

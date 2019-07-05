@@ -6,6 +6,9 @@ export declare const passwordNotLongEnough = "password must be at least 3 charac
 export declare const userEmailSchema: yup.ObjectSchema<yup.Shape<object, {
     email: string;
 }>>;
+export declare const userPasswordSchema: yup.ObjectSchema<yup.Shape<object, {
+    password: string;
+}>>;
 export declare const validUserSchema: yup.ObjectSchema<yup.Shape<object, {
     email: string;
     password: string;

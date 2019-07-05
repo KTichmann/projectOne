@@ -22,6 +22,10 @@ export const userEmailSchema = yup.object().shape({
 	email: userEmail
 });
 
+export const userPasswordSchema = yup.object().shape({
+	password: userPassword
+});
+
 export const validUserSchema = yup.object().shape({
 	email: yup
 		.string()

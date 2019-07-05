@@ -1,4 +1,3 @@
-// import * as Redis from "ioredis";
 import { Connection } from "typeorm";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { User } from "../../entity/User";
@@ -13,7 +12,6 @@ const password = "testing";
 const newPassword = "newPassword";
 let conn: Connection;
 let userId: any;
-// const redis = new Redis();
 
 beforeAll(async () => {
 	conn = await createTypeormConn();
