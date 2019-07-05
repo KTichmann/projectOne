@@ -9,6 +9,7 @@ interface FormValues {
 	password: string;
 }
 interface Props {
+	afterSubmit: () => void;
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
@@ -28,6 +29,7 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 					<Field
 						name='password'
 						prefix={<Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />}
+						type='password'
 						placeholder='Password'
 						component={InputField}
 					/>
@@ -61,5 +63,6 @@ export const RegisterView = withFormik<Props, FormValues>({
 		if (errors) {
 			setErrors(errors);
 		}
+		props.afterSubmit();
 	}
 })(RegisterViewWithoutFormik);
