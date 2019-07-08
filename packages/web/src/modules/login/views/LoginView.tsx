@@ -4,6 +4,7 @@ import { withFormik, FormikProps, Field, Form as FForm } from "formik";
 import { Link } from "react-router-dom";
 import { loginSchema } from "@abb/common";
 import { InputField } from "../../shared/InputField";
+import { Container, Wrapper } from "../../shared/InputStyles";
 
 interface FormValues {
 	email: string;
@@ -18,39 +19,41 @@ class LoginViewWithoutFormik extends React.PureComponent<
 > {
 	render() {
 		return (
-			<FForm style={{ display: "flex", margin: "auto" }}>
-				<div className='login-form' style={{ width: 400, margin: "auto" }}>
-					<Field
-						name='email'
-						prefix={<Icon type='user' style={{ color: "rgba(0,0,0,.25)" }} />}
-						placeholder='Email'
-						component={InputField}
-					/>
-					<Field
-						name='password'
-						prefix={<Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />}
-						placeholder='Password'
-						type='password'
-						component={InputField}
-					/>
-					<Form.Item>
-						<Link className='login-form-forgot' to='/forgot-password'>
-							Forgot password
-						</Link>
-					</Form.Item>
-					<Form.Item>
-						<Button
-							type='primary'
-							htmlType='submit'
-							className='login-form-button'>
-							Log In
-						</Button>
-					</Form.Item>
-					<Form.Item>
-						Or <Link to='/register'>register now!</Link>
-					</Form.Item>
-				</div>
-			</FForm>
+			<Wrapper>
+				<FForm style={{ display: "flex", margin: "auto" }}>
+					<Container>
+						<Field
+							name='email'
+							prefix={<Icon type='user' style={{ color: "rgba(0,0,0,.25)" }} />}
+							placeholder='Email'
+							component={InputField}
+						/>
+						<Field
+							name='password'
+							prefix={<Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />}
+							placeholder='Password'
+							type='password'
+							component={InputField}
+						/>
+						<Form.Item>
+							<Link className='login-form-forgot' to='/forgot-password'>
+								Forgot password
+							</Link>
+						</Form.Item>
+						<Form.Item>
+							<Button
+								type='primary'
+								htmlType='submit'
+								className='login-form-button'>
+								Log In
+							</Button>
+						</Form.Item>
+						<Form.Item>
+							Or <Link to='/register'>register now!</Link>
+						</Form.Item>
+					</Container>
+				</FForm>
+			</Wrapper>
 		);
 	}
 }

@@ -10,7 +10,7 @@ export const InputField: React.SFC<
 		<Form.Item
 			help={errMessage}
 			validateStatus={errMessage ? "error" : undefined}>
-			<Input {...field} {...props} />
+			<Input size='large' {...field} {...props} />
 		</Form.Item>
 	);
 };

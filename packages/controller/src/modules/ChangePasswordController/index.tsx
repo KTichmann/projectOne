@@ -29,7 +29,6 @@ class C extends React.PureComponent<
 		if (response && response.data && response.data.forgotPasswordChange) {
 			return normalizeErrors(response.data.forgotPasswordChange);
 		}
-		console.log(response);
 
 		return null;
 	};

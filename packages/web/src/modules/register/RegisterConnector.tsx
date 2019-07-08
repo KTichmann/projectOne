@@ -8,8 +8,10 @@ export class RegisterConnector extends React.PureComponent<
 > {
 	afterSubmit = () => {
 		this.props.history.push("/m/confirm-register", {
-			message:
-				"Thank you for registering, please check your email for a message from us :D"
+			messageTitle: "Registration Successful!",
+			messageText:
+				"Thank you for registering, please check your email for a message from us.",
+			img: "mailbox"
 		});
 	};
 	render() {
