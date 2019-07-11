@@ -4,8 +4,11 @@ import {
   Column,
   BaseEntity,
   PrimaryGeneratedColumn,
-  BeforeInsert
+  BeforeInsert,
+  OneToMany
 } from "typeorm";
+import { Snippet } from "./Snippet";
+import { Comment } from "./Comment";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -19,6 +22,10 @@ export class User extends BaseEntity {
   @Column("boolean", { default: false }) confirmed: boolean;
 
   @Column("boolean", { default: false }) forgotPasswordLocked: boolean;
+
+  @OneToMany(() => Snippet, snippet => snippet.user) snippets: Snippet[];
+
+  @OneToMany(() => Comment, comment => comment.user) comments: Comment[];
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {

@@ -1,0 +1,19 @@
+type Query {
+  getPublicSnippets: Snippet[]
+  getUserSnippets(userId: Number!): Snippet[]
+  getSnippetById(snippetId: Number!): Snippet
+  getSnippetsByTag(tag: String!): Snippet[]
+}
+
+type Mutation {
+  createSnippet(
+	  content: String!, 
+	  language: String!, 
+	  visibility: String!, 
+	  tags: String[], 
+	  user: User!;
+): Snippet
+  updateSnippet(content: String, language: String, visibility: String, tags: String[];
+): Snippet
+  deleteSnippet(snippetId: Number!): Boolean
+}
