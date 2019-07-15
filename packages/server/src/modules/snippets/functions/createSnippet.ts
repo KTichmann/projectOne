@@ -1,0 +1,39 @@
+// import { Snippet } from "../../../entity/Snippet";
+import { validSnippetSchema } from "@abb/common";
+import { formatYupError } from "../../../utils/formatYupError";
+import { Snippet } from "../../../entity/Snippet";
+import { Session } from "../../../types/graphql-utils";
+
+export const createSnippet = async (
+	session: Session,
+	args: GQL.ICreateSnippetOnMutationArguments
+) => {
+	const { content, language, visibility } = args;
+	let { tags } = args;
+
+	try {
+		await validSnippetSchema.validate(args, { abortEarly: false });
+	} catch (err) {
+		return formatYupError(err);
+	}
+
+	const userId = session.userId;
+	if (!userId) {
+		console.log("no user id");
+		return;
+	}
+	if (!tags) {
+		tags = [];
+	}
+	const snippet = Snippet.create({
+		user: userId,
+		visibility,
+		language,
+		content,
+		tags
+	});
+
+	await snippet.save();
+
+	return snippet;
+};

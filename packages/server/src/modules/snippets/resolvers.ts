@@ -1,15 +1,36 @@
 import { ResolverMap } from "../../types/graphql-utils";
 import { Snippet } from "../../entity/Snippet";
+import { createSnippet } from "./functions/createSnippet";
 
 export const resolvers: ResolverMap = {
-  Query: {
-    getPublicSnippets: async () =>
-      await Snippet.find({ where: { visibility: "public" } }),
-    getUserSnippets: async (userId: number) =>
-      await Snippet.find({ where: { user: userId } }),
-    getSnippetById: async (snippetId: number) =>
-      await Snippet.findOne({ where: { id: snippetId } })
-  },
+	Query: {
+		getPublicSnippets: async () => {
+			const res = await Snippet.find({
+				where: { visibility: "public" }
+			});
+			return res;
+		},
+		getUserSnippets: async (userId: string) => {
+			const res = await Snippet.find({
+				where: { userId }
+			});
+			return res;
+		},
+		getSnippetById: async (id: string) => {
+			const res = await Snippet.find({
+				where: { id }
+			});
+			return res;
+		}
+	},
 
-  Mutation: {}
+	Mutation: {
+		createSnippet: (
+			_,
+			args: GQL.ICreateSnippetOnMutationArguments,
+			{ session }
+		) => {
+			return createSnippet(session, args);
+		}
+	}
 };
