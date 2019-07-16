@@ -33,11 +33,11 @@ declare namespace GQL {
   }
 
   interface IGetUserSnippetsOnQueryArguments {
-    userId: number;
+    userId: string;
   }
 
   interface IGetSnippetByIdOnQueryArguments {
-    snippetId: number;
+    snippetId: string;
   }
 
   interface IGetSnippetsByTagOnQueryArguments {
@@ -72,7 +72,6 @@ declare namespace GQL {
     register: Array<IError> | null;
     createSnippet: ISnippet | null;
     updateSnippet: ISnippet | null;
-    deleteSnippet: boolean | null;
   }
 
   interface ISendForgotPasswordEmailOnMutationArguments {
@@ -102,14 +101,11 @@ declare namespace GQL {
   }
 
   interface IUpdateSnippetOnMutationArguments {
+    id: string;
     content?: string | null;
     language?: string | null;
     visibility?: string | null;
-    tags?: Array<string | null> | null;
-  }
-
-  interface IDeleteSnippetOnMutationArguments {
-    snippetId: number;
+    tags?: Array<string> | null;
   }
 
   interface IError {
