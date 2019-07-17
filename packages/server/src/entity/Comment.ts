@@ -1,24 +1,28 @@
 import {
-  Entity,
-  Column,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  ManyToOne
+	Entity,
+	Column,
+	BaseEntity,
+	PrimaryGeneratedColumn,
+	ManyToOne
 } from "typeorm";
 import { User } from "./User";
 import { Snippet } from "./Snippet";
 
 @Entity("comments")
 export class Comment extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid") id: string;
+	@PrimaryGeneratedColumn("uuid") id: string;
 
-  @Column("text")
-  content: string;
+	@Column("text")
+	content: string;
 
-  @Column("date", { default: new Date() })
-  created_at: Date;
+	@Column("timestamp", { default: new Date() })
+	createdAt: Date;
 
-  @ManyToOne(() => User, user => user.comments) user: User;
+	@Column("text")
+	@ManyToOne(() => User, user => user.comments)
+	user: string;
 
-  @ManyToOne(() => Snippet, snippet => snippet.id) snippet: Snippet;
+	@Column("text")
+	@ManyToOne(() => Snippet, snippet => snippet.id)
+	snippet: string;
 }

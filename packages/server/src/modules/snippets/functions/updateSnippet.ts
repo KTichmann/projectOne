@@ -17,26 +17,25 @@ export const updateSnippet = async (
 		return null;
 	}
 
-	// const updatePromise = User.update(
-	//     { id: userId },
-	//     {
-	//         forgotPasswordLocked: false,
-	//         password: hashedPassword
-	//     }
-	// );
+	const snippetToUpdate = await Snippet.findOne(id);
+	if (typeof snippetToUpdate === "undefined") {
+		return null;
+	}
 
-	console.log(test);
-	console.log("for the lint!", content, language, visibility);
+	if (tags.length > 0) {
+		snippetToUpdate.tags = tags;
+	}
+	if (content) {
+		snippetToUpdate.content = content;
+	}
+	if (language) {
+		snippetToUpdate.language = language;
+	}
+	if (visibility) {
+		snippetToUpdate.visibility = visibility;
+	}
 
-	// const snippet = Snippet.create({
-	// 	user: userId,
-	// 	visibility,
-	// // 	language,
-	// // 	content,
-	// // 	tags
-	// // });
+	await Snippet.save(snippetToUpdate);
 
-	// await snippet.save();
-
-	// return snippet;
+	return snippetToUpdate;
 };

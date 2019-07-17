@@ -4,6 +4,7 @@ type Snippet {
 	language: String!
 	tags: [String]
 	user: String!
+	createdAt: String!
 }
 
 type Query {
@@ -27,5 +28,5 @@ type Mutation {
 		visibility: String
 		tags: [String!]
 	): Snippet
-	# deleteSnippet(snippetId: Int!): Boolean
+	deleteSnippet(snippetId: String!): Boolean
 }

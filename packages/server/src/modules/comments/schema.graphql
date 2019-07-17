@@ -1,0 +1,18 @@
+type Comment {
+	id: ID!
+	content: String!
+	user: String!
+	createdAt: String!
+}
+
+type Query {
+	getSnippetComments(snippetId: String!): [Comment]
+	getUserComments(userId: String!): [Comment]
+	getCommentById(commentId: String!): Comment
+}
+
+type Mutation {
+	createComment(snippetId: String!, content: String!): Comment
+	updateComment(commentId: String!, content: String!): Comment
+	deleteComment(commentId: String!): Boolean
+}

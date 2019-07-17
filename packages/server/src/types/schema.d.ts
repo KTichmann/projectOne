@@ -72,6 +72,7 @@ declare namespace GQL {
     register: Array<IError> | null;
     createSnippet: ISnippet | null;
     updateSnippet: ISnippet | null;
+    deleteSnippet: boolean | null;
   }
 
   interface ISendForgotPasswordEmailOnMutationArguments {
@@ -106,6 +107,10 @@ declare namespace GQL {
     language?: string | null;
     visibility?: string | null;
     tags?: Array<string> | null;
+  }
+
+  interface IDeleteSnippetOnMutationArguments {
+    snippetId: string;
   }
 
   interface IError {

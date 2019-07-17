@@ -2,6 +2,7 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { Snippet } from "../../entity/Snippet";
 import { createSnippet } from "./functions/createSnippet";
 import { updateSnippet } from "./functions/updateSnippet";
+import { deleteSnippet } from "./functions/deleteSnippet";
 
 export const resolvers: ResolverMap = {
 	Query: {
@@ -55,6 +56,13 @@ export const resolvers: ResolverMap = {
 			{ session }
 		) => {
 			return updateSnippet(session, args);
+		},
+		deleteSnippet: (
+			_,
+			args: GQL.IDeleteSnippetOnMutationArguments,
+			{ session }
+		) => {
+			return deleteSnippet(session, args);
 		}
 	}
 };

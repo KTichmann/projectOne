@@ -15,7 +15,7 @@ export class Snippet extends BaseEntity {
 	@Column("text")
 	content: string;
 
-	@Column("date", { default: new Date() })
+	@Column("timestamp", { default: new Date() })
 	createdAt: Date;
 
 	@Column("varchar", { length: 255 }) language: string;

@@ -5,7 +5,8 @@ export const userCanEditSnippet = async (snippetId: string, userId: string) => {
 	const userCanEdit = await Snippet.find({
 		where: { id: snippetId }
 	});
-	console.log("userCanEdit: ", userCanEdit[0].user);
-	console.log("userId", userId);
+	if (userCanEdit.length < 1) {
+		return false;
+	}
 	return userCanEdit[0].user === userId;
 };
