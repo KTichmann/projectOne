@@ -22,6 +22,11 @@ declare namespace GQL {
 
   interface IQuery {
     __typename: 'Query';
+    getSnippetComments: Array<IComment | null> | null;
+    getUserComments: Array<IComment | null> | null;
+    getCommentById: IComment | null;
+    getUserFollowers: Array<string> | null;
+    getUserFollowing: Array<string> | null;
     dummy: string | null;
     errorFill: string | null;
     me: IUser | null;
@@ -29,7 +34,26 @@ declare namespace GQL {
     getUserSnippets: Array<ISnippet | null> | null;
     getSnippetById: ISnippet | null;
     getSnippetsByTag: Array<ISnippet | null> | null;
-    hello: string;
+  }
+
+  interface IGetSnippetCommentsOnQueryArguments {
+    snippetId: string;
+  }
+
+  interface IGetUserCommentsOnQueryArguments {
+    userId: string;
+  }
+
+  interface IGetCommentByIdOnQueryArguments {
+    commentId: string;
+  }
+
+  interface IGetUserFollowersOnQueryArguments {
+    userId: string;
+  }
+
+  interface IGetUserFollowingOnQueryArguments {
+    userId: string;
   }
 
   interface IGetUserSnippetsOnQueryArguments {
@@ -44,13 +68,18 @@ declare namespace GQL {
     tag: string;
   }
 
-  interface IHelloOnQueryArguments {
-    name?: string | null;
+  interface IComment {
+    __typename: 'Comment';
+    id: string;
+    content: string;
+    user: string;
+    createdAt: string;
   }
 
   interface IUser {
     __typename: 'User';
     id: string;
+    username: string;
     email: string;
   }
 
@@ -61,18 +90,46 @@ declare namespace GQL {
     language: string;
     tags: Array<string | null> | null;
     user: string;
+    createdAt: string;
   }
 
   interface IMutation {
     __typename: 'Mutation';
+    createComment: CommentOrError | null;
+    updateComment: CommentOrError | null;
+    deleteComment: boolean | null;
+    followUser: Array<IError | null> | null;
+    unfollowUser: Array<IError | null> | null;
     sendForgotPasswordEmail: boolean | null;
     forgotPasswordChange: Array<IError> | null;
     login: Array<IError> | null;
     logout: boolean | null;
     register: Array<IError> | null;
-    createSnippet: ISnippet | null;
-    updateSnippet: ISnippet | null;
+    createSnippet: SnippetOrError | null;
+    updateSnippet: SnippetOrError | null;
     deleteSnippet: boolean | null;
+  }
+
+  interface ICreateCommentOnMutationArguments {
+    snippetId: string;
+    content: string;
+  }
+
+  interface IUpdateCommentOnMutationArguments {
+    commentId: string;
+    content: string;
+  }
+
+  interface IDeleteCommentOnMutationArguments {
+    commentId: string;
+  }
+
+  interface IFollowUserOnMutationArguments {
+    userId: string;
+  }
+
+  interface IUnfollowUserOnMutationArguments {
+    userId: string;
   }
 
   interface ISendForgotPasswordEmailOnMutationArguments {
@@ -92,6 +149,7 @@ declare namespace GQL {
   interface IRegisterOnMutationArguments {
     email: string;
     password: string;
+    username: string;
   }
 
   interface ICreateSnippetOnMutationArguments {
@@ -113,11 +171,21 @@ declare namespace GQL {
     snippetId: string;
   }
 
+  type CommentOrError = IComment | IContentError;
+
+  interface IContentError {
+    __typename: 'ContentError';
+    error: string;
+    message: string;
+  }
+
   interface IError {
     __typename: 'Error';
     path: string;
     message: string;
   }
+
+  type SnippetOrError = ISnippet | IContentError;
 }
 
 // tslint:enable

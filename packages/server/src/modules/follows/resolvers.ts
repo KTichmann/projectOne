@@ -3,22 +3,31 @@ import { Following } from "../../entity/Following";
 
 export const resolvers: ResolverMap = {
 	Query: {
-		getUserFollowers: async (_, { userId }, { session }) => {
+		getUserFollowers: async (
+			_,
+			{ userId }: GQL.IGetUserFollowersOnQueryArguments,
+			{ session }
+		) => {
 			const id = userId || session.userId;
 			const res = await Following.find({ where: { followed: id } });
-
-			console.log(res);
 			return res;
 		},
-		getUserFollowing: async (_, { userId }, { session }) => {
+		getUserFollowing: async (
+			_,
+			{ userId }: GQL.IGetUserFollowingOnQueryArguments,
+			{ session }
+		) => {
 			const id = userId || session.userId;
 			const res = await Following.find({ where: { following: id } });
-			console.log(res);
 			return res;
 		}
 	},
 	Mutation: {
-		followUser: async (_, { userId }, { session }) => {
+		followUser: async (
+			_,
+			{ userId }: GQL.IFollowUserOnMutationArguments,
+			{ session }
+		) => {
 			const followerId = session.userId;
 			if (typeof followerId === "undefined") {
 				return [
@@ -28,7 +37,6 @@ export const resolvers: ResolverMap = {
 					}
 				];
 			}
-			console.log(userId, followerId);
 			const followRelation = await Following.create({
 				followed: userId,
 				following: followerId

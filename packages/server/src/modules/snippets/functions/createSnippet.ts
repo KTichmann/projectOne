@@ -3,6 +3,7 @@ import { validSnippetSchema } from "@abb/common";
 import { formatYupError } from "../../../utils/formatYupError";
 import { Snippet } from "../../../entity/Snippet";
 import { Session } from "../../../types/graphql-utils";
+import { noUser } from "../../../utils/errorMessages";
 
 export const createSnippet = async (
 	session: Session,
@@ -19,8 +20,10 @@ export const createSnippet = async (
 
 	const userId = session.userId;
 	if (!userId) {
-		console.log("no user id");
-		return;
+		return {
+			error: "user",
+			message: noUser
+		};
 	}
 	if (!tags) {
 		tags = [];

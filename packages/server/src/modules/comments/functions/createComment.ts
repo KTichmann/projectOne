@@ -1,6 +1,7 @@
 import { Comment } from "../../../entity/Comment";
 import { Session } from "../../../types/graphql-utils";
 import { Snippet } from "../../../entity/Snippet";
+import { noUser, noSnippet } from "../../../utils/errorMessages";
 
 export const createComment = async (
 	session: Session,
@@ -8,12 +9,12 @@ export const createComment = async (
 ) => {
 	const userId = session.userId;
 	if (!userId) {
-		return null;
+		return { error: "user", message: noUser };
 	}
 
 	const snippetExists = await Snippet.findOne({ where: { id: snippetId } });
 	if (typeof snippetExists === "undefined") {
-		return null;
+		return { error: "snippet", message: noSnippet };
 	}
 
 	const comment = Comment.create({

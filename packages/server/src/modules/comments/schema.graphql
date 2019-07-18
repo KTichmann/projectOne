@@ -1,9 +1,13 @@
+#import ContentError from "../../shared.graphql"
+
 type Comment {
 	id: ID!
 	content: String!
 	user: String!
 	createdAt: String!
 }
+
+union CommentOrError = Comment | ContentError
 
 type Query {
 	getSnippetComments(snippetId: String!): [Comment]
@@ -12,7 +16,7 @@ type Query {
 }
 
 type Mutation {
-	createComment(snippetId: String!, content: String!): Comment
-	updateComment(commentId: String!, content: String!): Comment
+	createComment(snippetId: String!, content: String!): CommentOrError
+	updateComment(commentId: String!, content: String!): CommentOrError
 	deleteComment(commentId: String!): Boolean
 }

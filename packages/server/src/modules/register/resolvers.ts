@@ -1,7 +1,7 @@
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
 import { formatYupError } from "../../utils/formatYupError";
-import { duplicateEmail } from "./errorMessages";
+import { duplicate } from "./errorMessages";
 import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 import { sendEmail } from "../../utils/sendEmail";
 import { validUserSchema } from "@abb/common";
@@ -22,19 +22,29 @@ export const resolvers: ResolverMap = {
 			} catch (err) {
 				return formatYupError(err);
 			}
-			const { email, password } = args;
-			const userAlreadyExists = await User.findOne({
+			const { email, password, username } = args;
+			const userEmailAlreadyExists = await User.findOne({
 				where: { email },
 				select: ["id"]
 			});
 
-			if (userAlreadyExists) {
-				return [{ path: "email", message: duplicateEmail }];
+			if (userEmailAlreadyExists) {
+				return [{ path: "email", message: duplicate }];
+			}
+
+			const usernameAlreadyExists = await User.findOne({
+				where: { username },
+				select: ["id"]
+			});
+
+			if (usernameAlreadyExists) {
+				return [{ path: "username", message: duplicate }];
 			}
 
 			// Create the user object
 			const user = User.create({
 				email,
+				username,
 				password
 			});
 			// Save the user to the db

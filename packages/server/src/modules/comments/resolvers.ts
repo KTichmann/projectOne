@@ -5,35 +5,65 @@ import { createComment } from "./functions/createComment";
 import { deleteComment } from "./functions/deleteComment";
 
 export const resolvers: ResolverMap = {
+	CommentOrError: {
+		__resolveType(obj, _, __) {
+			if (obj.id) {
+				return "Comment";
+			} else {
+				return "ContentError";
+			}
+		}
+	},
 	Query: {
-		getSnippetComments: async (_, { snippetId }) => {
+		getSnippetComments: async (
+			_,
+			{ snippetId }: GQL.IGetSnippetCommentsOnQueryArguments
+		) => {
 			const res = await Comment.find({
 				where: { snippet: snippetId }
 			});
 			return res;
 		},
-		getUserComments: async (_, { userId }) => {
+		getUserComments: async (
+			_,
+			{ userId }: GQL.IGetUserCommentsOnQueryArguments
+		) => {
 			const res = await Comment.find({
 				where: { user: userId }
 			});
 			return res;
 		},
-		getCommentById: async (_, { snippetId }) => {
+		getCommentById: async (
+			_,
+			{ commentId }: GQL.IGetCommentByIdOnQueryArguments
+		) => {
 			const res = await Comment.findOne({
-				where: { snippet: snippetId }
+				where: { snippet: commentId }
 			});
 			return res;
 		}
 	},
 
 	Mutation: {
-		createComment: (_, args: any, { session }) => {
+		createComment: (
+			_,
+			args: GQL.ICreateCommentOnMutationArguments,
+			{ session }
+		) => {
 			return createComment(session, args);
 		},
-		updateComment: (_, args: any, { session }) => {
+		updateComment: (
+			_,
+			args: GQL.IUpdateCommentOnMutationArguments,
+			{ session }
+		) => {
 			return updateComment(session, args);
 		},
-		deleteComment: (_, args: any, { session }) => {
+		deleteComment: (
+			_,
+			args: GQL.IDeleteCommentOnMutationArguments,
+			{ session }
+		) => {
 			return deleteComment(session, args);
 		}
 	}

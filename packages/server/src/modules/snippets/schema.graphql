@@ -1,3 +1,5 @@
+#import ContentError from "../../shared.graphql"
+
 type Snippet {
 	id: ID!
 	content: String!
@@ -6,6 +8,8 @@ type Snippet {
 	user: String!
 	createdAt: String!
 }
+
+union SnippetOrError = Snippet | ContentError
 
 type Query {
 	getPublicSnippets: [Snippet]
@@ -20,13 +24,13 @@ type Mutation {
 		language: String!
 		visibility: String!
 		tags: [String!]
-	): Snippet
+	): SnippetOrError
 	updateSnippet(
 		id: String!
 		content: String
 		language: String
 		visibility: String
 		tags: [String!]
-	): Snippet
+	): SnippetOrError
 	deleteSnippet(snippetId: String!): Boolean
 }

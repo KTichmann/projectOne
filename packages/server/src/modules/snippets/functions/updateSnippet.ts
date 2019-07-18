@@ -1,6 +1,7 @@
 import { userCanEditSnippet } from "./userCanEditSnippet";
 import { Session } from "../../../types/graphql-utils";
 import { Snippet } from "../../../entity/Snippet";
+import { noUser, noSnippet } from "../../../utils/errorMessages";
 
 export const updateSnippet = async (
 	session: Session,
@@ -14,12 +15,18 @@ export const updateSnippet = async (
 	const userId = session.userId;
 	const userCanEdit = await userCanEditSnippet(id, userId as string);
 	if (!userCanEdit) {
-		return null;
+		return {
+			error: "user",
+			message: noUser
+		};
 	}
 
 	const snippetToUpdate = await Snippet.findOne(id);
 	if (typeof snippetToUpdate === "undefined") {
-		return null;
+		return {
+			error: "snippet",
+			message: noSnippet
+		};
 	}
 
 	if (tags.length > 0) {

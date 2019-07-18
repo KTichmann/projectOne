@@ -5,6 +5,15 @@ import { updateSnippet } from "./functions/updateSnippet";
 import { deleteSnippet } from "./functions/deleteSnippet";
 
 export const resolvers: ResolverMap = {
+	SnippetOrError: {
+		__resolveType(obj, _, __) {
+			if (obj.id) {
+				return "Snippet";
+			} else {
+				return "ContentError";
+			}
+		}
+	},
 	Query: {
 		getPublicSnippets: async () => {
 			const res = await Snippet.find({
@@ -12,20 +21,29 @@ export const resolvers: ResolverMap = {
 			});
 			return res;
 		},
-		getUserSnippets: async (_, { userId }) => {
+		getUserSnippets: async (
+			_,
+			{ userId }: GQL.IGetUserSnippetsOnQueryArguments
+		) => {
 			const res = await Snippet.find({
 				where: { userId }
 			});
 			return res;
 		},
-		getSnippetById: async (_, { snippetId }) => {
+		getSnippetById: async (
+			_,
+			{ snippetId }: GQL.IGetSnippetByIdOnQueryArguments
+		) => {
 			const res = await Snippet.findOne({
 				where: { id: snippetId }
 			});
 			return res;
 		},
 
-		getSnippetsByTag: async (_, { tag }) => {
+		getSnippetsByTag: async (
+			_,
+			{ tag }: GQL.IGetSnippetsByTagOnQueryArguments
+		) => {
 			const res = await Snippet.createQueryBuilder()
 				.where(":tag = ANY(tags)", {
 					tag
@@ -41,7 +59,6 @@ export const resolvers: ResolverMap = {
 			return cleanedRes;
 		}
 	},
-
 	Mutation: {
 		createSnippet: (
 			_,
