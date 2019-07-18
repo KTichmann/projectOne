@@ -3,7 +3,7 @@ import { graphql, ChildMutateProps } from "react-apollo";
 import gql from "graphql-tag";
 import { MutationForgotPasswordChangeArgs } from "src/generated/graphql";
 import { ChangePasswordMutation } from "src/generated/mutationTypes";
-import { normalizeErrors } from "../../utils/normalizeErrors";
+import { normalizeArrayErrors } from "../../../utils/normalizeErrors";
 
 interface Props {
 	children: (data: {
@@ -27,7 +27,7 @@ class C extends React.PureComponent<
 			variables: values
 		});
 		if (response && response.data && response.data.forgotPasswordChange) {
-			return normalizeErrors(response.data.forgotPasswordChange);
+			return normalizeArrayErrors(response.data.forgotPasswordChange);
 		}
 
 		return null;

@@ -1,4 +1,10 @@
-import { Maybe, Error, Scalars } from "./graphql";
+import {
+	Maybe,
+	Error,
+	Scalars,
+	SnippetOrError,
+	CommentOrError
+} from "./graphql";
 
 export interface LoginMutation {
 	login: Maybe<Error[]>;
@@ -12,4 +18,40 @@ export interface ForgotPasswordEmailMutation {
 
 export interface ChangePasswordMutation {
 	forgotPasswordChange: Maybe<Error[]>;
+}
+
+export interface CreateSnippetMutation {
+	createSnippet: Maybe<SnippetOrError>;
+}
+
+export interface CreateCommentMutation {
+	createComment: Maybe<CommentOrError>;
+}
+
+export interface UpdateCommentMutation {
+	updateComment: Maybe<CommentOrError>;
+}
+
+export interface DeleteCommentMutation {
+	deleteComment?: Maybe<Scalars["Boolean"]>;
+}
+
+export interface FollowUserMutation {
+	followUser: Maybe<Array<Maybe<Error>>>;
+}
+
+export interface UnfollowUserMutation {
+	unfollowUser: Maybe<Array<Maybe<Error>>>;
+}
+
+export interface CreateSnippetMutation {
+	createSnippet: Maybe<SnippetOrError>;
+}
+
+export interface CreateSnippetMutation {
+	updateSnippet: Maybe<SnippetOrError>;
+}
+
+export interface CreateSnippetMutation {
+	deleteSnippet: Maybe<Scalars["Boolean"]>;
 }

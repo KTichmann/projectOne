@@ -3,7 +3,12 @@ interface Error {
 	message: string;
 }
 
-export const normalizeErrors = (errors: Error[]) => {
+interface OtherError {
+	error: string;
+	message: string;
+}
+
+export const normalizeArrayErrors = (errors: Error[]) => {
 	const errMap: { [key: string]: string } = {};
 
 	errors.forEach(err => {
@@ -11,4 +16,8 @@ export const normalizeErrors = (errors: Error[]) => {
 	});
 
 	return errMap;
+};
+
+export const normalizeErrors = (errors: OtherError) => {
+	console.log(errors);
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql, ChildMutateProps } from "react-apollo";
 import gql from "graphql-tag";
-import { normalizeErrors } from "../../utils/normalizeErrors";
+import { normalizeArrayErrors } from "../../../utils/normalizeErrors";
 import { MutationLoginArgs } from "src/generated/graphql";
 import { LoginMutation } from "src/generated/mutationTypes";
 
@@ -28,7 +28,7 @@ class C extends React.PureComponent<
 			response.data.login
 		) {
 			const login = response.data.login;
-			return normalizeErrors(login);
+			return normalizeArrayErrors(login);
 		}
 		return null;
 	};

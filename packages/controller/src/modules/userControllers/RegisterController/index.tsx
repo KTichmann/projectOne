@@ -3,7 +3,7 @@ import { graphql, ChildMutateProps } from "react-apollo";
 import gql from "graphql-tag";
 import { MutationRegisterArgs } from "src/generated/graphql";
 import { RegisterMutation } from "src/generated/mutationTypes";
-import { normalizeErrors } from "../../utils/normalizeErrors";
+import { normalizeArrayErrors } from "../../../utils/normalizeErrors";
 
 interface Props {
 	children: (data: {
@@ -29,7 +29,7 @@ class C extends React.PureComponent<
 			response.data.register
 		) {
 			const register = response.data.register;
-			return normalizeErrors(register);
+			return normalizeArrayErrors(register);
 		}
 		return null;
 	};
