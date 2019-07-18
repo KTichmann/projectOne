@@ -3,8 +3,8 @@ import { Form, Icon, Button } from "antd";
 import { withFormik, FormikProps, Field, Form as FForm } from "formik";
 import { Link } from "react-router-dom";
 import { userPasswordSchema } from "@abb/common";
-import { InputField } from "../../shared/InputField";
-import { Container, Wrapper } from "../../shared/InputStyles";
+import { InputField } from "../../../shared/InputField";
+import { Container, Wrapper } from "../../../shared/InputStyles";
 
 interface FormValues {
 	password: string;

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { RegisterConnector } from "../modules/register/RegisterConnector";
-import { LoginConnector } from "../modules/login/LoginConnector";
-import { ForgotPasswordConnector } from "../modules/forgotPassword/ForgotPasswordConnector";
-import { ChangePasswordConnector } from "../modules/changePassword/ChangePasswordConnector";
-import { TextView } from "../modules/textPage/TextView";
+import { RegisterConnector } from "../modules/user/register/RegisterConnector";
+import { LoginConnector } from "../modules/user/login/LoginConnector";
+import { ForgotPasswordConnector } from "../modules/user/forgotPassword/ForgotPasswordConnector";
+import { ChangePasswordConnector } from "../modules/user/changePassword/ChangePasswordConnector";
+import { TextView } from "../modules/user/textPage/TextView";
 
 export const Routes = () => (
 	<BrowserRouter>

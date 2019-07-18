@@ -1,20 +1,22 @@
 import React from "react";
 import { Form, Icon, Button } from "antd";
 import { withFormik, FormikProps, Field, Form as FForm } from "formik";
+import { validUserSchema } from "@abb/common";
 import { Link } from "react-router-dom";
-import { userEmailSchema } from "@abb/common";
-import { InputField } from "../../shared/InputField";
-import { Container, Wrapper } from "../../shared/InputStyles";
-
+import { InputField } from "../../../shared/InputField";
+import { Container, Wrapper } from "../../../shared/InputStyles";
 interface FormValues {
 	email: string;
+	password: string;
 }
 interface Props {
 	afterSubmit: () => void;
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
-class FPV extends React.PureComponent<FormikProps<FormValues> & Props> {
+class RegisterViewWithoutFormik extends React.PureComponent<
+	FormikProps<FormValues> & Props
+> {
 	render() {
 		return (
 			<Wrapper>
@@ -26,16 +28,23 @@ class FPV extends React.PureComponent<FormikProps<FormValues> & Props> {
 							placeholder='Email'
 							component={InputField}
 						/>
+						<Field
+							name='password'
+							prefix={<Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />}
+							type='password'
+							placeholder='Password'
+							component={InputField}
+						/>
 						<Form.Item>
 							<Button
 								type='primary'
 								htmlType='submit'
 								className='login-form-button'>
-								Send Password Reset Email
+								Register
 							</Button>
 						</Form.Item>
 						<Form.Item>
-							Or <Link to='/login'>login</Link>
+							Or <Link to='/login'>login now!</Link>
 						</Form.Item>
 					</Container>
 				</FForm>
@@ -44,9 +53,9 @@ class FPV extends React.PureComponent<FormikProps<FormValues> & Props> {
 	}
 }
 
-export const ForgotPasswordView = withFormik<Props, FormValues>({
-	validationSchema: userEmailSchema,
-	mapPropsToValues: () => ({ email: "" }),
+export const RegisterView = withFormik<Props, FormValues>({
+	validationSchema: validUserSchema,
+	mapPropsToValues: () => ({ email: "", password: "" }),
 	handleSubmit: async (values, { props, setErrors }) => {
 		const errors = await props.submit(values);
 		if (errors) {
@@ -55,4 +64,4 @@ export const ForgotPasswordView = withFormik<Props, FormValues>({
 			props.afterSubmit();
 		}
 	}
-})(FPV);
+})(RegisterViewWithoutFormik);
