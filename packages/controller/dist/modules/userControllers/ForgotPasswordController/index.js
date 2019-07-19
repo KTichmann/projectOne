@@ -53,13 +53,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import * as React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { normalizeErrors } from "../../utils/normalizeErrors";
 var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
-            var response, register;
+            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.props.mutate({
@@ -68,10 +67,11 @@ var C = /** @class */ (function (_super) {
                     case 1:
                         response = _a.sent();
                         if (typeof response !== "undefined" &&
-                            typeof response.data !== "undefined" &&
-                            response.data.register) {
-                            register = response.data.register;
-                            return [2 /*return*/, normalizeErrors(register)];
+                            response.data &&
+                            !response.data.sendForgotPasswordEmail) {
+                            return [2 /*return*/, {
+                                    email: "Failed to send email confirmation, please verify that you entered the email correctly and try again."
+                                }];
                         }
                         return [2 /*return*/, null];
                 }
@@ -84,7 +84,7 @@ var C = /** @class */ (function (_super) {
     };
     return C;
 }(React.PureComponent));
-var registerMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"], ["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"])));
-export var RegisterController = graphql(registerMutation)(C);
+var forgotPasswordMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"], ["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"])));
+export var ForgotPasswordController = graphql(forgotPasswordMutation)(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map

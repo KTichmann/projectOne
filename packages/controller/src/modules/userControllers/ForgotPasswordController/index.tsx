@@ -25,7 +25,6 @@ class C extends React.PureComponent<
 		const response = await this.props.mutate({
 			variables: values
 		});
-		console.log(response);
 		if (
 			typeof response !== "undefined" &&
 			response.data &&

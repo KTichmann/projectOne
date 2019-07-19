@@ -9,6 +9,19 @@ export interface Scalars {
     Int: number;
     Float: number;
 }
+export interface Comment {
+    __typename?: "Comment";
+    id: Scalars["ID"];
+    content: Scalars["String"];
+    user: Scalars["String"];
+    createdAt: Scalars["String"];
+}
+export declare type CommentOrError = Comment | ContentError;
+export interface ContentError {
+    __typename?: "ContentError";
+    error: Scalars["String"];
+    message: Scalars["String"];
+}
 export interface Error {
     __typename?: "Error";
     path: Scalars["String"];
@@ -16,11 +29,36 @@ export interface Error {
 }
 export interface Mutation {
     __typename?: "Mutation";
+    createComment?: Maybe<CommentOrError>;
+    updateComment?: Maybe<CommentOrError>;
+    deleteComment?: Maybe<Scalars["Boolean"]>;
+    followUser?: Maybe<Array<Maybe<Error>>>;
+    unfollowUser?: Maybe<Array<Maybe<Error>>>;
     sendForgotPasswordEmail?: Maybe<Scalars["Boolean"]>;
     forgotPasswordChange?: Maybe<Error[]>;
     login?: Maybe<Error[]>;
     logout?: Maybe<Scalars["Boolean"]>;
     register?: Maybe<Error[]>;
+    createSnippet?: Maybe<SnippetOrError>;
+    updateSnippet?: Maybe<SnippetOrError>;
+    deleteSnippet?: Maybe<Scalars["Boolean"]>;
+}
+export interface MutationCreateCommentArgs {
+    snippetId: Scalars["String"];
+    content: Scalars["String"];
+}
+export interface MutationUpdateCommentArgs {
+    commentId: Scalars["String"];
+    content: Scalars["String"];
+}
+export interface MutationDeleteCommentArgs {
+    commentId: Scalars["String"];
+}
+export interface MutationFollowUserArgs {
+    userId: Scalars["String"];
+}
+export interface MutationUnfollowUserArgs {
+    userId: Scalars["String"];
 }
 export interface MutationSendForgotPasswordEmailArgs {
     email: Scalars["String"];
@@ -36,20 +74,77 @@ export interface MutationLoginArgs {
 export interface MutationRegisterArgs {
     email: Scalars["String"];
     password: Scalars["String"];
+    username: Scalars["String"];
+}
+export interface MutationCreateSnippetArgs {
+    content: Scalars["String"];
+    language: Scalars["String"];
+    visibility: Scalars["String"];
+    tags?: Maybe<Array<Scalars["String"]>>;
+}
+export interface MutationUpdateSnippetArgs {
+    id: Scalars["String"];
+    content?: Maybe<Scalars["String"]>;
+    language?: Maybe<Scalars["String"]>;
+    visibility?: Maybe<Scalars["String"]>;
+    tags?: Maybe<Array<Scalars["String"]>>;
+}
+export interface MutationDeleteSnippetArgs {
+    snippetId: Scalars["String"];
 }
 export interface Query {
     __typename?: "Query";
+    getSnippetComments?: Maybe<Array<Maybe<Comment>>>;
+    getUserComments?: Maybe<Array<Maybe<Comment>>>;
+    getCommentById?: Maybe<Comment>;
+    getUserFollowers?: Maybe<Array<Scalars["String"]>>;
+    getUserFollowing?: Maybe<Array<Scalars["String"]>>;
     dummy?: Maybe<Scalars["String"]>;
     errorFill?: Maybe<Scalars["String"]>;
     me?: Maybe<User>;
-    hello: Scalars["String"];
+    getPublicSnippets?: Maybe<Array<Maybe<Snippet>>>;
+    getUserSnippets?: Maybe<Array<Maybe<Snippet>>>;
+    getSnippetById?: Maybe<Snippet>;
+    getSnippetsByTag?: Maybe<Array<Maybe<Snippet>>>;
 }
-export interface QueryHelloArgs {
-    name?: Maybe<Scalars["String"]>;
+export interface QueryGetSnippetCommentsArgs {
+    snippetId: Scalars["String"];
 }
+export interface QueryGetUserCommentsArgs {
+    userId: Scalars["String"];
+}
+export interface QueryGetCommentByIdArgs {
+    commentId: Scalars["String"];
+}
+export interface QueryGetUserFollowersArgs {
+    userId: Scalars["String"];
+}
+export interface QueryGetUserFollowingArgs {
+    userId: Scalars["String"];
+}
+export interface QueryGetUserSnippetsArgs {
+    userId: Scalars["String"];
+}
+export interface QueryGetSnippetByIdArgs {
+    snippetId: Scalars["String"];
+}
+export interface QueryGetSnippetsByTagArgs {
+    tag: Scalars["String"];
+}
+export interface Snippet {
+    __typename?: "Snippet";
+    id: Scalars["ID"];
+    content: Scalars["String"];
+    language: Scalars["String"];
+    tags?: Maybe<Array<Maybe<Scalars["String"]>>>;
+    user: Scalars["String"];
+    createdAt: Scalars["String"];
+}
+export declare type SnippetOrError = Snippet & ContentError;
 export interface User {
     __typename?: "User";
     id: Scalars["ID"];
+    username: Scalars["String"];
     email: Scalars["String"];
 }
 export declare type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -73,47 +168,103 @@ export declare type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {
 export interface ResolversTypes {
     Query: ResolverTypeWrapper<{}>;
     String: ResolverTypeWrapper<Scalars["String"]>;
-    User: ResolverTypeWrapper<User>;
+    Comment: ResolverTypeWrapper<Comment>;
     ID: ResolverTypeWrapper<Scalars["ID"]>;
+    User: ResolverTypeWrapper<User>;
+    Snippet: ResolverTypeWrapper<Snippet>;
     Mutation: ResolverTypeWrapper<{}>;
+    CommentOrError: ResolversTypes["Comment"] | ResolversTypes["ContentError"];
+    ContentError: ResolverTypeWrapper<ContentError>;
     Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
     Error: ResolverTypeWrapper<Error>;
+    SnippetOrError: ResolversTypes["Snippet"] | ResolversTypes["ContentError"];
 }
 /** Mapping between all available schema types and the resolvers parents */
 export interface ResolversParentTypes {
     Query: {};
     String: Scalars["String"];
-    User: User;
+    Comment: Comment;
     ID: Scalars["ID"];
+    User: User;
+    Snippet: Snippet;
     Mutation: {};
+    CommentOrError: ResolversTypes["Comment"] | ResolversTypes["ContentError"];
+    ContentError: ContentError;
     Boolean: Scalars["Boolean"];
     Error: Error;
+    SnippetOrError: ResolversTypes["Snippet"] | ResolversTypes["ContentError"];
+}
+export interface CommentResolvers<ContextType = any, ParentType = ResolversParentTypes["Comment"]> {
+    id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+    content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    user?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+}
+export interface CommentOrErrorResolvers<ContextType = any, ParentType = ResolversParentTypes["CommentOrError"]> {
+    __resolveType: TypeResolveFn<"Comment" | "ContentError", ParentType, ContextType>;
+}
+export interface ContentErrorResolvers<ContextType = any, ParentType = ResolversParentTypes["ContentError"]> {
+    error?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 }
 export interface ErrorResolvers<ContextType = any, ParentType = ResolversParentTypes["Error"]> {
     path?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
     message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 }
 export interface MutationResolvers<ContextType = any, ParentType = ResolversParentTypes["Mutation"]> {
+    createComment?: Resolver<Maybe<ResolversTypes["CommentOrError"]>, ParentType, ContextType, MutationCreateCommentArgs>;
+    updateComment?: Resolver<Maybe<ResolversTypes["CommentOrError"]>, ParentType, ContextType, MutationUpdateCommentArgs>;
+    deleteComment?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType, MutationDeleteCommentArgs>;
+    followUser?: Resolver<Maybe<Array<Maybe<ResolversTypes["Error"]>>>, ParentType, ContextType, MutationFollowUserArgs>;
+    unfollowUser?: Resolver<Maybe<Array<Maybe<ResolversTypes["Error"]>>>, ParentType, ContextType, MutationUnfollowUserArgs>;
     sendForgotPasswordEmail?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType, MutationSendForgotPasswordEmailArgs>;
     forgotPasswordChange?: Resolver<Maybe<Array<ResolversTypes["Error"]>>, ParentType, ContextType, MutationForgotPasswordChangeArgs>;
     login?: Resolver<Maybe<Array<ResolversTypes["Error"]>>, ParentType, ContextType, MutationLoginArgs>;
     logout?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
     register?: Resolver<Maybe<Array<ResolversTypes["Error"]>>, ParentType, ContextType, MutationRegisterArgs>;
+    createSnippet?: Resolver<Maybe<ResolversTypes["SnippetOrError"]>, ParentType, ContextType, MutationCreateSnippetArgs>;
+    updateSnippet?: Resolver<Maybe<ResolversTypes["SnippetOrError"]>, ParentType, ContextType, MutationUpdateSnippetArgs>;
+    deleteSnippet?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType, MutationDeleteSnippetArgs>;
 }
 export interface QueryResolvers<ContextType = any, ParentType = ResolversParentTypes["Query"]> {
+    getSnippetComments?: Resolver<Maybe<Array<Maybe<ResolversTypes["Comment"]>>>, ParentType, ContextType, QueryGetSnippetCommentsArgs>;
+    getUserComments?: Resolver<Maybe<Array<Maybe<ResolversTypes["Comment"]>>>, ParentType, ContextType, QueryGetUserCommentsArgs>;
+    getCommentById?: Resolver<Maybe<ResolversTypes["Comment"]>, ParentType, ContextType, QueryGetCommentByIdArgs>;
+    getUserFollowers?: Resolver<Maybe<Array<ResolversTypes["String"]>>, ParentType, ContextType, QueryGetUserFollowersArgs>;
+    getUserFollowing?: Resolver<Maybe<Array<ResolversTypes["String"]>>, ParentType, ContextType, QueryGetUserFollowingArgs>;
     dummy?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
     errorFill?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
     me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
-    hello?: Resolver<ResolversTypes["String"], ParentType, ContextType, QueryHelloArgs>;
+    getPublicSnippets?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType>;
+    getUserSnippets?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType, QueryGetUserSnippetsArgs>;
+    getSnippetById?: Resolver<Maybe<ResolversTypes["Snippet"]>, ParentType, ContextType, QueryGetSnippetByIdArgs>;
+    getSnippetsByTag?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType, QueryGetSnippetsByTagArgs>;
+}
+export interface SnippetResolvers<ContextType = any, ParentType = ResolversParentTypes["Snippet"]> {
+    id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+    content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    language?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    tags?: Resolver<Maybe<Array<Maybe<ResolversTypes["String"]>>>, ParentType, ContextType>;
+    user?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+    createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+}
+export interface SnippetOrErrorResolvers<ContextType = any, ParentType = ResolversParentTypes["SnippetOrError"]> {
+    __resolveType: TypeResolveFn<"Snippet" | "ContentError", ParentType, ContextType>;
 }
 export interface UserResolvers<ContextType = any, ParentType = ResolversParentTypes["User"]> {
     id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+    username?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
     email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 }
 export interface Resolvers<ContextType = any> {
+    Comment?: CommentResolvers<ContextType>;
+    CommentOrError?: CommentOrErrorResolvers;
+    ContentError?: ContentErrorResolvers<ContextType>;
     Error?: ErrorResolvers<ContextType>;
     Mutation?: MutationResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
+    Snippet?: SnippetResolvers<ContextType>;
+    SnippetOrError?: SnippetOrErrorResolvers;
     User?: UserResolvers<ContextType>;
 }
 /**

@@ -1,39 +1,30 @@
 import * as React from "react";
-import { normalizeErrors } from "src/utils/normalizeErrors";
 import gql from "graphql-tag";
-import { graphql } from "graphql";
 import { CreateSnippetMutation } from "src/generated/mutationTypes";
 import { MutationCreateSnippetArgs } from "src/generated/graphql";
-import { ChildMutateProps } from "react-apollo";
-
+import { ChildMutateProps, graphql } from "react-apollo";
 interface Props {
 	children: (data: {
-		submit: (
-			values: MutationCreateSnippetArgs
-		) => Promise<{
-			[key: string]: string;
-		} | null>;
+		submit: (values: MutationCreateSnippetArgs) => Promise<any>;
 	}) => JSX.Element | null;
 }
 
 class C extends React.PureComponent<
 	ChildMutateProps<Props, CreateSnippetMutation, MutationCreateSnippetArgs>
 > {
-	submit = async (values: any) => {
+	submit = async (values: MutationCreateSnippetArgs) => {
 		const response = await this.props.mutate({
 			variables: values
 		});
 		if (
 			typeof response !== "undefined" &&
-			typeof response.data !== "undefined" &&
+			response.data &&
 			response.data.createSnippet
 		) {
-			const snippet = response.data.createSnippet;
-			if (snippet.error) {
-				return normalizeErrors(snippet);
-			} else {
-				return snippet;
+			if (!response.data.createSnippet.error) {
+				return null;
 			}
+			return response.data.createSnippet;
 		}
 		return null;
 	};
@@ -43,7 +34,7 @@ class C extends React.PureComponent<
 	}
 }
 
-const createSnippetMutation = gql`
+const createSnippetGQLMutation = gql`
 	mutation CreateSnippetMutation(
 		$content: String!
 		$language: String!
@@ -72,6 +63,6 @@ const createSnippetMutation = gql`
 
 export const CreateSnippetController = graphql<
 	Props,
-	createSnippetMutation,
+	CreateSnippetMutation,
 	MutationCreateSnippetArgs
->(loginMutation)(C);
+>(createSnippetGQLMutation)(C);

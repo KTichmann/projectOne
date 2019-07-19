@@ -1,4 +1,4 @@
-export var normalizeErrors = function (errors) {
+export var normalizeArrayErrors = function (errors) {
     var errMap = {};
     errors.forEach(function (err) {
         errMap[err.path] = err.message;

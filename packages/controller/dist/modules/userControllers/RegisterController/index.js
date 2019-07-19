@@ -53,27 +53,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import * as React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { normalizeErrors } from "../../utils/normalizeErrors";
+import { normalizeArrayErrors } from "../../../utils/normalizeErrors";
 var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
-            var response;
+            var response, register;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("these the values:");
-                        console.log(values);
-                        return [4 /*yield*/, this.props.mutate({
-                                variables: values
-                            })];
+                    case 0: return [4 /*yield*/, this.props.mutate({
+                            variables: values
+                        })];
                     case 1:
                         response = _a.sent();
-                        if (response && response.data && response.data.forgotPasswordChange) {
-                            return [2 /*return*/, normalizeErrors(response.data.forgotPasswordChange)];
+                        if (typeof response !== "undefined" &&
+                            typeof response.data !== "undefined" &&
+                            response.data.register) {
+                            register = response.data.register;
+                            return [2 /*return*/, normalizeArrayErrors(register)];
                         }
-                        console.log(response);
                         return [2 /*return*/, null];
                 }
             });
@@ -85,7 +84,7 @@ var C = /** @class */ (function (_super) {
     };
     return C;
 }(React.PureComponent));
-var forgotPasswordMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation changePasswordMutation($password: String!, $key: String!) {\n\t\tforgotPasswordChange(newPassword: $password, key: $key) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"], ["\n\tmutation changePasswordMutation($password: String!, $key: String!) {\n\t\tforgotPasswordChange(newPassword: $password, key: $key) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"])));
-export var ChangePasswordController = graphql(forgotPasswordMutation)(C);
+var registerMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"], ["\n\tmutation RegisterMutation($email: String!, $password: String!) {\n\t\tregister(email: $email, password: $password) {\n\t\t\tpath\n\t\t\tmessage\n\t\t}\n\t}\n"])));
+export var RegisterController = graphql(registerMutation)(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map

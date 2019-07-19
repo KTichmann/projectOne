@@ -51,8 +51,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import * as React from "react";
-import { graphql } from "react-apollo";
 import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
@@ -66,13 +66,13 @@ var C = /** @class */ (function (_super) {
                         })];
                     case 1:
                         response = _a.sent();
-                        console.log(response);
                         if (typeof response !== "undefined" &&
                             response.data &&
-                            !response.data.sendForgotPasswordEmail) {
-                            return [2 /*return*/, {
-                                    email: "Failed to send email confirmation, please verify that you entered the email correctly and try again."
-                                }];
+                            response.data.createSnippet) {
+                            if (!response.data.createSnippet.error) {
+                                return [2 /*return*/, null];
+                            }
+                            return [2 /*return*/, response.data.createSnippet];
                         }
                         return [2 /*return*/, null];
                 }
@@ -85,7 +85,7 @@ var C = /** @class */ (function (_super) {
     };
     return C;
 }(React.PureComponent));
-var forgotPasswordMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"], ["\n\tmutation forgotPasswordMutation($email: String!) {\n\t\tsendForgotPasswordEmail(email: $email)\n\t}\n"])));
-export var ForgotPasswordController = graphql(forgotPasswordMutation)(C);
+var createSnippetGQLMutation = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tmutation CreateSnippetMutation(\n\t\t$content: String!\n\t\t$language: String!\n\t\t$visibility: String!\n\t\t$tags: [String!] = []\n\t) {\n\t\tcreateSnippet(\n\t\t\tcontent: $content\n\t\t\tlanguage: $language\n\t\t\tvisibility: $visibility\n\t\t\ttags: $tags\n\t\t) {\n\t\t\t... on Snippet {\n\t\t\t\tid\n\t\t\t\tcontent\n\t\t\t\tcreatedAt\n\t\t\t\tuser\n\t\t\t}\n\t\t\t... on ContentError {\n\t\t\t\terror\n\t\t\t\tmessage\n\t\t\t}\n\t\t}\n\t}\n"], ["\n\tmutation CreateSnippetMutation(\n\t\t$content: String!\n\t\t$language: String!\n\t\t$visibility: String!\n\t\t$tags: [String!] = []\n\t) {\n\t\tcreateSnippet(\n\t\t\tcontent: $content\n\t\t\tlanguage: $language\n\t\t\tvisibility: $visibility\n\t\t\ttags: $tags\n\t\t) {\n\t\t\t... on Snippet {\n\t\t\t\tid\n\t\t\t\tcontent\n\t\t\t\tcreatedAt\n\t\t\t\tuser\n\t\t\t}\n\t\t\t... on ContentError {\n\t\t\t\terror\n\t\t\t\tmessage\n\t\t\t}\n\t\t}\n\t}\n"])));
+export var CreateSnippetController = graphql(createSnippetGQLMutation)(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map
