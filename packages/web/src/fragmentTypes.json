@@ -1,0 +1,30 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "CommentOrError",
+        "possibleTypes": [
+          {
+            "name": "Comment"
+          },
+          {
+            "name": "ContentError"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SnippetOrError",
+        "possibleTypes": [
+          {
+            "name": "Snippet"
+          },
+          {
+            "name": "ContentError"
+          }
+        ]
+      }
+    ]
+  }
+}

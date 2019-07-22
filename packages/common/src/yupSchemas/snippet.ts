@@ -1,6 +1,13 @@
 import * as yup from "yup";
 
-const SUPPORTED_LANGS = ["javascript", "html", "python", "css", "php", "ruby"];
+export const SUPPORTED_LANGS = [
+	"javascript",
+	"html",
+	"python",
+	"css",
+	"php",
+	"ruby"
+];
 const VISIBILITY_OPTIONS = ["public", "private"];
 
 const content = yup

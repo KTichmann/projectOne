@@ -1,7 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const yup = require("yup");
-const SUPPORTED_LANGS = ["javascript", "html", "python", "css", "php", "ruby"];
+exports.SUPPORTED_LANGS = [
+    "javascript",
+    "html",
+    "python",
+    "css",
+    "php",
+    "ruby"
+];
 const VISIBILITY_OPTIONS = ["public", "private"];
 const content = yup
     .string()
@@ -9,7 +16,7 @@ const content = yup
     .required("snippet content cannot be empty");
 const language = yup
     .mixed()
-    .oneOf(SUPPORTED_LANGS, `language must be one of [${SUPPORTED_LANGS}]`);
+    .oneOf(exports.SUPPORTED_LANGS, `language must be one of [${exports.SUPPORTED_LANGS}]`);
 const visibility = yup.mixed().oneOf(VISIBILITY_OPTIONS);
 exports.validSnippetSchema = yup.object().shape({
     content,

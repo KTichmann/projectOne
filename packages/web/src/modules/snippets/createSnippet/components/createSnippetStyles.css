@@ -1,0 +1,11 @@
+.ant-select-selection.ant-select-selection--multiple {
+	border: none;
+}
+
+.ant-row.ant-form-item {
+	margin-bottom: 10px !important;
+}
+
+.login-form-button {
+	padding: 5px 40px !important;
+}

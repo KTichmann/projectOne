@@ -20,6 +20,14 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true
 	},
-	"exclude": ["node_modules"],
+	"exclude": [
+		"node_modules",
+		"build",
+		"scripts",
+		"acceptance-tests",
+		"webpack",
+		"jest",
+		"src/setupTests.ts"
+	],
 	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

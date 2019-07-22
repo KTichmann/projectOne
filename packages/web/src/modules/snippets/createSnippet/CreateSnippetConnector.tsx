@@ -1,13 +1,13 @@
 import * as React from "react";
-import { LoginController } from "@abb/controller";
+import { CreateSnippetController } from "@abb/controller";
 import { CreateSnippetComponent } from "./components/CreateSnippetComponent";
 
-export class LoginConnector extends React.PureComponent {
+export class CreateSnippetConnector extends React.PureComponent {
 	render() {
 		return (
-			<LoginController>
+			<CreateSnippetController>
 				{({ submit }) => <CreateSnippetComponent submit={submit} />}
-			</LoginController>
+			</CreateSnippetController>
 		);
 	}
 }
