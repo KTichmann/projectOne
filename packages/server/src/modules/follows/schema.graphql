@@ -1,11 +1,13 @@
 #import Error from "../../shared.graphql"
+#import Snippet from "../snippets/schema.graphql"
 
 type Query {
-	getUserFollowers(userId: String!): [String!]
-	getUserFollowing(userId: String!): [String!]
+  getUserFollowers(userId: String): [String!]
+  getUserFollowing(userId: String): [String!]
+  getFollowingSnippets: [Snippet!]
 }
 
 type Mutation {
-	followUser(userId: String!): [Error]
-	unfollowUser(userId: String!): [Error]
+  followUser(userId: String!): [Error]
+  unfollowUser(userId: String!): [Error]
 }

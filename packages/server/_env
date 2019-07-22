@@ -1,5 +1,0 @@
-SPARKPOST_API_KEY=a2356a8a0ec7bf516dcae31cf7dbd9764ae2b9f1
-SESSION_SECRET=asdfj;124;hae[0u2q45nasdf1234
-MONGO_URL=mongodb+srv://admin:Chomsky&Kratzer333@abb-9svkf.mongodb.net/test?retryWrites=true&w=majority
-MONGO_DB_PASS=Chomsky&Kratzer333
-FRONTEND_HOST=http://localhost:3000
