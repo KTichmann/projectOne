@@ -1,14 +1,13 @@
 import React, { Props } from "react";
 import { SnippetList } from "../../../shared/SnippetList";
-import { SUPPORTED_LANGS } from "@abb/common";
 
 export class FollowingSnippetsComponent extends React.PureComponent<
 	{
-		getSnippets: () => Promise<any>;
+		snippets: any[];
 	},
 	{ snippets: any[] }
 > {
-	constructor(props: { getSnippets: () => Promise<any> }) {
+	constructor(props: { snippets: any[] }) {
 		super(props);
 
 		this.state = {
@@ -17,9 +16,14 @@ export class FollowingSnippetsComponent extends React.PureComponent<
 	}
 
 	componentDidMount = async () => {
-		const snippets = await this.props.getSnippets();
+		const snippets = await this.props.snippets;
+		console.log(snippets);
 		this.setState({ snippets });
 	};
+
+	componentWillReceiveProps(newProps: any) {
+		this.setState({ snippets: newProps.snippets });
+	}
 
 	render() {
 		return (

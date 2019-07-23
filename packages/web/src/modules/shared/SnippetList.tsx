@@ -1,5 +1,5 @@
 import React from "react";
-import { Snippet } from "../snippets/Snippet";
+import { Snippet } from "../snippets/sharedComponents/Snippet";
 
 export const SnippetList = (props: any) => (
 	<div>

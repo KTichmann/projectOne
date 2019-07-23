@@ -5,8 +5,8 @@ import { LoginConnector } from "../modules/user/login/LoginConnector";
 import { ForgotPasswordConnector } from "../modules/user/forgotPassword/ForgotPasswordConnector";
 import { ChangePasswordConnector } from "../modules/user/changePassword/ChangePasswordConnector";
 import { TextView } from "../modules/user/textPage/TextView";
-import { FollowingSnippetsComponent } from "../modules/snippets/listFollowingSnippets/components/FollowingSnippetsComponent";
-import { CreateSnippetComponent } from "../modules/snippets/createSnippet/components/CreateSnippetComponent";
+import { CreateSnippetConnector } from "../modules/snippets/createSnippet/CreateSnippetConnector";
+import { FollowingSnippetsConnector } from "../modules/snippets/listFollowingSnippets/FollowingSnippetsConnector";
 
 export const Routes = () => (
 	<BrowserRouter>
@@ -23,8 +23,8 @@ export const Routes = () => (
 				path='/change-password/:key'
 				component={ChangePasswordConnector}
 			/>
-			<Route exact={true} path='/test' component={FollowingSnippetsComponent} />
-			<Route exact={true} path='/create' component={CreateSnippetComponent} />
+			<Route exact={true} path='/test' component={FollowingSnippetsConnector} />
+			<Route exact={true} path='/create' component={CreateSnippetConnector} />
 			<Route path='/m/' component={TextView} />
 		</Switch>
 	</BrowserRouter>

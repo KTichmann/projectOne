@@ -1,29 +1,40 @@
 import * as React from "react";
 import gql from "graphql-tag";
-import { ChildMutateProps, graphql } from "react-apollo";
+import { graphql, ChildDataProps } from "react-apollo";
 import { FollowingSnippetsQuery } from "src/generated/mutationTypes";
+import { Snippet } from "src/generated/graphql";
 interface Props {
-	children: (data: { getSnippets: () => Promise<any> }) => JSX.Element | null;
+	children: (data: Snippet[]) => JSX.Element | null;
 }
 
 class C extends React.PureComponent<
-	ChildMutateProps<Props, FollowingSnippetsQuery>
+	ChildDataProps<Props, FollowingSnippetsQuery>,
+	{ snippets: Snippet[] }
 > {
-	getSnippets = async () => {
-		const response = await this.props.mutate();
-		if (
-			typeof response !== "undefined" &&
-			response.data &&
-			response.data.getFollowingSnippets
-		) {
-			const snippets = response.data.getFollowingSnippets;
-			return snippets;
+	constructor(props: ChildDataProps<Props, FollowingSnippetsQuery>) {
+		super(props);
+
+		this.state = {
+			snippets: []
+		};
+	}
+	componentWillReceiveProps = (newProps: any) => {
+		const snippets = newProps.data.getFollowingSnippets;
+		if (typeof snippets !== "undefined" && snippets) {
+			this.setState({ snippets });
 		}
-		return [];
 	};
+	// getSnippets = async () => {
+	// 	console.log(this.props.data);
+	// 	const response = this.props.data.getFollowingSnippets;
+	// 	if (typeof response !== "undefined" && response) {
+	// 		return response;
+	// 	}
+	// 	return [];
+	// };
 
 	render() {
-		return this.props.children({ getSnippets: this.getSnippets });
+		return this.props.children(this.state.snippets);
 	}
 }
 

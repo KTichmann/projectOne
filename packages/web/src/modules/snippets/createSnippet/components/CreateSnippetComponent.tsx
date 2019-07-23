@@ -18,7 +18,6 @@ interface FormValues {
 
 interface Props {
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
-	test: string;
 }
 
 class CreateSnippetComponentWithoutFormik extends React.PureComponent<

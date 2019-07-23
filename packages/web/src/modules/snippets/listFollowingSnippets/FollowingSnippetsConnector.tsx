@@ -1,16 +1,13 @@
 import * as React from "react";
-// import { FollowingSnippetsController } from "@abb/controller";
-// import { FollowingSnippetsComponent } from "./components/FollowingSnippetsComponent";
+import { FollowingSnippetsController } from "@abb/controller";
+import { FollowingSnippetsComponent } from "./components/FollowingSnippetsComponent";
 
-export class CreateSnippetConnector extends React.PureComponent {
+export class FollowingSnippetsConnector extends React.PureComponent {
 	render() {
 		return (
-			<div>test</div>
-			// <FollowingSnippetsController>
-			// 	{({ getSnippets }) => (
-			// 		<FollowingSnippetsComponent getSnippets={getSnippets} />
-			// 	)}
-			// </FollowingSnippetsController>
+			<FollowingSnippetsController>
+				{snippets => <FollowingSnippetsComponent snippets={snippets} />}
+			</FollowingSnippetsController>
 		);
 	}
 }
