@@ -16,14 +16,9 @@ interface FormValues {
 	tags: string[];
 }
 
-type SetFieldValue = (
-	field: string,
-	value: any,
-	shouldValidate?: boolean
-) => void;
-
 interface Props {
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
+	test: string;
 }
 
 class CreateSnippetComponentWithoutFormik extends React.PureComponent<
@@ -122,6 +117,7 @@ export const CreateSnippetComponent = withFormik<Props, FormValues>({
 		tags: []
 	}),
 	handleSubmit: async (values, { props, setErrors, resetForm }) => {
+		console.log(props);
 		const errors = await props.submit(values);
 		if (errors) {
 			setErrors(errors);

@@ -6,7 +6,9 @@ export class CreateSnippetConnector extends React.PureComponent {
 	render() {
 		return (
 			<CreateSnippetController>
-				{({ submit }) => <CreateSnippetComponent submit={submit} />}
+				{({ submit }) => (
+					<CreateSnippetComponent submit={submit} test='testing' />
+				)}
 			</CreateSnippetController>
 		);
 	}
