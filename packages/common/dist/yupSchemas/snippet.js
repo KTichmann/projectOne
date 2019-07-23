@@ -17,8 +17,10 @@ const content = yup
 const language = yup
     .mixed()
     .oneOf(exports.SUPPORTED_LANGS, `language must be one of [${exports.SUPPORTED_LANGS}]`);
+const title = yup.string().required("snippet title cannot be empty");
 const visibility = yup.mixed().oneOf(VISIBILITY_OPTIONS);
 exports.validSnippetSchema = yup.object().shape({
+    title,
     content,
     language,
     visibility

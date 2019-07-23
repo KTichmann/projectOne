@@ -4,45 +4,48 @@ import { Snippet } from "../../../entity/Snippet";
 import { noUser, noSnippet } from "../../../utils/errorMessages";
 
 export const updateSnippet = async (
-	session: Session,
-	args: GQL.IUpdateSnippetOnMutationArguments
+  session: Session,
+  args: GQL.IUpdateSnippetOnMutationArguments
 ) => {
-	const { id, content, language, visibility } = args;
-	let { tags } = args;
-	if (!tags) {
-		tags = [];
-	}
-	const userId = session.userId;
-	const userCanEdit = await userCanEditSnippet(id, userId as string);
-	if (!userCanEdit) {
-		return {
-			error: "user",
-			message: noUser
-		};
-	}
+  const { id, content, language, visibility, title } = args;
+  let { tags } = args;
+  if (!tags) {
+    tags = [];
+  }
+  const userId = session.userId;
+  const userCanEdit = await userCanEditSnippet(id, userId as string);
+  if (!userCanEdit) {
+    return {
+      error: "user",
+      message: noUser
+    };
+  }
 
-	const snippetToUpdate = await Snippet.findOne(id);
-	if (typeof snippetToUpdate === "undefined") {
-		return {
-			error: "snippet",
-			message: noSnippet
-		};
-	}
+  const snippetToUpdate = await Snippet.findOne(id);
+  if (typeof snippetToUpdate === "undefined") {
+    return {
+      error: "snippet",
+      message: noSnippet
+    };
+  }
 
-	if (tags.length > 0) {
-		snippetToUpdate.tags = tags;
-	}
-	if (content) {
-		snippetToUpdate.content = content;
-	}
-	if (language) {
-		snippetToUpdate.language = language;
-	}
-	if (visibility) {
-		snippetToUpdate.visibility = visibility;
-	}
+  if (tags.length > 0) {
+    snippetToUpdate.tags = tags;
+  }
+  if (content) {
+    snippetToUpdate.content = content;
+  }
+  if (language) {
+    snippetToUpdate.language = language;
+  }
+  if (visibility) {
+    snippetToUpdate.visibility = visibility;
+  }
+  if (title) {
+    snippetToUpdate.title = title;
+  }
 
-	await Snippet.save(snippetToUpdate);
+  await Snippet.save(snippetToUpdate);
 
-	return snippetToUpdate;
+  return snippetToUpdate;
 };

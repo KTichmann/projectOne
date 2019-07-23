@@ -2,34 +2,28 @@ import React, { Props } from "react";
 import { SnippetList } from "../../../shared/SnippetList";
 
 export class FollowingSnippetsComponent extends React.PureComponent<
-	{
-		snippets: any[];
-	},
-	{ snippets: any[] }
+  {
+    snippets: any[];
+  },
+  { snippets: any[] }
 > {
-	constructor(props: { snippets: any[] }) {
-		super(props);
+  constructor(props: { snippets: any[] }) {
+    super(props);
 
-		this.state = {
-			snippets: []
-		};
-	}
+    this.state = {
+      snippets: []
+    };
+  }
 
-	componentDidMount = async () => {
-		const snippets = await this.props.snippets;
-		console.log(snippets);
-		this.setState({ snippets });
-	};
+  componentWillReceiveProps(newProps: any) {
+    this.setState({ snippets: newProps.snippets });
+  }
 
-	componentWillReceiveProps(newProps: any) {
-		this.setState({ snippets: newProps.snippets });
-	}
-
-	render() {
-		return (
-			<div>
-				<SnippetList values={this.state.snippets} />
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div>
+        <SnippetList values={this.state.snippets} />
+      </div>
+    );
+  }
 }

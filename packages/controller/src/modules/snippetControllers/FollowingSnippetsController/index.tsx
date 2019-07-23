@@ -4,54 +4,47 @@ import { graphql, ChildDataProps } from "react-apollo";
 import { FollowingSnippetsQuery } from "src/generated/mutationTypes";
 import { Snippet } from "src/generated/graphql";
 interface Props {
-	children: (data: Snippet[]) => JSX.Element | null;
+  children: (data: Snippet[]) => JSX.Element | null;
 }
 
 class C extends React.PureComponent<
-	ChildDataProps<Props, FollowingSnippetsQuery>,
-	{ snippets: Snippet[] }
+  ChildDataProps<Props, FollowingSnippetsQuery>,
+  { snippets: Snippet[] }
 > {
-	constructor(props: ChildDataProps<Props, FollowingSnippetsQuery>) {
-		super(props);
+  constructor(props: ChildDataProps<Props, FollowingSnippetsQuery>) {
+    super(props);
 
-		this.state = {
-			snippets: []
-		};
-	}
-	componentWillReceiveProps = (newProps: any) => {
-		const snippets = newProps.data.getFollowingSnippets;
-		if (typeof snippets !== "undefined" && snippets) {
-			this.setState({ snippets });
-		}
-	};
-	// getSnippets = async () => {
-	// 	console.log(this.props.data);
-	// 	const response = this.props.data.getFollowingSnippets;
-	// 	if (typeof response !== "undefined" && response) {
-	// 		return response;
-	// 	}
-	// 	return [];
-	// };
+    this.state = {
+      snippets: []
+    };
+  }
+  componentWillReceiveProps = (newProps: any) => {
+    const snippets = newProps.data.getFollowingSnippets;
+    if (typeof snippets !== "undefined" && snippets) {
+      this.setState({ snippets });
+    }
+  };
 
-	render() {
-		return this.props.children(this.state.snippets);
-	}
+  render() {
+    return this.props.children(this.state.snippets);
+  }
 }
 
 const getFollowingSnippets = gql`
-	query Query {
-		getFollowingSnippets {
-			id
-			content
-			language
-			tags
-			user
-			createdAt
-		}
-	}
+  query Query {
+    getFollowingSnippets {
+      id
+      content
+      title
+      language
+      tags
+      user
+      createdAt
+    }
+  }
 `;
 
 export const FollowingSnippetsController = graphql<
-	Props,
-	FollowingSnippetsQuery
+  Props,
+  FollowingSnippetsQuery
 >(getFollowingSnippets)(C);

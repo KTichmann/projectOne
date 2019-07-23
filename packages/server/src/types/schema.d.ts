@@ -21,7 +21,7 @@ declare namespace GQL {
   }
 
   interface IQuery {
-    __typename: 'Query';
+    __typename: "Query";
     getSnippetComments: Array<IComment | null> | null;
     getUserComments: Array<IComment | null> | null;
     getCommentById: IComment | null;
@@ -69,7 +69,7 @@ declare namespace GQL {
   }
 
   interface IComment {
-    __typename: 'Comment';
+    __typename: "Comment";
     id: string;
     content: string;
     user: string;
@@ -77,14 +77,14 @@ declare namespace GQL {
   }
 
   interface IUser {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     username: string;
     email: string;
   }
 
   interface ISnippet {
-    __typename: 'Snippet';
+    __typename: "Snippet";
     id: string;
     content: string;
     language: string;
@@ -94,7 +94,7 @@ declare namespace GQL {
   }
 
   interface IMutation {
-    __typename: 'Mutation';
+    __typename: "Mutation";
     createComment: CommentOrError | null;
     updateComment: CommentOrError | null;
     deleteComment: boolean | null;
@@ -156,11 +156,13 @@ declare namespace GQL {
     content: string;
     language: string;
     visibility: string;
+    title: string;
     tags?: Array<string> | null;
   }
 
   interface IUpdateSnippetOnMutationArguments {
     id: string;
+    title: string;
     content?: string | null;
     language?: string | null;
     visibility?: string | null;
@@ -174,13 +176,13 @@ declare namespace GQL {
   type CommentOrError = IComment | IContentError;
 
   interface IContentError {
-    __typename: 'ContentError';
+    __typename: "ContentError";
     error: string;
     message: string;
   }
 
   interface IError {
-    __typename: 'Error';
+    __typename: "Error";
     path: string;
     message: string;
   }

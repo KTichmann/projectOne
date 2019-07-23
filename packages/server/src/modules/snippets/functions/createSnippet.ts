@@ -6,37 +6,38 @@ import { Session } from "../../../types/graphql-utils";
 import { noUser } from "../../../utils/errorMessages";
 
 export const createSnippet = async (
-	session: Session,
-	args: GQL.ICreateSnippetOnMutationArguments
+  session: Session,
+  args: GQL.ICreateSnippetOnMutationArguments
 ) => {
-	const { content, language, visibility } = args;
-	let { tags } = args;
+  const { content, language, visibility, title } = args;
+  let { tags } = args;
 
-	try {
-		await validSnippetSchema.validate(args, { abortEarly: false });
-	} catch (err) {
-		return formatYupError(err);
-	}
+  try {
+    await validSnippetSchema.validate(args, { abortEarly: false });
+  } catch (err) {
+    return formatYupError(err);
+  }
 
-	const userId = session.userId;
-	if (!userId) {
-		return {
-			error: "user",
-			message: noUser
-		};
-	}
-	if (!tags) {
-		tags = [];
-	}
-	const snippet = Snippet.create({
-		user: userId,
-		visibility,
-		language,
-		content,
-		tags
-	});
+  const userId = session.userId;
+  if (!userId) {
+    return {
+      error: "user",
+      message: noUser
+    };
+  }
+  if (!tags) {
+    tags = [];
+  }
+  const snippet = Snippet.create({
+    user: userId,
+    visibility,
+    language,
+    content,
+    title,
+    tags
+  });
 
-	await snippet.save();
+  await snippet.save();
 
-	return snippet;
+  return snippet;
 };
