@@ -1,72 +1,46 @@
 import * as React from "react";
 import gql from "graphql-tag";
-import { CreateSnippetMutation } from "src/generated/mutationTypes";
-import { MutationCreateSnippetArgs } from "src/generated/graphql";
 import { ChildMutateProps, graphql } from "react-apollo";
+import { FollowingSnippetsQuery } from "src/generated/mutationTypes";
 interface Props {
-  children: (data: {
-    submit: (values: MutationCreateSnippetArgs) => Promise<any>;
-  }) => JSX.Element | null;
+	children: (data: { getSnippets: () => Promise<any> }) => JSX.Element | null;
 }
 
 class C extends React.PureComponent<
-  ChildMutateProps<Props, CreateSnippetMutation, MutationCreateSnippetArgs>
+	ChildMutateProps<Props, FollowingSnippetsQuery>
 > {
-  componentDidMount = async () => {
-    const response = await this.props.mutate();
-    console.log(response);
-  };
-  submit = async values => {
-    const response = await this.props.mutate({
-      variables: values
-    });
-    if (
-      typeof response !== "undefined" &&
-      response.data &&
-      response.data.createSnippet
-    ) {
-      if (!response.data.createSnippet.error) {
-        return null;
-      }
-      return response.data.createSnippet;
-    }
-    return null;
-  };
+	getSnippets = async () => {
+		const response = await this.props.mutate();
+		if (
+			typeof response !== "undefined" &&
+			response.data &&
+			response.data.getFollowingSnippets
+		) {
+			const snippets = response.data.getFollowingSnippets;
+			return snippets;
+		}
+		return [];
+	};
 
-  render() {
-    return this.props.children({ submit: this.submit });
-  }
+	render() {
+		return this.props.children({ getSnippets: this.getSnippets });
+	}
 }
 
 const getFollowingSnippets = gql`
-  mutation CreateSnippetMutation(
-    $content: String!
-    $language: String!
-    $visibility: String!
-    $tags: [String!] = []
-  ) {
-    createSnippet(
-      content: $content
-      language: $language
-      visibility: $visibility
-      tags: $tags
-    ) {
-      ... on Snippet {
-        id
-        content
-        createdAt
-        user
-      }
-      ... on ContentError {
-        error
-        message
-      }
-    }
-  }
+	query Query {
+		getFollowingSnippets {
+			id
+			content
+			language
+			tags
+			user
+			createdAt
+		}
+	}
 `;
 
-export const CreateSnippetController = graphql<
-  Props,
-  CreateSnippetMutation,
-  MutationCreateSnippetArgs
->(createSnippetGQLMutation)(C);
+export const FollowingSnippetsController = graphql<
+	Props,
+	FollowingSnippetsQuery
+>(getFollowingSnippets)(C);

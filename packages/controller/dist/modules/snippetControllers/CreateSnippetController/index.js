@@ -58,7 +58,7 @@ var C = /** @class */ (function (_super) {
     function C() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.submit = function (values) { return __awaiter(_this, void 0, void 0, function () {
-            var response;
+            var response, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.props.mutate({
@@ -69,7 +69,8 @@ var C = /** @class */ (function (_super) {
                         if (typeof response !== "undefined" &&
                             response.data &&
                             response.data.createSnippet) {
-                            if (!response.data.createSnippet.error) {
+                            result = response.data.createSnippet;
+                            if (!result.error) {
                                 return [2 /*return*/, null];
                             }
                             return [2 /*return*/, response.data.createSnippet];

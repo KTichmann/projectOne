@@ -99,6 +99,7 @@ export interface Query {
     getCommentById?: Maybe<Comment>;
     getUserFollowers?: Maybe<Array<Scalars["String"]>>;
     getUserFollowing?: Maybe<Array<Scalars["String"]>>;
+    getFollowingSnippets?: Maybe<Snippet[]>;
     dummy?: Maybe<Scalars["String"]>;
     errorFill?: Maybe<Scalars["String"]>;
     me?: Maybe<User>;
@@ -117,10 +118,10 @@ export interface QueryGetCommentByIdArgs {
     commentId: Scalars["String"];
 }
 export interface QueryGetUserFollowersArgs {
-    userId: Scalars["String"];
+    userId?: Maybe<Scalars["String"]>;
 }
 export interface QueryGetUserFollowingArgs {
-    userId: Scalars["String"];
+    userId?: Maybe<Scalars["String"]>;
 }
 export interface QueryGetUserSnippetsArgs {
     userId: Scalars["String"];
@@ -140,7 +141,7 @@ export interface Snippet {
     user: Scalars["String"];
     createdAt: Scalars["String"];
 }
-export declare type SnippetOrError = Snippet & ContentError;
+export declare type SnippetOrError = Snippet | ContentError;
 export interface User {
     __typename?: "User";
     id: Scalars["ID"];
@@ -170,8 +171,8 @@ export interface ResolversTypes {
     String: ResolverTypeWrapper<Scalars["String"]>;
     Comment: ResolverTypeWrapper<Comment>;
     ID: ResolverTypeWrapper<Scalars["ID"]>;
-    User: ResolverTypeWrapper<User>;
     Snippet: ResolverTypeWrapper<Snippet>;
+    User: ResolverTypeWrapper<User>;
     Mutation: ResolverTypeWrapper<{}>;
     CommentOrError: ResolversTypes["Comment"] | ResolversTypes["ContentError"];
     ContentError: ResolverTypeWrapper<ContentError>;
@@ -185,8 +186,8 @@ export interface ResolversParentTypes {
     String: Scalars["String"];
     Comment: Comment;
     ID: Scalars["ID"];
-    User: User;
     Snippet: Snippet;
+    User: User;
     Mutation: {};
     CommentOrError: ResolversTypes["Comment"] | ResolversTypes["ContentError"];
     ContentError: ContentError;
@@ -232,6 +233,7 @@ export interface QueryResolvers<ContextType = any, ParentType = ResolversParentT
     getCommentById?: Resolver<Maybe<ResolversTypes["Comment"]>, ParentType, ContextType, QueryGetCommentByIdArgs>;
     getUserFollowers?: Resolver<Maybe<Array<ResolversTypes["String"]>>, ParentType, ContextType, QueryGetUserFollowersArgs>;
     getUserFollowing?: Resolver<Maybe<Array<ResolversTypes["String"]>>, ParentType, ContextType, QueryGetUserFollowingArgs>;
+    getFollowingSnippets?: Resolver<Maybe<Array<ResolversTypes["Snippet"]>>, ParentType, ContextType>;
     dummy?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
     errorFill?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
     me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;

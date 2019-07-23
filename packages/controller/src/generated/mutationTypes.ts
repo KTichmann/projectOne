@@ -3,7 +3,8 @@ import {
 	Error,
 	Scalars,
 	SnippetOrError,
-	CommentOrError
+	CommentOrError,
+	Snippet
 } from "./graphql";
 
 export interface LoginMutation {
@@ -54,4 +55,8 @@ export interface CreateSnippetMutation {
 
 export interface CreateSnippetMutation {
 	deleteSnippet: Maybe<Scalars["Boolean"]>;
+}
+
+export interface FollowingSnippetsQuery {
+	getFollowingSnippets: Maybe<Snippet[]>;
 }

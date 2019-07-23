@@ -1,7 +1,7 @@
 import * as React from "react";
 import gql from "graphql-tag";
 import { CreateSnippetMutation } from "src/generated/mutationTypes";
-import { MutationCreateSnippetArgs } from "src/generated/graphql";
+import { MutationCreateSnippetArgs, ContentError } from "src/generated/graphql";
 import { ChildMutateProps, graphql } from "react-apollo";
 interface Props {
 	children: (data: {
@@ -21,7 +21,8 @@ class C extends React.PureComponent<
 			response.data &&
 			response.data.createSnippet
 		) {
-			if (!response.data.createSnippet.error) {
+			const result = response.data.createSnippet;
+			if (!(result as ContentError).error) {
 				return null;
 			}
 			return response.data.createSnippet;

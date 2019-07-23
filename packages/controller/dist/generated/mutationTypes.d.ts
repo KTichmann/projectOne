@@ -1,4 +1,4 @@
-import { Maybe, Error, Scalars, SnippetOrError, CommentOrError } from "./graphql";
+import { Maybe, Error, Scalars, SnippetOrError, CommentOrError, Snippet } from "./graphql";
 export interface LoginMutation {
     login: Maybe<Error[]>;
 }
@@ -37,4 +37,7 @@ export interface CreateSnippetMutation {
 }
 export interface CreateSnippetMutation {
     deleteSnippet: Maybe<Scalars["Boolean"]>;
+}
+export interface FollowingSnippetsQuery {
+    getFollowingSnippets: Maybe<Snippet[]>;
 }
