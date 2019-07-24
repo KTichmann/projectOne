@@ -23,22 +23,25 @@ var C = /** @class */ (function (_super) {
     function C(props) {
         var _this = _super.call(this, props) || this;
         _this.componentWillReceiveProps = function (newProps) {
-            var snippets = newProps.data.getFollowingSnippets;
-            if (typeof snippets !== "undefined" && snippets) {
-                _this.setState({ snippets: snippets });
+            var user = newProps.data.me;
+            if (typeof user !== "undefined" && user) {
+                _this.setState({ user: user });
             }
         };
         _this.state = {
-            snippets: []
+            user: {
+                username: "",
+                id: ""
+            }
         };
         return _this;
     }
     C.prototype.render = function () {
-        return this.props.children(this.state.snippets);
+        return this.props.children(this.state.user);
     };
     return C;
 }(React.PureComponent));
-var getFollowingSnippets = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery Query {\n\t\tgetFollowingSnippets {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t}\n\t}\n"], ["\n\tquery Query {\n\t\tgetFollowingSnippets {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t}\n\t}\n"])));
-export var FollowingSnippetsController = graphql(getFollowingSnippets)(C);
+var getMe = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery Query {\n\t\tme {\n\t\t\tid\n\t\t\tusername\n\t\t}\n\t}\n"], ["\n\tquery Query {\n\t\tme {\n\t\t\tid\n\t\t\tusername\n\t\t}\n\t}\n"])));
+export var MeController = graphql(getMe)(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map

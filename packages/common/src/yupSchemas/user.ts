@@ -18,6 +18,12 @@ const userPassword = yup
 	.max(255, "invalid login")
 	.required("Password field cannot be empty");
 
+const username = yup
+	.string()
+	.min(3, "username too short")
+	.max(255, "username too long")
+	.required("Username cannot be empty");
+
 export const userEmailSchema = yup.object().shape({
 	email: userEmail
 });
@@ -33,7 +39,8 @@ export const validUserSchema = yup.object().shape({
 		.max(255)
 		.email(invalidEmail)
 		.required(),
-	password: userPassword
+	password: userPassword,
+	username
 });
 
 export const loginSchema = yup.object().shape({

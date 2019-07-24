@@ -12,6 +12,7 @@ export declare const userPasswordSchema: yup.ObjectSchema<yup.Shape<object, {
 export declare const validUserSchema: yup.ObjectSchema<yup.Shape<object, {
     email: string;
     password: string;
+    username: string;
 }>>;
 export declare const loginSchema: yup.ObjectSchema<yup.Shape<object, {
     email: string;

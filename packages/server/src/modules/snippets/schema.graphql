@@ -1,39 +1,42 @@
 #import ContentError from "../../shared.graphql"
 
 type Snippet {
-  id: ID!
-  content: String!
-  language: String!
-  tags: [String]
-  user: String!
-  createdAt: String!
-  title: String!
+	id: ID!
+	content: String!
+	language: String!
+	tags: [String]
+	user: String!
+	theme: String!
+	createdAt: String!
+	title: String!
 }
 
 union SnippetOrError = Snippet | ContentError
 
 type Query {
-  getPublicSnippets: [Snippet]
-  getUserSnippets(userId: String!): [Snippet]
-  getSnippetById(snippetId: String!): Snippet
-  getSnippetsByTag(tag: String!): [Snippet]
+	getPublicSnippets: [Snippet]
+	getUserSnippets(userId: String!): [Snippet]
+	getSnippetById(snippetId: String!): Snippet
+	getSnippetsByTag(tag: String!): [Snippet]
 }
 
 type Mutation {
-  createSnippet(
-    content: String!
-    language: String!
-    visibility: String!
-    tags: [String!]
-    title: String!
-  ): SnippetOrError
-  updateSnippet(
-    id: String!
-    content: String
-    language: String
-    visibility: String
-    tags: [String!]
-    title: String!
-  ): SnippetOrError
-  deleteSnippet(snippetId: String!): Boolean
+	createSnippet(
+		content: String!
+		language: String!
+		visibility: String!
+		theme: String!
+		tags: [String!]
+		title: String!
+	): SnippetOrError
+	updateSnippet(
+		id: String!
+		content: String
+		language: String
+		visibility: String
+		theme: String
+		tags: [String!]
+		title: String!
+	): SnippetOrError
+	deleteSnippet(snippetId: String!): Boolean
 }

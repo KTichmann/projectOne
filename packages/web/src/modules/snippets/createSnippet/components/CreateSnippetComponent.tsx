@@ -1,8 +1,10 @@
 import React from "react";
-import { validSnippetSchema, SUPPORTED_LANGS } from "@abb/common";
+import {
+	validSnippetSchema,
+	SUPPORTED_LANGS,
+	SUPPORTED_THEMES
+} from "@abb/common";
 import { withFormik, FormikProps, Field, Form as FForm } from "formik";
-import { Container } from "../../../shared/InputStyles";
-import { TextAreaInput } from "../../../shared/TextArea";
 import { Button, Select } from "antd";
 import { selectInput } from "../../../shared/selectInput";
 import "./createSnippetStyles.css";
@@ -12,140 +14,172 @@ import { CodeMirror } from "../../../shared/CodeMirror";
 const { Option } = Select;
 
 interface FormValues {
-  content: string;
-  language: string;
-  visibility: string;
-  tags: string[];
+	content: string;
+	language: string;
+	visibility: string;
+	tags: string[];
 }
 
 interface Props {
-  submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
+	afterSubmit: (id: string) => void;
+	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
 class CreateSnippetComponentWithoutFormik extends React.PureComponent<
-  FormikProps<FormValues> & Props,
-  { tags: string[]; language: string }
+	FormikProps<FormValues> & Props,
+	{ tags: string[]; language: string; theme: string }
 > {
-  constructor(props: FormikProps<FormValues> & Props) {
-    super(props);
+	constructor(props: FormikProps<FormValues> & Props) {
+		super(props);
 
-    this.state = {
-      tags: [],
-      language: "html"
-    };
-  }
-  updateOptions = (e: any, type: string) => {
-    console.log(e);
-    const obj: any = {};
-    obj[type] = e;
-    this.setState(obj);
-    this.props.setFieldValue(type, e);
-  };
-  render() {
-    return (
-      <div>
-        <FForm style={{ display: "flex", margin: "auto" }}>
-          <Container style={{ width: "100%" }}>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Field
-                name="title"
-                placeholder="Title"
-                style={{ width: "100px", marginBottom: "0px" }}
-                component={InputField}
-              />
-              <Field
-                name="language"
-                placeholder="Language"
-                onChange={(e: string) => {
-                  this.updateOptions(e, "language");
-                  this.setState({ language: e });
-                }}
-                style={{ width: "100px" }}
-                component={selectInput}
-              >
-                {[
-                  ...SUPPORTED_LANGS.map(option => (
-                    <Option key={option}>{option}</Option>
-                  ))
-                ]}
-              </Field>
-              <Field
-                name="visibility"
-                placeholder="Visibility"
-                onChange={(e: string[]) => this.updateOptions(e, "visibility")}
-                style={{ width: "100px", marginLeft: "20px" }}
-                component={selectInput}
-              >
-                {[
-                  <Option key="public">Public</Option>,
-                  <Option key="private">Private</Option>
-                ]}
-              </Field>
-            </div>
-            <Field
-              name="content"
-              placeholder="Create a snippet..."
-              rows={5}
-              value=""
-              language={this.state.language}
-              theme="darcula"
-              readOnly={false}
-              style={{ width: "100%", marginBottom: "0px" }}
-              onChange={(_: any, __: any, e: string) => {
-                console.log("changing");
-                this.updateOptions(e, "content");
-              }}
-              component={CodeMirror}
-            />
-            <FlexDiv>
-              <div style={{ flex: "15", marginRight: "50px" }}>
-                <Field
-                  name="tags"
-                  placeholder="Add some tags"
-                  mode="tags"
-                  onChange={(e: string[]) => this.updateOptions(e, "tags")}
-                  style={{ width: "100%", border: "none" }}
-                  component={selectInput}
-                >
-                  {[
-                    <Option key="Javascript">Javascript</Option>,
-                    <Option key="HTML">HTML</Option>,
-                    <Option key="CSS">CSS</Option>
-                  ]}
-                </Field>
-              </div>
-              <div style={{ flex: "1" }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  Post
-                </Button>
-              </div>
-            </FlexDiv>
-          </Container>
-        </FForm>
-      </div>
-    );
-  }
+		this.state = {
+			tags: [],
+			language: "html",
+			theme: "darcula"
+		};
+	}
+	updateOptions = (e: any, type: string) => {
+		const obj: any = {};
+		obj[type] = e;
+		this.setState(obj);
+		this.props.setFieldValue(type, e);
+	};
+	render() {
+		return (
+			<div
+				style={{
+					padding: "2rem 5rem",
+					borderRadius: "5px",
+					boxShadow: "0px 0px 1px 1px rgba(0,0,0,.2)"
+				}}>
+				<FForm style={{ display: "flex", margin: "auto" }}>
+					<div style={{ width: "100%" }}>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+								marginLeft: "1.5rem",
+								marginBottom: "1rem"
+							}}>
+							<div style={{ width: "30%" }}>
+								<Field
+									name='title'
+									placeholder='Title'
+									style={{
+										width: "100%",
+										marginBottom: "0px"
+									}}
+									component={InputField}
+								/>
+							</div>
+							<div style={{ display: "flex" }}>
+								<Field
+									name='theme'
+									placeholder='Theme'
+									onChange={(e: string) => {
+										this.updateOptions(e, "theme");
+										this.setState({ theme: e });
+									}}
+									style={{ width: "100px", margin: "0px 20px" }}
+									component={selectInput}>
+									{[
+										...SUPPORTED_THEMES.map(option => (
+											<Option key={option}>{option}</Option>
+										))
+									]}
+								</Field>
+								<Field
+									name='language'
+									placeholder='Language'
+									onChange={(e: string) => {
+										this.updateOptions(e, "language");
+										this.setState({ language: e });
+									}}
+									style={{ width: "100px" }}
+									component={selectInput}>
+									{[
+										...SUPPORTED_LANGS.map(option => (
+											<Option key={option}>{option}</Option>
+										))
+									]}
+								</Field>
+								<Field
+									name='visibility'
+									placeholder='Visibility'
+									onChange={(e: string[]) =>
+										this.updateOptions(e, "visibility")
+									}
+									style={{ width: "100px", marginLeft: "20px" }}
+									component={selectInput}>
+									{[
+										<Option key='public'>Public</Option>,
+										<Option key='private'>Private</Option>
+									]}
+								</Field>
+							</div>
+						</div>
+						<Field
+							name='content'
+							placeholder='Create a snippet...'
+							value=''
+							language={this.state.language}
+							theme={this.state.theme}
+							readOnly={false}
+							style={{
+								width: "100%",
+								boxShadow: "1px 1px 1px 1px rgba(0,0,0,.3)"
+							}}
+							onChange={(_: any, __: any, e: string) => {
+								this.updateOptions(e, "content");
+							}}
+							component={CodeMirror}
+						/>
+						<FlexDiv style={{ marginTop: "20px" }}>
+							<div style={{ flex: "15", marginRight: "50px" }}>
+								<Field
+									name='tags'
+									placeholder='Add some tags'
+									mode='tags'
+									onChange={(e: string[]) => this.updateOptions(e, "tags")}
+									style={{ width: "100%", border: "none" }}
+									component={selectInput}>
+									{[
+										<Option key='Javascript'>Javascript</Option>,
+										<Option key='HTML'>HTML</Option>,
+										<Option key='CSS'>CSS</Option>
+									]}
+								</Field>
+							</div>
+							<div style={{ flex: "1" }}>
+								<Button
+									type='primary'
+									htmlType='submit'
+									className='login-form-button'>
+									Post
+								</Button>
+							</div>
+						</FlexDiv>
+					</div>
+				</FForm>
+			</div>
+		);
+	}
 }
 
 export const CreateSnippetComponent = withFormik<Props, FormValues>({
-  validationSchema: validSnippetSchema,
-  mapPropsToValues: () => ({
-    content: "",
-    language: "javascript",
-    title: "",
-    visibility: "public",
-    tags: []
-  }),
-  handleSubmit: async (values, { props, setErrors, resetForm }) => {
-    console.log(props);
-    const errors = await props.submit(values);
-    if (errors) {
-      setErrors(errors);
-    }
-    resetForm();
-  }
+	validationSchema: validSnippetSchema,
+	mapPropsToValues: () => ({
+		content: "",
+		language: "html",
+		title: "",
+		visibility: "public",
+		theme: "darcula",
+		tags: []
+	}),
+	handleSubmit: async (values, { props }) => {
+		const snippet = await props.submit(values);
+		if (snippet) {
+			props.afterSubmit(snippet.id);
+		}
+	}
 })(CreateSnippetComponentWithoutFormik);

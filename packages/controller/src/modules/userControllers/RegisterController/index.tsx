@@ -40,8 +40,12 @@ class C extends React.PureComponent<
 }
 
 const registerMutation = gql`
-	mutation RegisterMutation($email: String!, $password: String!) {
-		register(email: $email, password: $password) {
+	mutation RegisterMutation(
+		$email: String!
+		$password: String!
+		$username: String!
+	) {
+		register(email: $email, password: $password, username: $username) {
 			path
 			message
 		}

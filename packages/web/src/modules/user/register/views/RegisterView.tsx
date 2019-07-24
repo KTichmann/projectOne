@@ -23,6 +23,12 @@ class RegisterViewWithoutFormik extends React.PureComponent<
 				<FForm style={{ display: "flex", margin: "auto" }}>
 					<Container>
 						<Field
+							name='username'
+							prefix={<Icon type='user' style={{ color: "rgba(0,0,0,.25)" }} />}
+							placeholder='Username'
+							component={InputField}
+						/>
+						<Field
 							name='email'
 							prefix={<Icon type='user' style={{ color: "rgba(0,0,0,.25)" }} />}
 							placeholder='Email'

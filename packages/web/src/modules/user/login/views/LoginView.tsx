@@ -11,6 +11,7 @@ interface FormValues {
 	password: string;
 }
 interface Props {
+	afterSubmit: () => void;
 	submit: (values: FormValues) => Promise<{ [key: string]: string } | null>;
 }
 
@@ -67,6 +68,8 @@ export const LoginView = withFormik<Props, FormValues>({
 		const errors = await props.submit(values);
 		if (errors) {
 			setErrors(errors);
+		} else {
+			props.afterSubmit();
 		}
 	}
 })(LoginViewWithoutFormik);
