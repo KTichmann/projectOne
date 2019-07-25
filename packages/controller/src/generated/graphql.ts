@@ -95,7 +95,9 @@ export interface MutationCreateSnippetArgs {
 	content: Scalars["String"];
 	language: Scalars["String"];
 	visibility: Scalars["String"];
+	theme: Scalars["String"];
 	tags?: Maybe<Array<Scalars["String"]>>;
+	title: Scalars["String"];
 }
 
 export interface MutationUpdateSnippetArgs {
@@ -103,7 +105,9 @@ export interface MutationUpdateSnippetArgs {
 	content?: Maybe<Scalars["String"]>;
 	language?: Maybe<Scalars["String"]>;
 	visibility?: Maybe<Scalars["String"]>;
+	theme?: Maybe<Scalars["String"]>;
 	tags?: Maybe<Array<Scalars["String"]>>;
+	title: Scalars["String"];
 }
 
 export interface MutationDeleteSnippetArgs {
@@ -166,7 +170,9 @@ export interface Snippet {
 	language: Scalars["String"];
 	tags?: Maybe<Array<Maybe<Scalars["String"]>>>;
 	user: Scalars["String"];
+	theme: Scalars["String"];
 	createdAt: Scalars["String"];
+	title: Scalars["String"];
 }
 
 export type SnippetOrError = Snippet | ContentError;
@@ -479,7 +485,9 @@ export interface SnippetResolvers<
 		ContextType
 	>;
 	user?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	theme?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 }
 
 export interface SnippetOrErrorResolvers<

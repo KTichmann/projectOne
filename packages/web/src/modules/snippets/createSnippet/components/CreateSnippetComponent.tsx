@@ -15,7 +15,9 @@ const { Option } = Select;
 
 interface FormValues {
 	content: string;
+	title: string;
 	language: string;
+	theme: string;
 	visibility: string;
 	tags: string[];
 }
@@ -176,10 +178,18 @@ export const CreateSnippetComponent = withFormik<Props, FormValues>({
 		theme: "darcula",
 		tags: []
 	}),
-	handleSubmit: async (values, { props }) => {
-		const snippet = await props.submit(values);
-		if (snippet) {
-			props.afterSubmit(snippet.id);
+	handleSubmit: async (values, { props, setErrors }) => {
+		console.log(values.content.length);
+		if (values.content.length > 500) {
+			console.log("errors");
+			setErrors({
+				title: "Snippet content cannot be longer than 500 characters"
+			});
+		} else {
+			const snippet = await props.submit(values);
+			if (snippet) {
+				props.afterSubmit(snippet.id);
+			}
 		}
 	}
 })(CreateSnippetComponentWithoutFormik);

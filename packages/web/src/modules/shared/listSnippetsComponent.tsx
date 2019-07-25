@@ -7,7 +7,7 @@ export class ListSnippetsComponent extends React.PureComponent<
 	},
 	{ snippets: any[] }
 > {
-	constructor(props: { snippets: any[] }) {
+	constructor(props: { snippets: any }) {
 		super(props);
 
 		this.state = {
@@ -15,8 +15,16 @@ export class ListSnippetsComponent extends React.PureComponent<
 		};
 	}
 
+	componentDidMount() {
+		if (this.props.snippets) {
+			this.setState({ snippets: this.props.snippets });
+		}
+	}
+
 	componentWillReceiveProps(newProps: any) {
-		this.setState({ snippets: newProps.snippets });
+		if (newProps.snippets) {
+			this.setState({ snippets: newProps.snippets });
+		}
 	}
 
 	render() {

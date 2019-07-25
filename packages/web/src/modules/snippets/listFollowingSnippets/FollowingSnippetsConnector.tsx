@@ -6,7 +6,9 @@ export class FollowingSnippetsConnector extends React.PureComponent {
 	render() {
 		return (
 			<FollowingSnippetsController>
-				{snippets => <ListSnippetsComponent snippets={snippets} />}
+				{snippets => (
+					<ListSnippetsComponent snippets={snippets.getFollowingSnippets} />
+				)}
 			</FollowingSnippetsController>
 		);
 	}

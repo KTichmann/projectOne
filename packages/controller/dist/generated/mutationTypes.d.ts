@@ -41,3 +41,12 @@ export interface CreateSnippetMutation {
 export interface FollowingSnippetsQuery {
     getFollowingSnippets: Maybe<Snippet[]>;
 }
+export interface PublicSnippetsQuery {
+    getPublicSnippets: Maybe<Snippet[]>;
+}
+export interface PublicSnippetsQuery {
+    getPublicSnippets: Maybe<Snippet[]>;
+}
+export interface GetSnippetByIdQuery {
+    getSnippetById: Maybe<Snippet>;
+}

@@ -24,10 +24,10 @@ export const SUPPORTED_THEMES = [
 
 const VISIBILITY_OPTIONS = ["public", "private"];
 
-const content = yup
-	.string()
-	.max(500, "invalid login")
-	.required("snippet content cannot be empty");
+// const content = yup
+// 	.string()
+// 	.max(500, "invalid login")
+// 	.required("snippet content cannot be empty");
 
 const language = yup
 	.mixed()
@@ -43,7 +43,6 @@ const visibility = yup.mixed().oneOf(VISIBILITY_OPTIONS);
 
 export const validSnippetSchema = yup.object().shape({
 	title,
-	content,
 	language,
 	theme,
 	visibility

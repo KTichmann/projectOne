@@ -24,7 +24,6 @@ export class PageLayout extends React.PureComponent<
 		};
 	}
 	onCollapse = (collapsed: boolean) => {
-		console.log(collapsed);
 		this.setState({ collapsed });
 	};
 
@@ -68,7 +67,7 @@ export class PageLayout extends React.PureComponent<
 						<Menu.Item key='1'>
 							<Link to='/'>
 								<Icon type='home' />
-								<span>Feed</span>
+								<span>Home</span>
 							</Link>
 						</Menu.Item>
 						<Menu.Item key='2'>
@@ -81,12 +80,20 @@ export class PageLayout extends React.PureComponent<
 						</Menu.Item>
 						<H1>Snippets</H1>
 						<Menu.Item key='3'>
-							<Icon type='plus-square' />
-							<span>Following</span>
+							<Link to='/following'>
+								<Icon type='plus-square' />
+								<span>Following</span>
+							</Link>
 						</Menu.Item>
 						<Menu.Item key='4'>
+							<Link to='/public'>
+								<Icon type='global' />
+								<span>Public</span>
+							</Link>
+						</Menu.Item>
+						<Menu.Item key='5'>
 							<Icon type='global' />
-							<span>Public</span>
+							<span>Starred</span>
 						</Menu.Item>
 					</Menu>
 				</Sider>
