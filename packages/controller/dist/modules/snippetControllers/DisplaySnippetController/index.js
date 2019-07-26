@@ -30,7 +30,7 @@ var C = /** @class */ (function (_super) {
         };
         _this.state = {
             snippet: {
-                noData: []
+                noData: true
             }
         };
         return _this;
@@ -47,7 +47,9 @@ var C = /** @class */ (function (_super) {
     return C;
 }(React.PureComponent));
 export { C };
-export var getSnippet = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery GetSnippetQuery (\n        $snippetId: String!\n\t){\n        {\n  getSnippetById(snippetId: $snippetId){\n      id\n      content\n      title\n      language\n      tags\n      user\n      theme\n      createdAt\n  }\n}\n\t}\n"], ["\n\tquery GetSnippetQuery (\n        $snippetId: String!\n\t){\n        {\n  getSnippetById(snippetId: $snippetId){\n      id\n      content\n      title\n      language\n      tags\n      user\n      theme\n      createdAt\n  }\n}\n\t}\n"])));
-export var DisplaySnippetController = graphql(getSnippet)(C);
+export var getSnippet = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery GetSnippetQuery($snippetId: String!) {\n\t\tgetSnippetById(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t}\n\t}\n"], ["\n\tquery GetSnippetQuery($snippetId: String!) {\n\t\tgetSnippetById(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t}\n\t}\n"])));
+export var DisplaySnippetController = graphql(getSnippet, {
+    options: function (props) { return ({ variables: { snippetId: props.snippetId } }); }
+})(C);
 var templateObject_1;
 //# sourceMappingURL=index.js.map

@@ -15,6 +15,7 @@ export const Snippet = (props: {
 	count: number;
 	snapId?: string;
 	username?: string;
+	hideCommentCount?: boolean;
 }) => {
 	const {
 		title,
@@ -25,16 +26,20 @@ export const Snippet = (props: {
 		theme,
 		count,
 		snapId,
-		username
+		username,
+		hideCommentCount
 	} = props;
-
 	return (
-		<Card style={{ width: "100%", padding: "0px" }} key={snapId}>
+		<Card style={{ width: "100%", padding: "0px" }}>
 			<Meta
 				style={{ marginBottom: "10px" }}
-				avatar={<Avatar src={avatar} />}
-				title={title}
-				description={username || ""}
+				avatar={
+					<Link to={`/user/${username}`}>
+						<Avatar src={avatar} />
+					</Link>
+				}
+				title={<Link to={`/snippet/${snapId}`}>{title}</Link>}
+				description={<Link to={`/user/${username}`}>username || "" </Link>}
 			/>
 			<CodeMirror
 				value={value}
@@ -45,14 +50,14 @@ export const Snippet = (props: {
 			<Meta
 				style={{ float: "left", margin: "10px" }}
 				description={tags.map(tag => (
-					<Tag>{tag}</Tag>
+					<Tag key={tag}>{tag}</Tag>
 				))}
 			/>
-			<Link to={`/snapshot/${snapId}`}>
+			<Link to={`/snippet/${snapId}`}>
 				<Meta
 					style={{ margin: "10px", float: "right" }}
-					avatar={<Icon type='message' />}
-					description={`${count} comments`}
+					avatar={hideCommentCount ? false : <Icon type='message' />}
+					description={hideCommentCount ? false : `${count} comments`}
 				/>
 			</Link>
 		</Card>

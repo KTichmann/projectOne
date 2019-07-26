@@ -1,10 +1,12 @@
 import * as React from "react";
 import gql from "graphql-tag";
 import { ChildDataProps, graphql } from "react-apollo";
-import { Snippet, QueryGetSnippetByIdArgs } from "src/generated/graphql";
+import { QueryGetSnippetByIdArgs, Snippet } from "src/generated/graphql";
 import { GetSnippetByIdQuery } from "src/generated/mutationTypes";
+
 export interface Props {
 	children: (data: { [key: string]: Snippet[] }) => JSX.Element | null;
+	snippetId: string;
 }
 
 export class C extends React.PureComponent<
@@ -17,7 +19,7 @@ export class C extends React.PureComponent<
 		super(props);
 		this.state = {
 			snippet: {
-				noData: []
+				noData: true
 			}
 		};
 	}
@@ -40,21 +42,17 @@ export class C extends React.PureComponent<
 }
 
 export const getSnippet = gql`
-	query GetSnippetQuery (
-        $snippetId: String!
-	){
-        {
-  getSnippetById(snippetId: $snippetId){
-      id
-      content
-      title
-      language
-      tags
-      user
-      theme
-      createdAt
-  }
-}
+	query GetSnippetQuery($snippetId: String!) {
+		getSnippetById(snippetId: $snippetId) {
+			id
+			content
+			title
+			language
+			tags
+			user
+			theme
+			createdAt
+		}
 	}
 `;
 
@@ -62,4 +60,6 @@ export const DisplaySnippetController = graphql<
 	Props,
 	GetSnippetByIdQuery,
 	QueryGetSnippetByIdArgs
->(getSnippet)(C);
+>(getSnippet, {
+	options: props => ({ variables: { snippetId: props.snippetId } })
+})(C);

@@ -7,6 +7,7 @@ import { ChangePasswordConnector } from "../modules/user/changePassword/ChangePa
 import { TextView } from "../modules/user/textPage/TextView";
 import { LayoutConnector } from "../modules/layout/LayoutConnector";
 import { PublicSnippetsConnector } from "../modules/snippets/listPublicSnippets/PublicSnippetsConnector";
+import { App } from "../modules/comments/CommentListComponent";
 
 export const Routes = () => (
 	<BrowserRouter>
@@ -23,8 +24,8 @@ export const Routes = () => (
 				path='/change-password/:key'
 				component={ChangePasswordConnector}
 			/>
-			<Route exact={true} path='/testing' component={PublicSnippetsConnector} />
 			<Route path='/m/' component={TextView} />
+			<Route path='/testing' component={App} />
 			<LayoutConnector />
 		</Switch>
 	</BrowserRouter>

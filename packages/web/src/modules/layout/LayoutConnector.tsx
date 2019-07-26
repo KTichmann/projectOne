@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import { Home } from "../home/homeView";
 import { FollowingSnippetsConnector } from "../snippets/listFollowingSnippets/FollowingSnippetsConnector";
 import { PublicSnippetsConnector } from "../snippets/listPublicSnippets/PublicSnippetsConnector";
+import { SnippetView } from "../snippets/displaySnippet/snippetView";
 
 export class LayoutConnector extends React.PureComponent {
 	render() {
@@ -23,6 +24,11 @@ export class LayoutConnector extends React.PureComponent {
 							exact={true}
 							path='/public'
 							component={PublicSnippetsConnector}
+						/>
+						<Route
+							exact={true}
+							path='/snippet/:snippetId'
+							component={SnippetView}
 						/>
 					</PageLayout>
 				)}

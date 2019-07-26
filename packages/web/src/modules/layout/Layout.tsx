@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout, Menu, Icon, Avatar, Input } from "antd";
-import { H1 } from "./LayoutStyles";
 import { Link } from "react-router-dom";
 
 const { Search } = Input;
@@ -63,38 +62,40 @@ export class PageLayout extends React.PureComponent<
 						{this.state.collapsed || this.state.user.username}
 					</div>
 					<Menu theme='dark' defaultSelectedKeys={["1"]} mode='inline'>
-						<H1>Menu</H1>
-						<Menu.Item key='1'>
-							<Link to='/'>
-								<Icon type='home' />
-								<span>Home</span>
-							</Link>
-						</Menu.Item>
-						<Menu.Item key='2'>
-							<Icon type='mail' />
-							<span>Notifications</span>
-						</Menu.Item>
-						<Menu.Item key='9'>
-							<Icon type='setting' />
-							<span>Settings</span>
-						</Menu.Item>
-						<H1>Snippets</H1>
-						<Menu.Item key='3'>
-							<Link to='/following'>
-								<Icon type='plus-square' />
-								<span>Following</span>
-							</Link>
-						</Menu.Item>
-						<Menu.Item key='4'>
-							<Link to='/public'>
+						<Menu.ItemGroup title='Menu'>
+							<Menu.Item key='1'>
+								<Link to='/'>
+									<Icon type='home' />
+									<span>Home</span>
+								</Link>
+							</Menu.Item>
+							<Menu.Item key='2'>
+								<Icon type='mail' />
+								<span>Notifications</span>
+							</Menu.Item>
+							<Menu.Item key='9'>
+								<Icon type='setting' />
+								<span>Settings</span>
+							</Menu.Item>
+						</Menu.ItemGroup>
+						<Menu.ItemGroup title='Snippets'>
+							<Menu.Item key='3'>
+								<Link to='/following'>
+									<Icon type='plus-square' />
+									<span>Following</span>
+								</Link>
+							</Menu.Item>
+							<Menu.Item key='4'>
+								<Link to='/public'>
+									<Icon type='global' />
+									<span>Public</span>
+								</Link>
+							</Menu.Item>
+							<Menu.Item key='5'>
 								<Icon type='global' />
-								<span>Public</span>
-							</Link>
-						</Menu.Item>
-						<Menu.Item key='5'>
-							<Icon type='global' />
-							<span>Starred</span>
-						</Menu.Item>
+								<span>Starred</span>
+							</Menu.Item>
+						</Menu.ItemGroup>
 					</Menu>
 				</Sider>
 				<Layout>
