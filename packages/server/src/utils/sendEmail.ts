@@ -1,32 +1,36 @@
-import * as SparkPost from "sparkpost";
+import * as nodemailer from "nodemailer";
 
 export const sendEmail = async (
 	recipient: string,
 	url: string
 	// linkText: string
 ) => {
-	const client = new SparkPost(process.env.SPARKPOST_API_KEY);
-	client.transmissions
-		.send({
-			content: {
-				from: "ktichmann@sparkpost.com",
-				subject: `Confirm Email`,
-				html: `
-	        <html>
-	            <body>
-	                <p>Please confirm your email by clicking the link below: </p>
-	                <a href="${url}">Click here to Activate your account</a>
-	            </body>
-	        </html>`
-			},
-			recipients: [{ address: recipient }]
-		})
-		.then(() => {
-			console.log("Woohoo! You just sent your first mailing!");
-		})
-		.catch(err => {
-			console.log("wrong");
+	const transporter = nodemailer.createTransport({
+		service: "gmail",
+		auth: {
+			user: process.env.EMAIL_USERNAME,
+			pass: process.env.EMAIL_PASSWORD
+		}
+	});
+	const mailOptions = {
+		from: process.env.EMAIL_USERNAME,
+		to: recipient,
+		subject: `From The Snippet Team`,
+		html: `
+		<html>
+		<body>
+			<p>Please confirm your email by clicking the link below: </p>
+			<a href="${url}">Click here to Activate your account</a>
+		</body>
+	</html>`
+	};
+
+	transporter.sendMail(mailOptions, (err: any, info: any) => {
+		if (err) {
 			console.log(err);
-		});
+		} else {
+			console.log(info);
+		}
+	});
 	// console.log("Sending Email! \n", recipient, url, linkText);
 };
