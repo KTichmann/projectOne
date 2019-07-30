@@ -57,7 +57,7 @@ declare namespace GQL {
 	}
 
 	interface IGetUserSnippetsOnQueryArguments {
-		userId: string;
+		username: string;
 	}
 
 	interface IGetSnippetByIdOnQueryArguments {

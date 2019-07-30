@@ -1,18 +1,23 @@
 import React from "react";
 import { Layout, Menu, Icon, Avatar, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
 
-export class PageLayout extends React.PureComponent<
-	{ children: any; user: { username: string; id: string } },
-	{ collapsed: boolean; user: { username: string; id: string } }
-> {
-	constructor(props: {
+class C extends React.PureComponent<
+	RouteComponentProps & {
 		children: any;
 		user: { username: string; id: string };
-	}) {
+	},
+	{ collapsed: boolean; user: { username: string; id: string } }
+> {
+	constructor(
+		props: RouteComponentProps & {
+			children: any;
+			user: { username: string; id: string };
+		}
+	) {
 		super(props);
 		this.state = {
 			collapsed: false,
@@ -69,14 +74,14 @@ export class PageLayout extends React.PureComponent<
 									<span>Home</span>
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='2'>
+							{/* <Menu.Item key='2'>
 								<Icon type='mail' />
 								<span>Notifications</span>
-							</Menu.Item>
-							<Menu.Item key='9'>
+							</Menu.Item> */}
+							{/* <Menu.Item key='9'>
 								<Icon type='setting' />
 								<span>Settings</span>
-							</Menu.Item>
+							</Menu.Item> */}
 						</Menu.ItemGroup>
 						<Menu.ItemGroup title='Snippets'>
 							<Menu.Item key='3'>
@@ -92,9 +97,15 @@ export class PageLayout extends React.PureComponent<
 								</Link>
 							</Menu.Item>
 							<Menu.Item key='5'>
+								<Link to='/my-snippets'>
+									<Icon type='global' />
+									<span>My Snippets</span>
+								</Link>
+							</Menu.Item>
+							{/* <Menu.Item key='5'>
 								<Icon type='global' />
 								<span>Starred</span>
-							</Menu.Item>
+							</Menu.Item> */}
 						</Menu.ItemGroup>
 					</Menu>
 				</Sider>
@@ -108,13 +119,15 @@ export class PageLayout extends React.PureComponent<
 							placeholder='Search'
 							enterButton
 							size='large'
-							onSearch={value => console.log(value)}
+							onSearch={value => this.props.history.push(`/search/${value}`)}
 						/>
 					</Header>
 					<Content style={{ margin: "0 16px" }}>{this.props.children}</Content>
-					<Footer style={{ textAlign: "center" }}>Footer Af</Footer>
+					<Footer style={{ textAlign: "center" }}>Footer</Footer>
 				</Layout>
 			</Layout>
 		);
 	}
 }
+
+export const PageLayout = withRouter(C);

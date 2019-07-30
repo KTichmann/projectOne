@@ -111,6 +111,7 @@ export interface Query {
     getUserSnippets?: Maybe<Array<Maybe<Snippet>>>;
     getSnippetById?: Maybe<Snippet>;
     getSnippetsByTag?: Maybe<Array<Maybe<Snippet>>>;
+    getMySnippets?: Maybe<Array<Maybe<Snippet>>>;
 }
 export interface QueryGetSnippetCommentsArgs {
     snippetId: Scalars["String"];
@@ -128,7 +129,7 @@ export interface QueryGetUserFollowingArgs {
     userId?: Maybe<Scalars["String"]>;
 }
 export interface QueryGetUserSnippetsArgs {
-    userId: Scalars["String"];
+    username: Scalars["String"];
 }
 export interface QueryGetSnippetByIdArgs {
     snippetId: Scalars["String"];
@@ -247,6 +248,7 @@ export interface QueryResolvers<ContextType = any, ParentType = ResolversParentT
     getUserSnippets?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType, QueryGetUserSnippetsArgs>;
     getSnippetById?: Resolver<Maybe<ResolversTypes["Snippet"]>, ParentType, ContextType, QueryGetSnippetByIdArgs>;
     getSnippetsByTag?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType, QueryGetSnippetsByTagArgs>;
+    getMySnippets?: Resolver<Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>, ParentType, ContextType>;
 }
 export interface SnippetResolvers<ContextType = any, ParentType = ResolversParentTypes["Snippet"]> {
     id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;

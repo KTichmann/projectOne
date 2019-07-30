@@ -65,6 +65,18 @@ export interface PublicSnippetsQuery {
 	getPublicSnippets: Maybe<Snippet[]>;
 }
 
+export interface UserSnippetsQuery {
+	getUserSnippets: Maybe<Snippet[]>;
+}
+
+export interface SearchSnippetsQuery {
+	searchSnippets: Maybe<Snippet[]>;
+}
+
+export interface MySnippetsQuery {
+	getMySnippets: Maybe<Snippet[]>;
+}
+
 export interface PublicSnippetsQuery {
 	getPublicSnippets: Maybe<Snippet[]>;
 }

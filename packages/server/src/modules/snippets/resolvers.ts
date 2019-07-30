@@ -4,6 +4,7 @@ import { createSnippet } from "./functions/createSnippet";
 import { updateSnippet } from "./functions/updateSnippet";
 import { deleteSnippet } from "./functions/deleteSnippet";
 import { addUsernamesToSnippets } from "./functions/addUsernamesToSnippets";
+import { Like } from "typeorm";
 
 export const resolvers: ResolverMap = {
 	SnippetOrError: {
@@ -24,8 +25,15 @@ export const resolvers: ResolverMap = {
 		},
 		getUserSnippets: async (
 			_,
-			{ userId }: GQL.IGetUserSnippetsOnQueryArguments
+			{ username }: GQL.IGetUserSnippetsOnQueryArguments
 		) => {
+			const res = await Snippet.find({
+				where: { username, visibility: "public" }
+			});
+			return addUsernamesToSnippets(res);
+		},
+		getMySnippets: async (_, __, { session }) => {
+			const userId = session.userId;
 			const res = await Snippet.find({
 				where: { userId }
 			});
@@ -62,6 +70,20 @@ export const resolvers: ResolverMap = {
 				user: obj.Snippet_user
 			}));
 			return addUsernamesToSnippets(cleanedRes);
+		},
+		searchSnippets: async (_, { query }: any) => {
+			const titleSearch = await Snippet.find({ where: { title: Like(query) } });
+			const userSearch = await Snippet.find({
+				where: { user: Like(query) }
+			});
+			const contentSearch = await Snippet.find({
+				where: { content: Like(query) }
+			});
+			return addUsernamesToSnippets([
+				...titleSearch,
+				...contentSearch,
+				...userSearch
+			]);
 		}
 	},
 	Mutation: {

@@ -5,6 +5,8 @@ export interface Props {
     children: (data: {
         [key: string]: Snippet[];
     }) => JSX.Element | null;
+    username?: string;
+    query?: string;
 }
 export declare class ListControllerTemplate extends React.PureComponent<ChildDataProps<Props, any>, {
     snippets: any;

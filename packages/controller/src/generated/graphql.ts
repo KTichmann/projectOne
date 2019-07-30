@@ -129,6 +129,7 @@ export interface Query {
 	getUserSnippets?: Maybe<Array<Maybe<Snippet>>>;
 	getSnippetById?: Maybe<Snippet>;
 	getSnippetsByTag?: Maybe<Array<Maybe<Snippet>>>;
+	getMySnippets?: Maybe<Array<Maybe<Snippet>>>;
 }
 
 export interface QueryGetSnippetCommentsArgs {
@@ -152,7 +153,7 @@ export interface QueryGetUserFollowingArgs {
 }
 
 export interface QueryGetUserSnippetsArgs {
-	userId: Scalars["String"];
+	username: Scalars["String"];
 }
 
 export interface QueryGetSnippetByIdArgs {
@@ -469,6 +470,11 @@ export interface QueryResolvers<
 		ParentType,
 		ContextType,
 		QueryGetSnippetsByTagArgs
+	>;
+	getMySnippets?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes["Snippet"]>>>,
+		ParentType,
+		ContextType
 	>;
 }
 

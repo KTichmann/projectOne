@@ -15,9 +15,11 @@ union SnippetOrError = Snippet | ContentError
 
 type Query {
 	getPublicSnippets: [Snippet]
-	getUserSnippets(userId: String!): [Snippet]
+	getUserSnippets(username: String!): [Snippet]
 	getSnippetById(snippetId: String!): Snippet
 	getSnippetsByTag(tag: String!): [Snippet]
+	getMySnippets: [Snippet]
+	searchSnippets(query: String!): [Snippet]
 }
 
 type Mutation {

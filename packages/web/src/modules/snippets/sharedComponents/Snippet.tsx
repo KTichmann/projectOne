@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar, Icon, Tag } from "antd";
+import { Card, Avatar, Icon, Tag, Row, Col } from "antd";
 import Meta from "antd/lib/card/Meta";
 import "./SnippetStyles.css";
 import { Link } from "react-router-dom";
@@ -31,16 +31,23 @@ export const Snippet = (props: {
 	} = props;
 	return (
 		<Card style={{ width: "100%", padding: "0px" }}>
-			<Meta
-				style={{ marginBottom: "10px" }}
-				avatar={
-					<Link to={`/user/${username}`}>
-						<Avatar src={avatar} />
-					</Link>
-				}
-				title={<Link to={`/snippet/${snapId}`}>{title}</Link>}
-				description={<Link to={`/user/${username}`}>username || "" </Link>}
-			/>
+			<Row type='flex' justify='space-between'>
+				<Col>
+					<Meta
+						style={{ marginBottom: "10px" }}
+						avatar={
+							<Link to={`/user/${username}`}>
+								<Avatar src={avatar} />
+							</Link>
+						}
+						title={<Link to={`/snippet/${snapId}`}>{title}</Link>}
+						description={
+							<Link to={`/user/${username}`}>{username || ""} </Link>
+						}
+					/>
+				</Col>
+			</Row>
+
 			<CodeMirror
 				value={value}
 				language={language}
@@ -53,13 +60,13 @@ export const Snippet = (props: {
 					<Tag key={tag}>{tag}</Tag>
 				))}
 			/>
-			<Link to={`/snippet/${snapId}`}>
+			{/* <Link to={`/snippet/${snapId}`}>
 				<Meta
 					style={{ margin: "10px", float: "right" }}
 					avatar={hideCommentCount ? false : <Icon type='message' />}
 					description={hideCommentCount ? false : `${count} comments`}
 				/>
-			</Link>
+			</Link> */}
 		</Card>
 	);
 };

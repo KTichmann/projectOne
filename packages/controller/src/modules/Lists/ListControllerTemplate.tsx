@@ -3,6 +3,8 @@ import { ChildDataProps } from "react-apollo";
 import { Snippet } from "src/generated/graphql";
 export interface Props {
 	children: (data: { [key: string]: Snippet[] }) => JSX.Element | null;
+	username?: string;
+	query?: string;
 }
 
 export class ListControllerTemplate extends React.PureComponent<
