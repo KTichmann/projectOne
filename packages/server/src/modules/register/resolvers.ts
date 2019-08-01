@@ -54,7 +54,7 @@ export const resolvers: ResolverMap = {
 				await sendEmail(
 					email,
 					await createConfirmEmailLink(url, user.id, mongo),
-					"Verify your email address"
+					"Please click the link below to verify your email address:"
 				);
 			}
 

@@ -15,8 +15,8 @@ export const confirmEmail = async (req: Request, res: Response, mongo: Db) => {
 
 		await collection.remove({ userId: { $eq: userId } }, { single: true });
 
-		res.redirect(process.env.FRONTEND_HOST as string);
+		res.redirect(`${process.env.FRONTEND_HOST as string}/login`);
 	} else {
-		res.send("invalid");
+		res.send("Not a valid url");
 	}
 };

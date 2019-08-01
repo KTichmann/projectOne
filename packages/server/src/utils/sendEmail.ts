@@ -1,15 +1,21 @@
 import * as nodemailer from "nodemailer";
+import console = require("console");
 
 export const sendEmail = async (
 	recipient: string,
-	url: string
-	// linkText: string
+	url: string,
+	linkText: string
 ) => {
+	console.log(url);
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
+		secure: false,
 		auth: {
 			user: process.env.EMAIL_USERNAME,
 			pass: process.env.EMAIL_PASSWORD
+		},
+		tls: {
+			rejectUnauthorized: false
 		}
 	});
 	const mailOptions = {
@@ -19,7 +25,7 @@ export const sendEmail = async (
 		html: `
 		<html>
 		<body>
-			<p>Please confirm your email by clicking the link below: </p>
+			<p>${linkText}</p>
 			<a href="${url}">Click here to Activate your account</a>
 		</body>
 	</html>`

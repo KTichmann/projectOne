@@ -41,7 +41,7 @@ export const resolvers: ResolverMap = {
 			);
 
 			// send email with the url
-			await sendEmail(email, url, "Reset your password here");
+			await sendEmail(email, url, "Reset your password here: ");
 
 			return true;
 		},
