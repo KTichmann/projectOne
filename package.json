@@ -9,7 +9,7 @@
 		"common:build": "cd ./packages/common && yarn build",
 		"server:build": "cd ./packages/server && yarn build && cd ../../ && yarn common:build",
 		"server:deploy": "cd ./packages/server && yarn build && git add . && git commit -m 'deploy to heroku' && git push && cd ../../ && git push heroku master",
-		"web:build": "cd ./packages/web && yarn build && cd ../.. && yarn common:build"
+		"web:build": "cd ./packages/web && yarn build"
 	},
 	"dependencies": {
 		"lerna": "^3.15.0",
