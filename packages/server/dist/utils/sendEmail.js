@@ -8,7 +8,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = (recipient, url) => __awaiter(this, void 0, void 0, function* () {
-    console.log(recipient, url);
+const nodemailer = require("nodemailer");
+const console = require("console");
+exports.sendEmail = (recipient, url, linkText) => __awaiter(this, void 0, void 0, function* () {
+    console.log(url);
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_USERNAME,
+            pass: process.env.EMAIL_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+    const mailOptions = {
+        from: process.env.EMAIL_USERNAME,
+        to: recipient,
+        subject: `From The Snippet Team`,
+        html: `
+		<html>
+		<body>
+			<p>${linkText}</p>
+			<a href="${url}">Click here to Activate your account</a>
+		</body>
+	</html>`
+    };
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(info);
+        }
+    });
 });
 //# sourceMappingURL=sendEmail.js.map

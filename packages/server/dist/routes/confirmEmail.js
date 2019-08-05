@@ -18,10 +18,10 @@ exports.confirmEmail = (req, res, mongo) => __awaiter(this, void 0, void 0, func
     if (userId) {
         yield User_1.User.update({ id: userId }, { confirmed: true });
         yield collection.remove({ userId: { $eq: userId } }, { single: true });
-        res.send("ok");
+        res.redirect(`${process.env.FRONTEND_HOST}/login`);
     }
     else {
-        res.send("invalid");
+        res.send("Not a valid url");
     }
 });
 //# sourceMappingURL=confirmEmail.js.map

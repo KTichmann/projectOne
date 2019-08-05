@@ -19,6 +19,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require("bcryptjs");
 const typeorm_1 = require("typeorm");
+const Snippet_1 = require("./Snippet");
+const Comment_1 = require("./Comment");
 let User = class User extends typeorm_1.BaseEntity {
     hashPasswordBeforeInsert() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -39,6 +41,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
+    typeorm_1.Column("text"),
+    __metadata("design:type", String)
+], User.prototype, "username", void 0);
+__decorate([
     typeorm_1.Column("boolean", { default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "confirmed", void 0);
@@ -46,6 +52,14 @@ __decorate([
     typeorm_1.Column("boolean", { default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "forgotPasswordLocked", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => Snippet_1.Snippet, snippet => snippet.user),
+    __metadata("design:type", Array)
+], User.prototype, "snippets", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => Comment_1.Comment, comment => comment.user),
+    __metadata("design:type", Array)
+], User.prototype, "comments", void 0);
 __decorate([
     typeorm_1.BeforeInsert(),
     __metadata("design:type", Function),

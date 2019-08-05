@@ -26,21 +26,29 @@ exports.resolvers = {
             catch (err) {
                 return formatYupError_1.formatYupError(err);
             }
-            const { email, password } = args;
-            const userAlreadyExists = yield User_1.User.findOne({
+            const { email, password, username } = args;
+            const userEmailAlreadyExists = yield User_1.User.findOne({
                 where: { email },
                 select: ["id"]
             });
-            if (userAlreadyExists) {
-                return [{ path: "email", message: errorMessages_1.duplicateEmail }];
+            if (userEmailAlreadyExists) {
+                return [{ path: "email", message: errorMessages_1.duplicate }];
+            }
+            const usernameAlreadyExists = yield User_1.User.findOne({
+                where: { username },
+                select: ["id"]
+            });
+            if (usernameAlreadyExists) {
+                return [{ path: "username", message: errorMessages_1.duplicate }];
             }
             const user = User_1.User.create({
                 email,
+                username,
                 password
             });
             yield user.save();
             if (process.env.NODE_ENV !== "test") {
-                yield sendEmail_1.sendEmail(email, yield createConfirmEmailLink_1.createConfirmEmailLink(url, user.id, mongo));
+                yield sendEmail_1.sendEmail(email, yield createConfirmEmailLink_1.createConfirmEmailLink(url, user.id, mongo), "Please click the link below to verify your email address:");
             }
             return null;
         })

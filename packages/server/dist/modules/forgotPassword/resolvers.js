@@ -11,11 +11,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const yup = require("yup");
 const bcrypt = require("bcryptjs");
 const createForgotPasswordLink_1 = require("../../utils/createForgotPasswordLink");
-const forgotPasswordLockAccount_1 = require("../../utils/forgotPasswordLockAccount");
 const User_1 = require("../../entity/User");
 const errorMessages_1 = require("./errorMessages");
 const yupSchemas_1 = require("../../yupSchemas");
 const formatYupError_1 = require("../../utils/formatYupError");
+const sendEmail_1 = require("../../utils/sendEmail");
 const schema = yup.object().shape({
     newPassword: yupSchemas_1.registerPasswordValidation
 });
@@ -27,10 +27,10 @@ exports.resolvers = {
         sendForgotPasswordEmail: (_, { email }, { mongo }) => __awaiter(this, void 0, void 0, function* () {
             const user = yield User_1.User.findOne({ where: { email } });
             if (!user) {
-                return [{ path: "email", message: errorMessages_1.userNotFoundError }];
+                return false;
             }
-            yield forgotPasswordLockAccount_1.forgotPasswordLockAccount(user.id);
-            yield createForgotPasswordLink_1.createForgotPasswordLink("", user.id, mongo);
+            const url = yield createForgotPasswordLink_1.createForgotPasswordLink(process.env.FRONTEND_HOST, user.id, mongo);
+            yield sendEmail_1.sendEmail(email, url, "Reset your password here: ");
             return true;
         }),
         forgotPasswordChange: (_, { newPassword, key }, { mongo }) => __awaiter(this, void 0, void 0, function* () {
@@ -39,7 +39,7 @@ exports.resolvers = {
             if (!forgotPasswordObj) {
                 return [
                     {
-                        path: "key",
+                        path: "password",
                         message: errorMessages_1.expiredKeyError
                     }
                 ];
