@@ -43,7 +43,6 @@
 		"type": "postgres",
 		"synchronize": true,
 		"logging": false,
-		"dropSchema": true,
 		"entities": ["dist/entity/**/*.js"],
 		"migrations": ["src/migration/**/*.js"],
 		"subscribers": ["src/subscriber/**/*.js"],

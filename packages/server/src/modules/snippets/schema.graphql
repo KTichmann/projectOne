@@ -9,6 +9,7 @@ type Snippet {
 	theme: String!
 	createdAt: String!
 	title: String!
+	comments: Int
 }
 
 union SnippetOrError = Snippet | ContentError

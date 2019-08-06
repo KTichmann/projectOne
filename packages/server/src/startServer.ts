@@ -12,68 +12,68 @@ const MongoStore = connectMongo(session);
 const MONGO_URL = process.env.MONGO_URL;
 
 export const startServer = async () => {
-  const mongo = await MongoDb();
+	const mongo = await MongoDb();
 
-  // make graphql server, passing in schema array to mergeSchemas to make one schema
-  const server = new GraphQLServer({
-    schema: genSchema(),
-    context: ({ request }) => ({
-      mongo,
-      url: request.protocol + "://" + request.get("host"),
-      session: request.session,
-      req: request
-    })
-  });
+	// make graphql server, passing in schema array to mergeSchemas to make one schema
+	const server = new GraphQLServer({
+		schema: genSchema(),
+		context: ({ request }) => ({
+			mongo,
+			url: request.protocol + "://" + request.get("host"),
+			session: request.session,
+			req: request
+		})
+	});
 
-  // const limiter = RateLimit({
-  // 	store: new RateLimitMongoStore({ uri: MONGO_URL }),
-  // 	max: 100,
-  // 	windowMs: 15 * 60 * 1000
-  // });
-  // server.express.use(limiter);
+	// const limiter = RateLimit({
+	// 	store: new RateLimitMongoStore({ uri: MONGO_URL }),
+	// 	max: 100,
+	// 	windowMs: 15 * 60 * 1000
+	// });
+	// server.express.use(limiter);
 
-  server.express.use(
-    session({
-      store: new MongoStore({
-        url: MONGO_URL as string,
-        stringify: false
-      }),
-      name: "tid",
-      secret: SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-      }
-    })
-  );
+	server.express.use(
+		session({
+			store: new MongoStore({
+				url: MONGO_URL as string,
+				stringify: false
+			}),
+			name: "tid",
+			secret: SESSION_SECRET,
+			resave: false,
+			saveUninitialized: false,
+			cookie: {
+				httpOnly: true,
+				secure: process.env.NODE_ENV === "production",
+				maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+			}
+		})
+	);
 
-  const cors = {
-    credentials: true,
-    origin:
-      process.env.NODE_ENV === "test"
-        ? "*"
-        : (process.env.FRONTEND_HOST as string)
-  };
+	const cors = {
+		credentials: true,
+		origin:
+			process.env.NODE_ENV === "test"
+				? "*"
+				: (process.env.FRONTEND_HOST as string)
+	};
 
-  server.express.get("/confirm/:id", (req, res) =>
-    confirmEmail(req, res, mongo)
-  );
+	server.express.get("/confirm/:id", (req, res) =>
+		confirmEmail(req, res, mongo)
+	);
 
-  // connect to our db through typeorm
-  await createTypeormConn();
-  const app = await server.start({
-    cors,
-    port: process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4000
-  });
+	// connect to our db through typeorm
+	await createTypeormConn();
+	const app = await server.start({
+		cors,
+		port: process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4001
+	});
 
-  console.log(
-    `Server is running on localhost:${
-      process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4000
-    }`
-  );
+	console.log(
+		`Server is running on localhost:${
+			process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 4001
+		}`
+	);
 
-  return app;
+	return app;
 };

@@ -5,6 +5,7 @@ import { updateSnippet } from "./functions/updateSnippet";
 import { deleteSnippet } from "./functions/deleteSnippet";
 import { addUsernamesToSnippets } from "./functions/addUsernamesToSnippets";
 import { Like } from "typeorm";
+import { addCommentCountsToSnippets } from "./functions/addCommentCountsToSnippets";
 
 export const resolvers: ResolverMap = {
 	SnippetOrError: {
@@ -30,14 +31,16 @@ export const resolvers: ResolverMap = {
 			const res = await Snippet.find({
 				where: { username, visibility: "public" }
 			});
-			return addUsernamesToSnippets(res);
+			const response = await addCommentCountsToSnippets(res);
+			return addUsernamesToSnippets(response);
 		},
 		getMySnippets: async (_, __, { session }) => {
 			const userId = session.userId;
 			const res = await Snippet.find({
 				where: { userId }
 			});
-			return addUsernamesToSnippets(res);
+			const response = await addCommentCountsToSnippets(res);
+			return addUsernamesToSnippets(response);
 		},
 		getSnippetById: async (
 			_,
@@ -69,7 +72,8 @@ export const resolvers: ResolverMap = {
 				tags: obj.Snippet_tags,
 				user: obj.Snippet_user
 			}));
-			return addUsernamesToSnippets(cleanedRes);
+			const response = await addCommentCountsToSnippets(cleanedRes);
+			return addUsernamesToSnippets(response);
 		},
 		searchSnippets: async (_, { query }: any) => {
 			const titleSearch = await Snippet.find({ where: { title: Like(query) } });
@@ -79,11 +83,12 @@ export const resolvers: ResolverMap = {
 			const contentSearch = await Snippet.find({
 				where: { content: Like(query) }
 			});
-			return addUsernamesToSnippets([
+			const response = await addCommentCountsToSnippets([
 				...titleSearch,
 				...contentSearch,
 				...userSearch
 			]);
+			return addUsernamesToSnippets(response);
 		}
 	},
 	Mutation: {
