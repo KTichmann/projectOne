@@ -42,7 +42,7 @@ const createSnippetGQLMutation = gql`
 		$visibility: String!
 		$title: String!
 		$tags: [String!] = []
-		$theme: String! = "darcula"
+		$theme: String! = "github"
 	) {
 		createSnippet(
 			content: $content

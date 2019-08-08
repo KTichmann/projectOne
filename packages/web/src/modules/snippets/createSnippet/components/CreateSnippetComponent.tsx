@@ -10,7 +10,7 @@ import { selectInput } from "../../../shared/selectInput";
 import "./createSnippetStyles.css";
 import { FlexDiv } from "./CreateSnippetStyles";
 import { InputField } from "../../../shared/InputField";
-import { CodeMirror } from "../../../shared/CodeMirror";
+import { CodeBlock } from "../../../shared/CodeBlock";
 const { Option } = Select;
 
 interface FormValues {
@@ -29,7 +29,7 @@ interface Props {
 
 class CreateSnippetComponentWithoutFormik extends React.PureComponent<
 	FormikProps<FormValues> & Props,
-	{ tags: string[]; language: string; theme: string }
+	{ tags: string[]; language: string; theme: string; content: string }
 > {
 	constructor(props: FormikProps<FormValues> & Props) {
 		super(props);
@@ -37,7 +37,8 @@ class CreateSnippetComponentWithoutFormik extends React.PureComponent<
 		this.state = {
 			tags: [],
 			language: "html",
-			theme: "darcula"
+			theme: "github",
+			content: ""
 		};
 	}
 	updateOptions = (e: any, type: string) => {
@@ -123,7 +124,7 @@ class CreateSnippetComponentWithoutFormik extends React.PureComponent<
 						<Field
 							name='content'
 							placeholder='Create a snippet...'
-							value=''
+							value={this.state.content}
 							language={this.state.language}
 							theme={this.state.theme}
 							readOnly={false}
@@ -131,10 +132,10 @@ class CreateSnippetComponentWithoutFormik extends React.PureComponent<
 								width: "100%",
 								boxShadow: "1px 1px 1px 1px rgba(0,0,0,.3)"
 							}}
-							onChange={(_: any, __: any, e: string) => {
+							onChange={(e: string) => {
 								this.updateOptions(e, "content");
 							}}
-							component={CodeMirror}
+							component={CodeBlock}
 						/>
 						<FlexDiv style={{ marginTop: "20px" }}>
 							<div style={{ flex: "15", marginRight: "50px" }}>
@@ -179,13 +180,12 @@ export const CreateSnippetComponent = withFormik<Props, FormValues>({
 		tags: []
 	}),
 	handleSubmit: async (values, { props, setErrors }) => {
-		console.log(values.content.length);
 		if (values.content.length > 500) {
-			console.log("errors");
 			setErrors({
 				title: "Snippet content cannot be longer than 500 characters"
 			});
 		} else {
+			console.log("values: ", values);
 			const snippet = await props.submit(values);
 			if (snippet) {
 				props.afterSubmit(snippet.id);

@@ -8,7 +8,7 @@ export const Snippet2 = () => (
 		language='htmlmixed'
 		tags={["live", "laugh", "love"]}
 		value='<div>testing</div>'
-		theme='darcula'
+		theme='github'
 		count={100}
 		snapId='100'
 	/>

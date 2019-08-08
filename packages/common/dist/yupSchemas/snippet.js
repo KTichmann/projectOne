@@ -3,23 +3,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const yup = require("yup");
 exports.SUPPORTED_LANGS = [
     "javascript",
+    "json",
     "html",
-    "python",
+    "typescript",
+    "jsx",
     "css",
+    "scss",
     "php",
     "ruby"
 ];
 exports.SUPPORTED_THEMES = [
-    "3024-day",
-    "3024-night",
-    "abcdef",
-    "blackboard",
+    "github",
+    "ambiance",
+    "chaos",
+    "chrome",
+    "clouds",
     "cobalt",
-    "darcula",
-    "duotone-dark",
-    "duotone-light",
+    "dawn",
+    "dracula",
+    "dreamweaver",
     "eclipse",
-    "elegant"
+    "gob",
+    "kuroir",
+    "pastel_on_dark",
+    "textmate",
+    "terminal"
 ];
 const VISIBILITY_OPTIONS = ["public", "private"];
 const language = yup
