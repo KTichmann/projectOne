@@ -1,16 +1,8 @@
 import React from "react";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
+import { CommentListConnector } from "./CommentListConnector";
 
 const { TextArea } = Input;
-
-const CommentList = ({ comments }: { comments: any[] }) => (
-	<List
-		dataSource={comments}
-		header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
-		itemLayout='horizontal'
-		renderItem={props => <Comment {...props} />}
-	/>
-);
 
 const Editor = ({
 	onChange,
@@ -36,7 +28,7 @@ const Editor = ({
 	</div>
 );
 
-export class App extends React.Component<
+export class CommentListComponent extends React.Component<
 	{},
 	{ comments: any[]; submitting: boolean; value: string }
 > {
@@ -84,7 +76,7 @@ export class App extends React.Component<
 
 		return (
 			<div>
-				{comments.length > 0 && <CommentList comments={comments} />}
+				<CommentListConnector snippetId='8f736f2c-2110-43ab-a441-8539094b3df2' />
 				<Comment
 					avatar={
 						<Avatar

@@ -23,32 +23,29 @@ var C = /** @class */ (function (_super) {
     function C(props) {
         var _this = _super.call(this, props) || this;
         _this.componentWillReceiveProps = function (newProps) {
-            var snippet = newProps.data;
-            if (typeof snippet !== "undefined" && snippet) {
-                _this.setState({ snippet: snippet });
+            var comments = newProps.data;
+            if (typeof comments !== "undefined" && comments.length > 0) {
+                _this.setState({ comments: comments });
             }
         };
         _this.state = {
-            snippet: {
-                noData: true
-            }
+            comments: []
         };
         return _this;
     }
     C.prototype.componentDidMount = function () {
-        var snippet = this.props.data;
-        if (typeof snippet !== "undefined" && snippet) {
-            this.setState({ snippet: snippet });
+        var comments = this.props.data;
+        if (typeof comments !== "undefined" && comments.length > 0) {
+            this.setState({ comments: comments });
         }
     };
     C.prototype.render = function () {
-        return this.props.children(this.state.snippet);
+        return this.props.children({ comments: this.state.comments });
     };
     return C;
 }(React.PureComponent));
-export { C };
-export var getSnippet = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery GetSnippetQuery($snippetId: String!) {\n\t\tgetSnippetById(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t\tcomments\n\t\t}\n\t}\n"], ["\n\tquery GetSnippetQuery($snippetId: String!) {\n\t\tgetSnippetById(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\ttitle\n\t\t\tlanguage\n\t\t\ttags\n\t\t\tuser\n\t\t\ttheme\n\t\t\tcreatedAt\n\t\t\tcomments\n\t\t}\n\t}\n"])));
-export var DisplaySnippetController = graphql(getSnippet, {
+export var getComments = gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tquery GetCommentsQuery($snippetId: String!) {\n\t\tgetSnippetComments(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\tuser\n\t\t\tcreatedAt\n\t\t}\n\t}\n"], ["\n\tquery GetCommentsQuery($snippetId: String!) {\n\t\tgetSnippetComments(snippetId: $snippetId) {\n\t\t\tid\n\t\t\tcontent\n\t\t\tuser\n\t\t\tcreatedAt\n\t\t}\n\t}\n"])));
+export var CommentListController = graphql(getComments, {
     options: function (props) { return ({ variables: { snippetId: props.snippetId } }); }
 })(C);
 var templateObject_1;

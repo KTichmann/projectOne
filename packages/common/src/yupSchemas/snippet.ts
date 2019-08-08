@@ -32,11 +32,6 @@ export const SUPPORTED_THEMES = [
 
 const VISIBILITY_OPTIONS = ["public", "private"];
 
-// const content = yup
-// 	.string()
-// 	.max(500, "invalid login")
-// 	.required("snippet content cannot be empty");
-
 const language = yup
 	.mixed()
 	.oneOf(SUPPORTED_LANGS, `language must be one of [${SUPPORTED_LANGS}]`);

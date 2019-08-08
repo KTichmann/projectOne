@@ -1,15 +1,14 @@
 import * as React from "react";
-// import { CommentController } from "@abb/controller";
-
-export class DisplaySnippetConnector extends React.PureComponent<{
+import { CommentList } from "./CommentList";
+import { CommentListController } from "@abb/controller";
+export class CommentListConnector extends React.PureComponent<{
 	snippetId: string;
 }> {
 	render() {
-		return test;
-		// <CommentController snippetId={this.props.snippetId}>
-		// 	{(comments: any[], submitComment: ) => {
-		// 		return <DisplaySnippetComponent snippet={snippet.getSnippetById} />;
-		// 	}}
-		// </CommentController>
+		return (
+			<CommentListController snippetId={this.props.snippetId}>
+				{({ comments }) => <CommentList comments={comments} />}
+			</CommentListController>
+		);
 	}
 }

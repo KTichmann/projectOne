@@ -52,6 +52,7 @@ export const getSnippet = gql`
 			user
 			theme
 			createdAt
+			comments
 		}
 	}
 `;

@@ -6,4 +6,5 @@ export * from "./modules/userControllers/ChangePasswordController";
 export * from "./modules/snippetControllers/CreateSnippetController";
 export * from "./modules/Lists";
 export * from "./modules/snippetControllers/DisplaySnippetController";
+export * from "./modules/commentControllers/commentListController";
 //# sourceMappingURL=index.js.map

@@ -26,6 +26,7 @@
 		"react-router": "^5.0.1",
 		"react-router-dom": "^5.0.1",
 		"react-scripts": "^3.0.1",
+		"react-spinkit": "^3.0.0",
 		"styled-components": "^4.3.2",
 		"typescript": "3.5.2",
 		"yup": "^0.27.0"
@@ -53,6 +54,7 @@
 	},
 	"devDependencies": {
 		"@types/react-router-dom": "^4.3.4",
+		"@types/react-spinkit": "^3.0.5",
 		"@types/styled-components": "^4.1.16",
 		"@types/yup": "^0.26.17",
 		"graphql-code-generator": "^0.18.2",

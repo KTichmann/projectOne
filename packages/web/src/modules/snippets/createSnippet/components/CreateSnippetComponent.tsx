@@ -176,16 +176,15 @@ export const CreateSnippetComponent = withFormik<Props, FormValues>({
 		language: "html",
 		title: "",
 		visibility: "public",
-		theme: "darcula",
+		theme: "github",
 		tags: []
 	}),
 	handleSubmit: async (values, { props, setErrors }) => {
-		if (values.content.length > 500) {
+		if (values.content.length > 1500) {
 			setErrors({
-				title: "Snippet content cannot be longer than 500 characters"
+				title: "Snippet content cannot be longer than 1500 characters"
 			});
 		} else {
-			console.log("values: ", values);
 			const snippet = await props.submit(values);
 			if (snippet) {
 				props.afterSubmit(snippet.id);

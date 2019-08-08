@@ -1,6 +1,8 @@
 import React from "react";
 import AceEditor from "react-ace";
 import brace from "brace";
+
+import "brace/ext/language_tools";
 import "brace/mode/javascript";
 import "brace/mode/json";
 import "brace/mode/html";
