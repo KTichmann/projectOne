@@ -1,5 +1,4 @@
 import * as nodemailer from "nodemailer";
-import console = require("console");
 
 export const sendEmail = async (
 	recipient: string,

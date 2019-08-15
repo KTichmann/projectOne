@@ -1,12 +1,13 @@
 import * as session from "express-session";
 import * as connectMongo from "connect-mongo";
-
+import * as bodyParser from "body-parser";
 import { GraphQLServer } from "graphql-yoga";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
 import { MongoDb } from "./utils/mongoDb";
-import { createEditor } from "./routes/createEditor";
+import { createSession } from "./routes/collab/createSession";
+import { addUsers } from "./routes/collab/addUsers";
 
 const SESSION_SECRET = "asdfj;124;hae[0u2q45nasdf1234";
 const MongoStore = connectMongo(session);
@@ -51,6 +52,8 @@ export const startServer = async () => {
 		})
 	);
 
+	server.express.use(bodyParser.urlencoded({ extended: false }));
+
 	const cors = {
 		credentials: true,
 		origin:
@@ -63,8 +66,12 @@ export const startServer = async () => {
 		confirmEmail(req, res, mongo)
 	);
 
-	server.express.get("/create/editor", (req, res) =>
-		createEditor(req, res, mongo)
+	server.express.post("/collab/create", (req, res) =>
+		createSession(req, res, mongo)
+	);
+
+	server.express.post("/collab/add-users", (req, res) =>
+		addUsers(req, res, mongo)
 	);
 
 	// connect to our db through typeorm

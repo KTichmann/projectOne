@@ -1,5 +1,4 @@
 import { Comment } from "../../../entity/Comment";
-import console = require("console");
 
 export const addCommentCountsToSnippets = async (snippetArr: any[]) => {
 	const result = snippetArr.map(async snippet => {
