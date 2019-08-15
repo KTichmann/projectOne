@@ -39,7 +39,6 @@ export class DisplaySnippetComponent extends React.PureComponent<
 			user,
 			comments
 		} = this.state.snippet;
-		console.log(this.state.snippet);
 		return this.state.snippet ? (
 			<Snippet
 				key={id}

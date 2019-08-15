@@ -78,12 +78,14 @@ export const resolvers: ResolverMap = {
 			return addUsernamesToSnippets(response);
 		},
 		searchSnippets: async (_, { query }: any) => {
-			const titleSearch = await Snippet.find({ where: { title: Like(query) } });
+			const titleSearch = await Snippet.find({
+				where: { title: Like(`%${query}%`) }
+			});
 			const userSearch = await Snippet.find({
-				where: { user: Like(query) }
+				where: { user: Like(`%${query}%`) }
 			});
 			const contentSearch = await Snippet.find({
-				where: { content: Like(query) }
+				where: { content: Like(`%${query}%`) }
 			});
 			const response = await addCommentCountsToSnippets([
 				...titleSearch,
