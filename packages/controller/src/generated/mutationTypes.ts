@@ -1,86 +1,90 @@
 import {
-	Maybe,
-	Error,
-	Scalars,
-	SnippetOrError,
-	CommentOrError,
-	Snippet
+  Maybe,
+  Error,
+  Scalars,
+  SnippetOrError,
+  CommentOrError,
+  Snippet
 } from "./graphql";
 
 export interface LoginMutation {
-	login: Maybe<Error[]>;
+  login: Maybe<Error[]>;
 }
 export interface RegisterMutation {
-	register: Maybe<Error[]>;
+  register: Maybe<Error[]>;
 }
 export interface ForgotPasswordEmailMutation {
-	sendForgotPasswordEmail: Maybe<Scalars["Boolean"]>;
+  sendForgotPasswordEmail: Maybe<Scalars["Boolean"]>;
 }
 
 export interface ChangePasswordMutation {
-	forgotPasswordChange: Maybe<Error[]>;
+  forgotPasswordChange: Maybe<Error[]>;
 }
 
 export interface CreateSnippetMutation {
-	createSnippet: Maybe<SnippetOrError>;
+  createSnippet: Maybe<SnippetOrError>;
 }
 
 export interface CreateCommentMutation {
-	createComment: Maybe<CommentOrError>;
+  createComment: Maybe<CommentOrError>;
 }
 
 export interface UpdateCommentMutation {
-	updateComment: Maybe<CommentOrError>;
+  updateComment: Maybe<CommentOrError>;
 }
 
 export interface DeleteCommentMutation {
-	deleteComment?: Maybe<Scalars["Boolean"]>;
+  deleteComment?: Maybe<Scalars["Boolean"]>;
 }
 
 export interface FollowUserMutation {
-	followUser: Maybe<Array<Maybe<Error>>>;
+  followUser: Maybe<Array<Maybe<Error>>>;
 }
 
 export interface UnfollowUserMutation {
-	unfollowUser: Maybe<Array<Maybe<Error>>>;
+  unfollowUser: Maybe<Array<Maybe<Error>>>;
 }
 
 export interface CreateSnippetMutation {
-	createSnippet: Maybe<SnippetOrError>;
+  createSnippet: Maybe<SnippetOrError>;
 }
 
 export interface CreateSnippetMutation {
-	updateSnippet: Maybe<SnippetOrError>;
+  updateSnippet: Maybe<SnippetOrError>;
 }
 
 export interface CreateSnippetMutation {
-	deleteSnippet: Maybe<Scalars["Boolean"]>;
+  deleteSnippet: Maybe<Scalars["Boolean"]>;
 }
 
 export interface FollowingSnippetsQuery {
-	getFollowingSnippets: Maybe<Snippet[]>;
+  getFollowingSnippets: Maybe<Snippet[]>;
 }
 
 export interface PublicSnippetsQuery {
-	getPublicSnippets: Maybe<Snippet[]>;
+  getPublicSnippets: Maybe<Snippet[]>;
 }
 
 export interface UserSnippetsQuery {
-	getUserSnippets: Maybe<Snippet[]>;
+  getUserSnippets: Maybe<Snippet[]>;
 }
 
 export interface SearchSnippetsQuery {
-	searchSnippets: Maybe<Snippet[]>;
+  searchSnippets: Maybe<Snippet[]>;
 }
 
 export interface MySnippetsQuery {
-	getMySnippets: Maybe<Snippet[]>;
+  getMySnippets: Maybe<Snippet[]>;
 }
 
 export interface PublicSnippetsQuery {
-	getPublicSnippets: Maybe<Snippet[]>;
+  getPublicSnippets: Maybe<Snippet[]>;
 }
 
 export interface GetSnippetByIdQuery {
-	getSnippetById: Maybe<Snippet>;
+  getSnippetById: Maybe<Snippet>;
+}
+
+export interface CreateCommentMutation {
+  createComment: Maybe<CommentOrError>;
 }

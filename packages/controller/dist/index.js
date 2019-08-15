@@ -7,4 +7,5 @@ export * from "./modules/snippetControllers/CreateSnippetController";
 export * from "./modules/Lists";
 export * from "./modules/snippetControllers/DisplaySnippetController";
 export * from "./modules/commentControllers/commentListController";
+export * from "./modules/commentControllers/addCommentController";
 //# sourceMappingURL=index.js.map

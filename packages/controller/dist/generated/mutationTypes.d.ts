@@ -59,3 +59,6 @@ export interface PublicSnippetsQuery {
 export interface GetSnippetByIdQuery {
     getSnippetById: Maybe<Snippet>;
 }
+export interface CreateCommentMutation {
+    createComment: Maybe<CommentOrError>;
+}
