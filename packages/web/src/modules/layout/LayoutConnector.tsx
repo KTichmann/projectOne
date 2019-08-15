@@ -10,7 +10,7 @@ import { SnippetView } from "../snippets/displaySnippet/snippetView";
 import { UserSnippetView } from "../snippets/listUserSnippets/UserSnippetView";
 import { MySnippetsConnector } from "../snippets/listMySnippets/MySnippetsConnector";
 import { SearchSnippetsView } from "../snippets/searchSnippets/SearchSnippetsView";
-import { LoginView } from "../user/login/views/LoginView";
+import { LoginConnector } from "../user/login/LoginConnector";
 
 export class LayoutConnector extends React.PureComponent {
 	render() {
@@ -24,42 +24,73 @@ export class LayoutConnector extends React.PureComponent {
 							path='/public'
 							component={PublicSnippetsConnector}
 						/>
-						{user.id ? (
-							[
-								<Route
-									key='1'
-									exact={true}
-									path='/following'
-									component={FollowingSnippetsConnector}
-								/>,
-								<Route
-									key='2'
-									exact={true}
-									path='/snippet/:snippetId'
-									component={SnippetView}
-								/>,
-								<Route
-									key='3'
-									exact={true}
-									path='/user/:username'
-									component={UserSnippetView}
-								/>,
-								<Route
-									key='4'
-									exact={true}
-									path='/my-snippets'
-									component={MySnippetsConnector}
-								/>,
-								<Route
-									key='5'
-									exact={true}
-									path='/search/:query'
-									component={SearchSnippetsView}
-								/>
-							]
-						) : (
-							<Route path='/' component={LoginView} />
-						)}
+						{user.id
+							? [
+									<Route
+										key='1'
+										exact={true}
+										path='/following'
+										component={FollowingSnippetsConnector}
+									/>,
+									<Route
+										key='2'
+										exact={true}
+										path='/snippet/:snippetId'
+										component={SnippetView}
+									/>,
+									<Route
+										key='3'
+										exact={true}
+										path='/user/:username'
+										component={UserSnippetView}
+									/>,
+									<Route
+										key='4'
+										exact={true}
+										path='/my-snippets'
+										component={MySnippetsConnector}
+									/>,
+									<Route
+										key='5'
+										exact={true}
+										path='/search/:query'
+										component={SearchSnippetsView}
+									/>
+							  ]
+							: [
+									<Route
+										key='1'
+										exact={true}
+										path='/following'
+										component={LoginConnector}
+									/>,
+									<Route
+										key='2'
+										exact={true}
+										path='/snippet/:snippetId'
+										component={LoginConnector}
+									/>,
+									<Route
+										key='3'
+										exact={true}
+										path='/user/:username'
+										component={LoginConnector}
+									/>,
+									<Route
+										key='4'
+										exact={true}
+										path='/my-snippets'
+										component={LoginConnector}
+									/>,
+									<Route
+										key='5'
+										exact={true}
+										path='/search/:query'
+										component={LoginConnector}
+									/>
+							  ]
+						// <Route path='/' exact={true} component={LoginView} />
+						}
 					</PageLayout>
 				)}
 			</MeController>

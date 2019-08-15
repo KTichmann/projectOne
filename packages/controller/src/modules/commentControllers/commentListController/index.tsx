@@ -17,14 +17,14 @@ class C extends React.PureComponent<
 			comments: []
 		};
 	}
-	componentDidMount() {
-		const comments = this.props.data;
-		if (typeof comments !== "undefined" && comments.length > 0) {
-			this.setState({ comments });
-		}
-	}
+	// componentDidMount() {
+	// 	const comments = this.props.data;
+	// 	if (typeof comments !== "undefined" && comments.length > 0) {
+	// 		this.setState({ comments });
+	// 	}
+	// }
 	componentWillReceiveProps = (newProps: any) => {
-		const comments = newProps.data;
+		const comments = newProps.data.getSnippetComments;
 		if (typeof comments !== "undefined" && comments.length > 0) {
 			this.setState({ comments });
 		}

@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Rule } from "./styles/homeViewStyles";
-import { FollowingSnippetsConnector } from "../snippets/listFollowingSnippets/FollowingSnippetsConnector";
 import { CreateSnippetConnector } from "../snippets/createSnippet/CreateSnippetConnector";
 import { RouteComponentProps } from "react-router";
 import { PublicSnippetsConnector } from "../snippets/listPublicSnippets/PublicSnippetsConnector";

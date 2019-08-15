@@ -22,8 +22,14 @@ var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C(props) {
         var _this = _super.call(this, props) || this;
+        // componentDidMount() {
+        // 	const comments = this.props.data;
+        // 	if (typeof comments !== "undefined" && comments.length > 0) {
+        // 		this.setState({ comments });
+        // 	}
+        // }
         _this.componentWillReceiveProps = function (newProps) {
-            var comments = newProps.data;
+            var comments = newProps.data.getSnippetComments;
             if (typeof comments !== "undefined" && comments.length > 0) {
                 _this.setState({ comments: comments });
             }
@@ -33,12 +39,6 @@ var C = /** @class */ (function (_super) {
         };
         return _this;
     }
-    C.prototype.componentDidMount = function () {
-        var comments = this.props.data;
-        if (typeof comments !== "undefined" && comments.length > 0) {
-            this.setState({ comments: comments });
-        }
-    };
     C.prototype.render = function () {
         return this.props.children({ comments: this.state.comments });
     };

@@ -76,7 +76,7 @@ export class CommentListComponent extends React.Component<
 
 		return (
 			<div>
-				<CommentListConnector snippetId='8f736f2c-2110-43ab-a441-8539094b3df2' />
+				<CommentListConnector snippetId='745958b8-822f-4d6f-b8b8-00e8174425d0' />
 				<Comment
 					avatar={
 						<Avatar

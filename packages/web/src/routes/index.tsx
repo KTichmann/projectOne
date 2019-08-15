@@ -6,7 +6,7 @@ import { ForgotPasswordConnector } from "../modules/user/forgotPassword/ForgotPa
 import { ChangePasswordConnector } from "../modules/user/changePassword/ChangePasswordConnector";
 import { TextView } from "../modules/user/textPage/TextView";
 import { LayoutConnector } from "../modules/layout/LayoutConnector";
-import { CommentListComponent } from "../modules/comments/CommentListComponent";
+import { CommentListComponent } from "../modules/comments/commentList/CommentListComponent";
 
 export const Routes = () => (
 	<BrowserRouter>
