@@ -2,6 +2,7 @@ import React from "react";
 import { Snippet } from "../sharedComponents/Snippet";
 import Spinner from "react-spinkit";
 import { CommentListComponent } from "../../comments/commentList/CommentListComponent";
+
 export class DisplaySnippetComponent extends React.PureComponent<
   {
     snippet: any;
@@ -40,7 +41,6 @@ export class DisplaySnippetComponent extends React.PureComponent<
       user,
       comments
     } = this.state.snippet;
-    console.log(this.state.snippet);
     return this.state.snippet ? (
       <div>
         <Snippet

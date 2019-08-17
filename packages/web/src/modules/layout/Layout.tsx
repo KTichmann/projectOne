@@ -1,6 +1,8 @@
 import React from "react";
 import { Layout, Menu, Icon, Avatar, Input } from "antd";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import Avatars from "@dicebear/avatars";
+import sprites from "@dicebear/avatars-bottts-sprites";
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
@@ -44,6 +46,8 @@ class C extends React.PureComponent<
   }
 
   render() {
+    let avatars = new Avatars(sprites({}));
+    let avatar = avatars.create(this.state.user.username);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
@@ -51,11 +55,21 @@ class C extends React.PureComponent<
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <Avatar
+          <div
+            style={{
+              margin: "2rem auto",
+              display: "flow-root",
+              width: this.state.collapsed ? 60 : 100
+            }}
+            dangerouslySetInnerHTML={{
+              __html: avatar
+            }}
+          />
+          {/* <Avatar
             size={this.state.collapsed ? 60 : 100}
             icon="user"
             style={{ margin: "2rem auto", display: "flow-root" }}
-          />
+          /> */}
           <div
             style={{
               textAlign: "center",
