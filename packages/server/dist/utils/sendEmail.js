@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer = require("nodemailer");
-const console = require("console");
 exports.sendEmail = (recipient, url, linkText) => __awaiter(this, void 0, void 0, function* () {
     console.log(url);
     const transporter = nodemailer.createTransport({

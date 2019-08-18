@@ -14,6 +14,7 @@ const updateSnippet_1 = require("./functions/updateSnippet");
 const deleteSnippet_1 = require("./functions/deleteSnippet");
 const addUsernamesToSnippets_1 = require("./functions/addUsernamesToSnippets");
 const typeorm_1 = require("typeorm");
+const addCommentCountsToSnippets_1 = require("./functions/addCommentCountsToSnippets");
 exports.resolvers = {
     SnippetOrError: {
         __resolveType(obj, _, __) {
@@ -30,20 +31,23 @@ exports.resolvers = {
             const res = yield Snippet_1.Snippet.find({
                 where: { visibility: "public" }
             });
-            return addUsernamesToSnippets_1.addUsernamesToSnippets(res);
+            const response = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets(res);
+            return addUsernamesToSnippets_1.addUsernamesToSnippets(response);
         }),
         getUserSnippets: (_, { username }) => __awaiter(this, void 0, void 0, function* () {
             const res = yield Snippet_1.Snippet.find({
                 where: { username, visibility: "public" }
             });
-            return addUsernamesToSnippets_1.addUsernamesToSnippets(res);
+            const response = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets(res);
+            return addUsernamesToSnippets_1.addUsernamesToSnippets(response);
         }),
         getMySnippets: (_, __, { session }) => __awaiter(this, void 0, void 0, function* () {
             const userId = session.userId;
             const res = yield Snippet_1.Snippet.find({
                 where: { userId }
             });
-            return addUsernamesToSnippets_1.addUsernamesToSnippets(res);
+            const response = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets(res);
+            return addUsernamesToSnippets_1.addUsernamesToSnippets(response);
         }),
         getSnippetById: (_, { snippetId }) => __awaiter(this, void 0, void 0, function* () {
             const res = yield Snippet_1.Snippet.findOne({
@@ -53,7 +57,8 @@ exports.resolvers = {
                 return null;
             }
             const resultArr = yield addUsernamesToSnippets_1.addUsernamesToSnippets([res]);
-            return resultArr[0];
+            const result = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets(resultArr);
+            return result[0];
         }),
         getSnippetsByTag: (_, { tag }) => __awaiter(this, void 0, void 0, function* () {
             const res = yield Snippet_1.Snippet.createQueryBuilder()
@@ -68,7 +73,8 @@ exports.resolvers = {
                 tags: obj.Snippet_tags,
                 user: obj.Snippet_user
             }));
-            return addUsernamesToSnippets_1.addUsernamesToSnippets(cleanedRes);
+            const response = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets(cleanedRes);
+            return addUsernamesToSnippets_1.addUsernamesToSnippets(response);
         }),
         searchSnippets: (_, { query }) => __awaiter(this, void 0, void 0, function* () {
             const titleSearch = yield Snippet_1.Snippet.find({ where: { title: typeorm_1.Like(query) } });
@@ -78,11 +84,12 @@ exports.resolvers = {
             const contentSearch = yield Snippet_1.Snippet.find({
                 where: { content: typeorm_1.Like(query) }
             });
-            return addUsernamesToSnippets_1.addUsernamesToSnippets([
+            const response = yield addCommentCountsToSnippets_1.addCommentCountsToSnippets([
                 ...titleSearch,
                 ...contentSearch,
                 ...userSearch
             ]);
+            return addUsernamesToSnippets_1.addUsernamesToSnippets(response);
         })
     },
     Mutation: {

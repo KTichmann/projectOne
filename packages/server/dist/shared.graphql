@@ -1,9 +1,0 @@
-type Error {
-	path: String!
-	message: String!
-}
-
-type ContentError {
-	error: String!
-	message: String!
-}

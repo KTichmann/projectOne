@@ -23,7 +23,7 @@ __decorate([
     __metadata("design:type", String)
 ], Comment.prototype, "content", void 0);
 __decorate([
-    typeorm_1.Column("timestamp", { default: new Date() }),
+    typeorm_1.CreateDateColumn({ type: "timestamp" }),
     __metadata("design:type", Date)
 ], Comment.prototype, "createdAt", void 0);
 __decorate([
