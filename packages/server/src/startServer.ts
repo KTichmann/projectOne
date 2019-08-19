@@ -65,12 +65,6 @@ export const startServer = async () => {
     confirmEmail(req, res, mongo)
   );
 
-  server.express.use(express.static(path.join(__dirname, "build")));
-
-  server.express.get("/", (_, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-  });
-
   // connect to our db through typeorm
   await createTypeormConn();
   const app = await server.start({
