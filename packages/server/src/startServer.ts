@@ -1,6 +1,7 @@
 import * as session from "express-session";
 import * as connectMongo from "connect-mongo";
-
+import * as express from "express";
+import * as path from "path";
 import { GraphQLServer } from "graphql-yoga";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
@@ -61,6 +62,12 @@ export const startServer = async () => {
   server.express.get("/confirm/:id", (req, res) =>
     confirmEmail(req, res, mongo)
   );
+
+  server.express.use(express.static(path.join(__dirname, "build")));
+
+  server.express.get("/", (_, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
 
   // connect to our db through typeorm
   await createTypeormConn();
