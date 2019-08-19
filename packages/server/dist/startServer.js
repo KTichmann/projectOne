@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const session = require("express-session");
 const connectMongo = require("connect-mongo");
+const express = require("express");
+const path = require("path");
 const graphql_yoga_1 = require("graphql-yoga");
 const createTypeormConn_1 = require("./utils/createTypeormConn");
 const confirmEmail_1 = require("./routes/confirmEmail");
@@ -40,8 +42,9 @@ exports.startServer = () => __awaiter(this, void 0, void 0, function* () {
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 1000 * 60 * 60 * 24 * 7
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            sameSite: false
         }
     }));
     const cors = {
@@ -51,6 +54,10 @@ exports.startServer = () => __awaiter(this, void 0, void 0, function* () {
             : process.env.FRONTEND_HOST
     };
     server.express.get("/confirm/:id", (req, res) => confirmEmail_1.confirmEmail(req, res, mongo));
+    server.express.use(express.static(path.join(__dirname, "build")));
+    server.express.get("/", (_, res) => {
+        res.sendFile(path.join(__dirname, "build", "index.html"));
+    });
     yield createTypeormConn_1.createTypeormConn();
     const app = yield server.start({
         cors,
