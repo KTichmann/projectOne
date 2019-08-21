@@ -12,6 +12,7 @@ import { TestClient } from "../../utils/testClient";
 
 const email = "testing@test.com";
 const password = "testing";
+const username = "testing@test.com";
 
 let conn: Connection;
 beforeAll(async () => {
@@ -25,7 +26,7 @@ describe("register user", () => {
 	test("user registers successfully", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response = await client.register(email, password);
+		const response = await client.register(email, password, username);
 
 		expect(response.data).toEqual({ register: null });
 
@@ -40,7 +41,7 @@ describe("register user", () => {
 	test("duplicate email responds with correct error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response2: any = await client.register(email, password);
+		const response2: any = await client.register(email, password, username);
 		expect(response2.data.register).toHaveLength(1);
 		expect(response2.data.register[0]).toEqual({
 			path: "email",
@@ -51,7 +52,7 @@ describe("register user", () => {
 	test("invalid email responds with correct error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response3: any = await client.register("e", password);
+		const response3: any = await client.register("e", password, username);
 		expect(response3.data).toEqual({
 			register: [
 				{
@@ -69,7 +70,7 @@ describe("register user", () => {
 	test("invalid password responds with correct error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response4: any = await client.register(email, "t");
+		const response4: any = await client.register(email, "t", username);
 		expect(response4.data).toEqual({
 			register: [
 				{
@@ -82,7 +83,7 @@ describe("register user", () => {
 
 	test("invalid password and email responds with correct error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
-		const response4: any = await client.register("e", "t");
+		const response4: any = await client.register("e", "t", username);
 		expect(response4.data).toEqual({
 			register: [
 				{

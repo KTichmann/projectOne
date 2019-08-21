@@ -9,3 +9,4 @@ temp/
 dump.rdb
 .netlify/
 queries.txt
+*.env.test

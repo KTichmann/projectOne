@@ -1,26 +1,33 @@
-// import * as Redis from "ioredis";
 import fetch from "node-fetch";
 
 import { createConfirmEmailLink } from "./createConfirmEmailLink";
 import { createTypeormConn } from "./createTypeormConn";
 import { User } from "../entity/User";
 import { MongoDb } from "./mongoDb";
+import { TestClient } from "./testClient";
+import { Connection } from "typeorm";
 
 let userId: string;
-// const redis = new Redis();
+let conn: Connection;
 
 beforeAll(async () => {
-	await createTypeormConn();
-	const user = await User.create({
-		email: "bob5@bob.com",
-		password: "testing"
-	}).save();
+	conn = await createTypeormConn();
+	const email = "tom@bob.com";
+	const password = "jalksdf";
+	const username = "tom";
 
-	userId = user.id;
+	const client = new TestClient(process.env.TEST_HOST as string);
+	await client.register(email, password, username);
+	const user = await User.findOne({ where: { email } });
+	userId = user!.id;
+});
+
+afterAll(async () => {
+	conn.close();
 });
 
 describe("createConfirmEmailLink works", () => {
-	test("confirms user and clears key in redis", async () => {
+	test("confirms user and redirects", async () => {
 		const mongo = await MongoDb();
 
 		const url = await createConfirmEmailLink(
@@ -29,15 +36,10 @@ describe("createConfirmEmailLink works", () => {
 			mongo
 		);
 		const response = await fetch(url);
-		const text = await response.text();
-		expect(text).toEqual("ok");
+		const redirectURL = await response.url;
+		expect(redirectURL).toEqual(`${process.env.FRONTEND_HOST}/login`);
 
 		const user = await User.findOne({ where: { id: userId } });
 		expect((user as User).confirmed).toBeTruthy();
-
-		// const chunks = url.split("/");
-		// const key = chunks[chunks.length - 1];
-		// const value = await redis.get(key);
-		// expect(value).toBeNull();
 	});
 });

@@ -7,7 +7,6 @@ import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
 import { User } from "../../entity/User";
 import { expiredKeyError } from "./errorMessages";
 import { registerPasswordValidation } from "../../yupSchemas";
-import { formatYupError } from "../../utils/formatYupError";
 import { sendEmail } from "../../utils/sendEmail";
 
 // 20 minute timeout
@@ -65,7 +64,12 @@ export const resolvers: ResolverMap = {
 			try {
 				await schema.validate({ newPassword }, { abortEarly: true });
 			} catch (err) {
-				return formatYupError(err);
+				return [
+					{
+						message: err.message,
+						path: err.path
+					}
+				];
 			}
 			const hashedPassword = await bcrypt.hash(newPassword, 10);
 

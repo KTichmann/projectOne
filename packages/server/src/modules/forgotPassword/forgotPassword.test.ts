@@ -2,14 +2,16 @@ import { Connection } from "typeorm";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { User } from "../../entity/User";
 import { TestClient } from "../../utils/testClient";
-// import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
 import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
 import { forgotPasswordLocked } from "../login/errorMessages";
 import { passwordNotLongEnough } from "../register/errorMessages";
+import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
+import { MongoDb } from "../../utils/mongoDb";
 
 const email = "bobert@bobert.com";
 const password = "testing";
 const newPassword = "newPassword";
+const username = "bobert@bobert.com";
 let conn: Connection;
 let userId: any;
 
@@ -18,6 +20,7 @@ beforeAll(async () => {
 	const user = await User.create({
 		email,
 		password,
+		username,
 		confirmed: true
 	}).save();
 	userId = user.id;
@@ -30,9 +33,14 @@ afterAll(async () => {
 describe("forgot password", () => {
 	test("works", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
+		const mongo = await MongoDb();
 
-		// const url = await createForgotPasswordLink("", userId, );
-		const url = "CHANGE";
+		// const url =
+		const url = await createForgotPasswordLink(
+			"http://localhost:0",
+			userId,
+			mongo
+		);
 		await forgotPasswordLockAccount(userId);
 		const parts = url.split("/");
 		const key = parts[parts.length - 1];
@@ -48,7 +56,7 @@ describe("forgot password", () => {
 			}
 		});
 
-		// try chacnging to a password that's too short
+		// try changing to a password that's too short
 		expect(await client.forgotPasswordChange("a", key)).toEqual({
 			data: {
 				forgotPasswordChange: [

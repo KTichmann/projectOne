@@ -7,13 +7,13 @@ exports.invalidEmail = "email must be a valid email";
 exports.passwordNotLongEnough = "password must be at least 3 characters";
 const userEmail = yup
     .string()
-    .min(3, "invalid login")
+    .min(3, exports.emailNotLongEnough)
     .max(255, "invalid login")
     .email("Please enter a valid email")
     .required("Email field cannot be empty");
 const userPassword = yup
     .string()
-    .min(3, "invalid login")
+    .min(3, exports.passwordNotLongEnough)
     .max(255, "invalid login")
     .required("Password field cannot be empty");
 const username = yup
