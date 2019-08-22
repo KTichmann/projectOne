@@ -1,1 +1,0 @@
-{"version":3,"file":"removeAllUsersSessions.js","sourceRoot":"","sources":["../../src/utils/removeAllUsersSessions.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,uCAAoC;AAEvB,QAAA,sBAAsB,GAAG,CAAO,MAAc,EAAE,EAAE;IAC9D,MAAM,EAAE,GAAG,MAAM,iBAAO,CAAC,MAAM,CAAC,CAAC;IAEjC,MAAM,EAAE,CAAC,UAAU,CAAC,UAAU,CAAC,CAAC,UAAU,CAAC,EAAE,gBAAgB,EAAE,MAAM,EAAE,CAAC,CAAC;AAC1E,CAAC,CAAA,CAAC"}
