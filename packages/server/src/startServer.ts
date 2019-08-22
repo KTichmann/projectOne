@@ -1,7 +1,5 @@
 import * as session from "express-session";
 import * as connectMongo from "connect-mongo";
-import * as express from "express";
-import * as path from "path";
 import { GraphQLServer } from "graphql-yoga";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";

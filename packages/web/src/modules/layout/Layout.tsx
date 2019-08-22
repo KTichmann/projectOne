@@ -1,8 +1,7 @@
 import React from "react";
 import { Layout, Menu, Icon, Avatar, Input } from "antd";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import Avatars from "@dicebear/avatars";
-import sprites from "@dicebear/avatars-bottts-sprites";
+import TopToolbar from "./Toolbar";
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
@@ -46,8 +45,6 @@ class C extends React.PureComponent<
   }
 
   render() {
-    let avatars = new Avatars(sprites({}));
-    let avatar = avatars.create(this.state.user.username);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
@@ -55,21 +52,11 @@ class C extends React.PureComponent<
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <div
-            style={{
-              margin: "2rem auto",
-              display: "flow-root",
-              width: this.state.collapsed ? 60 : 100
-            }}
-            dangerouslySetInnerHTML={{
-              __html: avatar
-            }}
-          />
-          {/* <Avatar
+          <Avatar
             size={this.state.collapsed ? 60 : 100}
             icon="user"
             style={{ margin: "2rem auto", display: "flow-root" }}
-          /> */}
+          />
           <div
             style={{
               textAlign: "center",
@@ -126,22 +113,8 @@ class C extends React.PureComponent<
           </Menu>
         </Sider>
         <Layout>
-          <Header
-            style={{
-              background: "inherit",
-              padding: "3rem",
-              marginLeft: "4rem",
-              marginRight: "4rem",
-              marginBottom: "2rem"
-            }}
-          >
-            <Search
-              placeholder="Search"
-              enterButton
-              size="large"
-              style={{ width: "100%" }}
-              onSearch={value => this.props.history.push(`/search/${value}`)}
-            />
+          <Header>
+            <TopToolbar history={this.props.history} />
           </Header>
           <Content style={{ margin: "0 16px" }}>{this.props.children}</Content>
           <Footer style={{ textAlign: "center" }}>Footer</Footer>
