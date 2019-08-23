@@ -22,7 +22,11 @@ export class LayoutConnector extends React.PureComponent {
 						<Route
 							exact={true}
 							path='/public'
-							component={PublicSnippetsConnector}
+							component={() => (
+								<div style={{ padding: "100px" }}>
+									<PublicSnippetsConnector />
+								</div>
+							)}
 						/>
 						{user.id
 							? [
@@ -30,31 +34,51 @@ export class LayoutConnector extends React.PureComponent {
 										key='1'
 										exact={true}
 										path='/following'
-										component={FollowingSnippetsConnector}
+										component={(props: any) => (
+											<div style={{ padding: "100px" }}>
+												<FollowingSnippetsConnector {...props} />
+											</div>
+										)}
 									/>,
 									<Route
 										key='2'
 										exact={true}
 										path='/snippet/:snippetId'
-										component={SnippetView}
+										component={(props: any) => (
+											<div style={{ padding: "100px" }}>
+												<SnippetView {...props} />
+											</div>
+										)}
 									/>,
 									<Route
 										key='3'
 										exact={true}
 										path='/user/:username'
-										component={UserSnippetView}
+										component={(props: any) => (
+											<div style={{ padding: "100px" }}>
+												<UserSnippetView {...props} />
+											</div>
+										)}
 									/>,
 									<Route
 										key='4'
 										exact={true}
 										path='/my-snippets'
-										component={MySnippetsConnector}
+										component={(props: any) => (
+											<div style={{ padding: "100px" }}>
+												<MySnippetsConnector {...props} />
+											</div>
+										)}
 									/>,
 									<Route
 										key='5'
 										exact={true}
 										path='/search/:query'
-										component={SearchSnippetsView}
+										component={(props: any) => (
+											<div style={{ padding: "100px" }}>
+												<SearchSnippetsView {...props} />
+											</div>
+										)}
 									/>
 							  ]
 							: [
@@ -88,9 +112,7 @@ export class LayoutConnector extends React.PureComponent {
 										path='/search/:query'
 										component={LoginConnector}
 									/>
-							  ]
-						// <Route path='/' exact={true} component={LoginView} />
-						}
+							  ]}
 					</PageLayout>
 				)}
 			</MeController>
