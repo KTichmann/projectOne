@@ -1,1 +1,18 @@
 @import "~antd/dist/antd.css";
+
+.ant-layout-header {
+	z-index: 100;
+}
+
+.ant-layout-sider {
+	z-index: 101;
+}
+
+.ant-layout-sider-children {
+	position: fixed;
+	width: 200px;
+}
+
+.MuiAppBar-colorPrimary {
+	background-color: #001529;
+}

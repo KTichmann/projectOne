@@ -60,9 +60,9 @@ export class DisplaySnippetComponent extends React.PureComponent<
       </div>
     ) : (
       <Spinner
-        name="pacman"
+        name="folding-cube"
         color="#1890ff"
-        style={{ left: "53%", position: "absolute", top: "20%" }}
+        style={{ left: "50%", marginTop: 100 }}
       />
     );
   }
