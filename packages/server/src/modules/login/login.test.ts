@@ -42,7 +42,7 @@ const loginSetup = async () => {
 describe("login", () => {
 	test("email not found send back error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
-		await loginExpectError(client, "bob@bob.com", "whatever", invalidLogin);
+		return loginExpectError(client, "bob@bob.com", "whatever", invalidLogin);
 	});
 
 	test("email not confirmed", async () => {
@@ -52,7 +52,7 @@ describe("login", () => {
 
 		await User.update({ email }, { confirmed: true });
 
-		await loginExpectError(client, email, "aslkdfjaksdljf", invalidLogin);
+		return loginExpectError(client, email, "aslkdfjaksdljf", invalidLogin);
 	});
 
 	test("login successful", async () => {
@@ -60,6 +60,6 @@ describe("login", () => {
 
 		const response = await client.login(email, password);
 
-		expect(response.data).toEqual({ login: null });
+		return expect(response.data).toEqual({ login: null });
 	});
 });

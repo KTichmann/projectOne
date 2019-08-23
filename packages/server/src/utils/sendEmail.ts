@@ -5,7 +5,6 @@ export const sendEmail = async (
 	url: string,
 	linkText: string
 ) => {
-	console.log(url);
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
 		secure: false,

@@ -33,9 +33,9 @@ describe("me query", () => {
 
 	test("gets current user", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
-		client.login(email, password).then(async () => {
+		return client.login(email, password).then(async () => {
 			const response = await client.me();
-			expect(response.data).toEqual({
+			return expect(response.data).toEqual({
 				me: {
 					id: userId,
 					email

@@ -45,7 +45,7 @@ describe("forgot password", () => {
 		const parts = url.split("/");
 		const key = parts[parts.length - 1];
 		// make sure you can't login after you've locked your account
-		expect(await client.login(email, password)).toEqual({
+		const test1 = await expect(await client.login(email, password)).toEqual({
 			data: {
 				login: [
 					{
@@ -57,7 +57,7 @@ describe("forgot password", () => {
 		});
 
 		// try changing to a password that's too short
-		expect(await client.forgotPasswordChange("a", key)).toEqual({
+		const test2 = expect(await client.forgotPasswordChange("a", key)).toEqual({
 			data: {
 				forgotPasswordChange: [
 					{
@@ -70,14 +70,16 @@ describe("forgot password", () => {
 
 		// change password works
 		const response = await client.forgotPasswordChange(newPassword, key);
-		expect(response.data).toEqual({
+		const test3 = expect(response.data).toEqual({
 			forgotPasswordChange: null
 		});
 
-		expect(await client.login(email, newPassword)).toEqual({
+		const test4 = expect(await client.login(email, newPassword)).toEqual({
 			data: {
 				login: null
 			}
 		});
+
+		return Promise.all([test1, test2, test3, test4]);
 	});
 });

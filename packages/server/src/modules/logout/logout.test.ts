@@ -34,15 +34,17 @@ describe("logout", () => {
 		await sess1.login(email, password);
 		await sess2.login(email, password);
 
-		expect(await sess1.me()).toEqual(await sess2.me());
+		const test1 = expect(await sess1.me()).toEqual(await sess2.me());
 
 		await sess1.logout();
-		expect(await sess1.me()).toEqual(await sess2.me());
+		const test2 = expect(await sess1.me()).toEqual(await sess2.me());
+
+		return Promise.all([test1, test2]);
 	});
 	test("single session - logs out a user", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		client.login(email, password).then(async _ => {
+		const test1 = client.login(email, password).then(async _ => {
 			const response = await client.me();
 			expect(response.data).toEqual({
 				me: {
@@ -52,10 +54,12 @@ describe("logout", () => {
 			});
 		});
 
-		client.logout().then(async _ => {
+		const test2 = client.logout().then(async _ => {
 			const response2 = await client.me();
 
 			expect(response2.data.me).toBeNull();
 		});
+
+		return Promise.all([test1, test2]);
 	});
 });

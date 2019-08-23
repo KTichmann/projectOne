@@ -91,4 +91,52 @@ export class TestClient {
 			}
 		});
 	}
+
+	async createSnippet(snippet: any) {
+		const { content, language, visibility, tags, title, theme } = snippet;
+		return rp.post(this.url, {
+			...this.options,
+			body: {
+				query: `
+				mutation {
+					createSnippet(
+					content: "${content}"
+					language: "${language}"
+					visibility: "${visibility}"
+					tags: "${tags}"
+					${title ? `title: "${title}"` : ``}
+					theme: "${theme}"
+				) {
+					... on Snippet {
+						content
+						language
+						title
+						theme
+					}
+					... on ContentError {
+						error
+						message
+					}
+				}
+			}
+				`
+			}
+		});
+	}
+
+	async getMySnippets() {
+		return rp.post(this.url, {
+			...this.options,
+			body: {
+				query: `{
+					getMySnippets{
+						content
+						language
+						title
+						theme
+					}
+				}`
+			}
+		});
+	}
 }
