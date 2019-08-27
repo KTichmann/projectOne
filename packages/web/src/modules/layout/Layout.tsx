@@ -2,6 +2,8 @@ import React from "react";
 import { Layout, Menu, Icon, Avatar, Input } from "antd";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import TopToolbar from "./Toolbar";
+import Avatars from "@dicebear/avatars";
+import sprites from "@dicebear/avatars-bottts-sprites";
 
 const { Search } = Input;
 const { Header, Content, Footer, Sider } = Layout;
@@ -45,22 +47,32 @@ class C extends React.PureComponent<
 	}
 
 	render() {
+		const avatars = new Avatars(sprites({}));
+		const avatar = avatars.create(this.state.user.username!);
 		return (
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sider
 					collapsible
 					collapsed={this.state.collapsed}
 					onCollapse={this.onCollapse}>
-					<Avatar
-						size={this.state.collapsed ? 60 : 100}
-						icon='user'
+					<div
+						dangerouslySetInnerHTML={{
+							__html: avatar
+						}}
 						style={{
+							width: this.state.collapsed ? "60px" : "120px",
 							margin: "2rem auto",
 							marginLeft: this.state.collapsed ? ".7rem" : "auto",
+							marginBottom: "0px",
 							display: "flow-root",
 							transition: "all .4s"
 						}}
 					/>
+					{/* <Avatar
+						size={this.state.collapsed ? 60 : 100}
+						icon={avatar}
+
+					/> */}
 					<div
 						style={{
 							textAlign: "center",
@@ -122,7 +134,10 @@ class C extends React.PureComponent<
 						padding: "0px",
 						backgroundColor: "#001529"
 					}}>
-					<TopToolbar history={this.props.history} />
+					<TopToolbar
+						history={this.props.history}
+						user={this.state.user.username}
+					/>
 				</Header>
 				<Layout>
 					<Content

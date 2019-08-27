@@ -7,6 +7,7 @@ import { ChangePasswordConnector } from "../modules/user/changePassword/ChangePa
 import { TextView } from "../modules/user/textPage/TextView";
 import { LayoutConnector } from "../modules/layout/LayoutConnector";
 import { CommentListComponent } from "../modules/comments/commentList/CommentListComponent";
+import { LogoutConnector } from "../modules/user/logout/logoutConnector";
 
 export const Routes = () => (
 	<BrowserRouter>
@@ -25,6 +26,7 @@ export const Routes = () => (
 			/>
 			<Route exact={true} path='/comments' component={CommentListComponent} />
 			<Route path='/m/' component={TextView} />
+			<Route path='/log-out' exact={true} component={LogoutConnector} />
 			<LayoutConnector />
 		</Switch>
 	</BrowserRouter>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar, Icon, Tag, Row, Col } from "antd";
+import { Card, Icon, Tag, Row } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Avatars from "@dicebear/avatars";
 import sprites from "@dicebear/avatars-bottts-sprites";

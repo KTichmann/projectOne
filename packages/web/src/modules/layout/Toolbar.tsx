@@ -10,6 +10,7 @@ import {
 	createMuiTheme
 } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: any) => ({
 	root: {
@@ -45,10 +46,17 @@ const useStyles = makeStyles((theme: any) => ({
 		position: "absolute",
 		zIndex: 103,
 		cursor: "pointer",
-		// pointerEvents: "none",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center"
+	},
+	logOut: {
+		backgroundColor: "white",
+		margin: "5px 0",
+		lineHeight: "40px",
+		borderRadius: "10px",
+		padding: "0px 20px",
+		marginLeft: "20px"
 	},
 	inputRoot: {
 		color: "inherit"
@@ -72,7 +80,7 @@ const mainTheme = createMuiTheme({
 	}
 });
 
-export default function TopToolbar(props: { history: any }) {
+export default function TopToolbar(props: { history: any; user: any }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
 
@@ -81,9 +89,7 @@ export default function TopToolbar(props: { history: any }) {
 			<div className={classes.root}>
 				<AppBar position='static' color='primary'>
 					<Toolbar>
-						<Typography className={classes.title} variant='h6' noWrap>
-							Material-UI
-						</Typography>
+						<Typography className={classes.title} variant='h6' noWrap />
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
 								<SearchIcon
@@ -110,6 +116,15 @@ export default function TopToolbar(props: { history: any }) {
 									}
 								}}
 							/>
+						</div>
+						<div className={classes.logOut}>
+							<Button>
+								{props.user ? (
+									<a href='/log-out'>Log Out</a>
+								) : (
+									<a href='/login'>Log In</a>
+								)}
+							</Button>
 						</div>
 					</Toolbar>
 				</AppBar>
