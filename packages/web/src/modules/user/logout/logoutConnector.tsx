@@ -7,6 +7,7 @@ export class LogoutConnector extends React.PureComponent<
 > {
 	afterSubmit = () => {
 		this.props.history.push("/");
+		window.location.reload();
 	};
 	render() {
 		return (

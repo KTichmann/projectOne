@@ -9,3 +9,4 @@ export * from "./modules/Lists";
 export * from "./modules/snippetControllers/DisplaySnippetController";
 export * from "./modules/commentControllers/commentListController";
 export * from "./modules/commentControllers/addCommentController";
+export * from "./modules/followControllers/followUserController";

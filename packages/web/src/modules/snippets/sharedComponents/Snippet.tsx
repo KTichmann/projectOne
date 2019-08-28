@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Icon, Tag, Row } from "antd";
+import { Card, Icon, Tag, Row, Button } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Avatars from "@dicebear/avatars";
 import sprites from "@dicebear/avatars-bottts-sprites";
@@ -18,6 +18,7 @@ export const Snippet = (props: {
 	snapId?: string;
 	username?: string;
 	hideCommentCount?: boolean;
+	follow?: any;
 }) => {
 	const {
 		title,
@@ -29,7 +30,8 @@ export const Snippet = (props: {
 		count,
 		snapId,
 		username,
-		hideCommentCount
+		hideCommentCount,
+		follow
 	} = props;
 	const avatars = new Avatars(sprites({}));
 	const avatar = avatars.create(username!);
@@ -78,6 +80,11 @@ export const Snippet = (props: {
 					}
 				/>
 			</Link>
+			{follow ? (
+				<Button onClick={() => follow({ username })}>Follow!</Button>
+			) : (
+				false
+			)}
 		</Card>
 	);
 };
