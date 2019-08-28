@@ -15,9 +15,9 @@ export class Following extends BaseEntity {
 	@PrimaryColumn()
 	following: string;
 
-	@ManyToOne(() => User, user => user.id, { primary: true })
+	@ManyToOne(() => User, user => user.username)
 	@JoinColumn({ name: "followed" })
-	followedUser: Promise<User>;
+	followedUser: User;
 
 	@ManyToOne(() => User, user => user.id, { primary: true })
 	@JoinColumn({ name: "following" })

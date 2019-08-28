@@ -125,7 +125,7 @@ declare namespace GQL {
 	}
 
 	interface IFollowUserOnMutationArguments {
-		userId: string;
+		username: string;
 	}
 
 	interface IUnfollowUserOnMutationArguments {

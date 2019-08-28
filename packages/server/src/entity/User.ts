@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Snippet } from "./Snippet";
 import { Comment } from "./Comment";
+import { Following } from "./Following";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -28,6 +29,9 @@ export class User extends BaseEntity {
 	@OneToMany(() => Snippet, snippet => snippet.user) snippets: Snippet[];
 
 	@OneToMany(() => Comment, comment => comment.user) comments: Comment[];
+
+	@OneToMany(() => Following, following => following.followed)
+	following: Following[];
 
 	@BeforeInsert()
 	async hashPasswordBeforeInsert() {
