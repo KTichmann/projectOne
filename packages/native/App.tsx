@@ -1,25 +1,39 @@
-import { Container, Content, Header, Footer } from "native-base";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text } from "react-native";
-import { Head } from "./src/Header";
-import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { HomeScreenRouter } from "./src/Home";
+import * as Font from "expo-font";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import HomeScreenRouter from "./src/Home";
+import { Header, Left, Icon, Title, Body, Right, Button } from "native-base";
 
-export default function App() {
-	const [isReady, setReady] = useState(false);
-	const componentDidMount = async () => {
-		await Font.loadAsync({
+export default class App extends React.PureComponent<
+	{ navigation: any },
+	{ isReady: boolean }
+> {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isReady: false
+		};
+	}
+	componentDidMount() {
+		console.log("we MOUNTING!");
+		Font.loadAsync({
 			Roboto: require("native-base/Fonts/Roboto.ttf"),
 			Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
 			...Ionicons.font
+		}).then(res => {
+			this.setState({ isReady: true });
 		});
-		setReady(true);
-	};
-	useEffect(() => {
-		componentDidMount();
-	}, []);
-	return <HomeScreenRouter />;
+	}
+	render() {
+		return this.state.isReady ? (
+			<HomeScreenRouter />
+		) : (
+			<View>
+				<Text>Testing</Text>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
