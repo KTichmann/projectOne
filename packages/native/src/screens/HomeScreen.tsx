@@ -1,39 +1,21 @@
-import React from "react";
 import {
+	Body,
 	Button,
-	Text,
-	Container,
 	Card,
 	CardItem,
-	Body,
+	Container,
 	Content,
-	Header,
-	Title,
-	Left,
-	Icon,
-	Right
+	Text
 } from "native-base";
+import React from "react";
+import { AbbHeader } from "../components/AbbHeader";
+import { HomeConnector } from "../components/home/HomeConnector";
 
 export class HomeScreen extends React.PureComponent<{ navigation: any }> {
 	render() {
 		return (
 			<Container>
-				<Header>
-					<Left>
-						<Button
-							transparent
-							onPress={() => {
-								console.log("clicky");
-								this.props.navigation.openDrawer();
-							}}>
-							<Icon name='menu' />
-						</Button>
-					</Left>
-					<Body>
-						<Title>Homescreen</Title>
-					</Body>
-					<Right />
-				</Header>
+				<AbbHeader navigation={this.props.navigation} title='Home' />
 				<Content padder>
 					<Card>
 						<CardItem>
@@ -58,6 +40,7 @@ export class HomeScreen extends React.PureComponent<{ navigation: any }> {
 						onPress={() => this.props.navigation.navigate("About")}>
 						<Text>Goto Profiles</Text>
 					</Button>
+					<HomeConnector />
 				</Content>
 			</Container>
 		);

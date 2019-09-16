@@ -2,8 +2,17 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import HomeScreenRouter from "./src/Home";
-import { Header, Left, Icon, Title, Body, Right, Button } from "native-base";
+import HomeScreenRouter from "./src/navigationRouter";
+import {
+	Header,
+	Left,
+	Icon,
+	Title,
+	Body,
+	Right,
+	Button,
+	Root
+} from "native-base";
 
 export default class App extends React.PureComponent<
 	{ navigation: any },
@@ -27,7 +36,9 @@ export default class App extends React.PureComponent<
 	}
 	render() {
 		return this.state.isReady ? (
-			<HomeScreenRouter />
+			<Root>
+				<HomeScreenRouter />
+			</Root>
 		) : (
 			<View>
 				<Text>Testing</Text>
